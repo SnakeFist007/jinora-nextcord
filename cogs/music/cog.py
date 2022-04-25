@@ -5,6 +5,7 @@ from nextcord.ext import commands
 from nextcord.abc import GuildChannel
 import wavelink
 import datetime
+import asyncio
 from main import testServerID
 
 class Music(commands.Cog):
@@ -30,22 +31,22 @@ class Music(commands.Cog):
             return await vc.play(track)
 
         if vc.queue.is_empty:
-            return await interaction.send("Reached end of queue!")
+            await interaction.send("Ende der Wartschleife erreicht!")
+            return await vc.disconnect()
         
         next_song = vc.queue.get()
         await vc.play(next_song)
         em = nextcord.Embed(
-            title=f"Now playing {next_song.title}", description=f"Artist: {next_song.author}")
+            title=f"Spiele {next_song.title} ab", description=f"Interpret: {next_song.author}")
         em.add_field(
-            name="Duration", value=f"{str(datetime.timedelta(seconds=next_song.length))}")
+            name="Länge", value=f"{str(datetime.timedelta(seconds=next_song.length))}")
         em.add_field(
-            name="URL", value=f"[Click Me!]({str(next_song.uri)})")
+            name="URL", value=f"[Klick mich!]({str(next_song.uri)})")
 
         await interaction.send(embed=em)
 
-
     # PLAY NEW VIDEO / SONG
-    @nextcord.slash_command(name="play", description="Plays a YouTube video.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="play", description="Spielt ein YouTube Video ab", guild_ids=[testServerID])
     async def play(self, interaction: Interaction, channel: GuildChannel = SlashOption(channel_types=[ChannelType.voice], description="Voice Channel to join"), search: str = SlashOption(description="Video URL or name")):
         search = await wavelink.YouTubeTrack.search(query=search, return_first=True)
 
@@ -58,138 +59,138 @@ class Music(commands.Cog):
             await vc.play(search)
 
             em = nextcord.Embed(
-                title=f"Now playing {vc.track.title}", description=f"Artist: {vc.track.author}")
+                title=f"Spiele {vc.track.title} ab", description=f"Interpret: {vc.track.author}")
             em.add_field(
-            name="Duration", value=f"{str(datetime.timedelta(seconds=vc.track.length))}")
+            name="Länge", value=f"{str(datetime.timedelta(seconds=vc.track.length))}")
             em.add_field(
-            name="URL", value=f"[Click Me!]({str(vc.track.uri)})")
+                name="URL", value=f"[Klick mich!]({str(vc.track.uri)})")
 
             await interaction.send(embed=em)
         else:
             await vc.queue.put_wait(search)
-            await interaction.send(f"Added ***{search.title}*** to the queue!")
+            await interaction.send(f"***{search.title}*** der Wartschleife hinzugefügt!")
 
         vc.interaction = interaction
         setattr(vc, "loop", False)
 
 
     # SHOW CURRENT PLAYING VIDEO / SONG
-    @nextcord.slash_command(name="nowplaying", description="Shows the name of the current track.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="nowplaying", description="Zeigt Informationen zum aktuell abgespielten Video an", guild_ids=[testServerID])
     async def nowplaying(self, interaction: Interaction):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.send("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
 
         if not vc.is_playing():
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.send("Es wird nichts abgespielt zur Zeit!")
         
-        em = nextcord.Embed(title=f"Now playing {vc.track.title}", description=f"Artist: {vc.track.author}")
-        em.add_field(name="Duration", value=f"{str(datetime.timedelta(seconds=vc.track.length))}")
-        em.add_field(name="URL", value=f"[Click Me!]({str(vc.track.uri)})")
+        em = nextcord.Embed(title=f"Spiele {vc.track.title} ab", description=f"Interpret: {vc.track.author}")
+        em.add_field(name="Länge", value=f"{str(datetime.timedelta(seconds=vc.track.length))}")
+        em.add_field(name="URL", value=f"[Klick mich!]({str(vc.track.uri)})")
 
         return await interaction.send(embed=em)
 
 
     # STOP PLAYBACK & DISCONNECT
-    @nextcord.slash_command(name="stop", description="Stops playback & disconnects the bot from any voice channel.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="stop", description="Stoppt die Wiedergabe", guild_ids=[testServerID])
     async def stop(self, interaction: Interaction):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.send("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
         
         await vc.stop()
         await vc.disconnect()
-        await interaction.send("Stopping playback!")
+        await interaction.send("Stoppe die Wiedergabe!")
 
 
     # DISCONNECT (FOR DEBUG)
-    @nextcord.slash_command(name="connect", description="Connects the bot to a channel.", guild_ids=[testServerID])
-    async def connect(self, interaction: Interaction, channel: GuildChannel = SlashOption(channel_types=[ChannelType.voice], description="Voice Channel to join")):
+    @nextcord.slash_command(name="connect", description="Verbindet den Bot zum entsprechenden Kanal", guild_ids=[testServerID])
+    async def connect(self, interaction: Interaction, channel: GuildChannel = SlashOption(channel_types=[ChannelType.voice], description="Gewünschter Sprachkanal")):
         if not interaction.guild.voice_client:
             vc: wavelink.Player = await channel.connect(cls=wavelink.Player)
             await vc.connect(timeout=0, reconnect=False)
-            await interaction.send("Connecting!", ephemeral=True)
         else:
-            return await interaction.send("Already connected! Please disconnect / stop the current running instance first.")       
+            return await interaction.send("Bereits verbunden!")       
 
 
     # DISCONNECT (FOR DEBUG)
-    @nextcord.slash_command(name="disconnect", description="Disconnects the bot from any voice channel.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="disconnect", description="Trennt die Verbindung des Bots", guild_ids=[testServerID])
     async def disconnect(self, interaction: Interaction):
         vc: wavelink.Player = interaction.guild.voice_client
 
         await vc.disconnect()
-        await interaction.send("Disconnecting!")
+        await interaction.send("Tschüss!")
 
 
     # PAUSE PLAYBACK
-    @nextcord.slash_command(name="pause", description="Pauses playback.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="pause", description="Pausiert das Video", guild_ids=[testServerID])
     async def pause(self, interaction: Interaction):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.send("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
 
         await vc.pause()
-        await interaction.send("Pausing playback!")
+        await interaction.response.send_message("Pausiere das Video!")
 
 
     # RESUME PLAYBACK
     @nextcord.slash_command(name="resume", description="Resumes playback.", guild_ids=[testServerID])
     async def resume(self, interaction: Interaction):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.response.send_message("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
 
         await vc.resume()
-        await interaction.send("Resuming playback!")
+        await interaction.response.send_message("Setzte das Video fort!")
 
 
     # SKIP VIDEO / SONG IN QUEUE OR DISCONNECT IF QUEUE IS EMPTY
-    @nextcord.slash_command(name="skip", description="Skips the current song.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="skip", description="Überspringt das aktuelle Video", guild_ids=[testServerID])
     async def skip(self, interaction: Interaction):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.send("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
 
         if not vc.queue.is_empty:
             await vc.stop()
-            return await interaction.send("Skipping current video / song!")
+            return await interaction.response.send_message("Video übersprungen!")
         else:
             await vc.stop()
-            return await interaction.send("Stopping currently running track, disconnecting!")
+            return await interaction.response.send_message("Video gestoppt!")
 
 
     # SET VOLUME (DEFAULT IS 50%)
-    @nextcord.slash_command(name="volume", description="Set the playback volume (0-150).", guild_ids=[testServerID])
+    @nextcord.slash_command(name="volume", description="Lautstärke (0-150) einstellen", guild_ids=[testServerID])
     async def volume(self, interaction: Interaction, volume: int = SlashOption(description="Volume in % (1-150)")):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.send("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
 
         if volume > 251:
-            await interaction.send("That's a little much bruh")
+            await interaction.response.send_message("Bisschen viel Bruder.")
         if volume < 251 and volume > 101:
-            await interaction.send("Let's go into earrape mode")
-            await interaction.send(f"Setting the volume to {volume}%")
+            await interaction.response.send_message("***Starting ear rape mode***")
+            await interaction.response.send_message(f"Lautstärke auf {volume}% eingestellt!")
             return await vc.set_volume(volume)
         if volume < 101 and volume > 0:
-            await interaction.send(f"Setting the volume to {volume}%")
+            await interaction.response.send_message(f"Lautstärke auf {volume}% eingestellt!")
             return await vc.set_volume(volume)
         if volume < 0:
-            await interaction.send("Can't go that low. You wouldn't hear anything anyway then.")
+            await vc.disconnect()
+            await interaction.response.send_message("Stelle auf stumm!")
 
 
     # LOOP PLAYBACK (TOGGLE COMMAND)
-    @nextcord.slash_command(name="loop", description="Toggle looping the playback.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="loop", description="Wiederholung an / aus schalten", guild_ids=[testServerID])
     async def loop(self, interaction: Interaction):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.response.send_message("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
 
@@ -199,23 +200,23 @@ class Music(commands.Cog):
             setattr(vc, "loop", False)
         
         if vc.loop:
-            return await interaction.send("Repeat is now enabled!")
+            return await interaction.response.send_message("Wiederholung aktiviert!")
         else:
-            return await interaction.send("Repeat is now disabled!")
+            return await interaction.response.send_message("Wiederholung deaktiviert!")
 
 
     # SHOW ALL VIDEOS / SONGS IN QUEUE
-    @nextcord.slash_command(name="queue", description="Shows the content of the current queue.", guild_ids=[testServerID])
+    @nextcord.slash_command(name="queue", description="Zeigt den Inhalt der Warteschleife", guild_ids=[testServerID])
     async def queue(self, interaction: Interaction):
         if not interaction.guild.voice_client:
-            return await interaction.send("There is nothing playing at the moment!")
+            return await interaction.response.send_message("Es wird nichts abgespielt zur Zeit!")
         else:
             vc: wavelink.Player = interaction.guild.voice_client
 
         if vc.queue.is_empty:
-            return await interaction.send("Queue is empty!")
+            return await interaction.response.send_message("Warteschleife ist leer!")
 
-        em = nextcord.Embed(title="Current Queue")
+        em = nextcord.Embed(title="Aktuelle Warteschleife")
         queue = vc.queue.copy()
         song_count = 0
 
