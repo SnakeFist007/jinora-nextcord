@@ -15,7 +15,7 @@ class Basics(commands.Cog):
 
     @nextcord.slash_command(name="say", description="Says something.", guild_ids=[testServerID])
     async def say(self, interaction: Interaction, message: str = SlashOption(description="Enter something to say!")):
-        await interaction.send(message)    
+        await interaction.send(message)
 
 # Add Cog to bot
 def setup(bot):

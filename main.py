@@ -7,14 +7,16 @@ import os
 import env
 
 # Variables
-intents = nextcord.Intents.default()
-intents.members = True
 token_file = open("token.auth", "r")
 token = token_file.read()
 
+testServerID = env.server_id
+
+intents = nextcord.Intents.default()
+intents.members = True
+
 bot = commands.Bot(command_prefix=commands.when_mentioned, intents=intents)
 #bot.remove_command("help")
-testServerID = env.server_id
 
 # Events
 @bot.event
