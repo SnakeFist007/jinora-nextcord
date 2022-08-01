@@ -5,3 +5,4 @@ cogs/__pycache__
 cogs/misc/__pycache__/cog.cpython-310.pyc
 cogs/music/__pycache__/cog.cpython-310.pyc
 cogs/roles/__pycache__/cog.cpython-310.pyc
+*.pyc
