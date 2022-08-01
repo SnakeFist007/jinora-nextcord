@@ -7,7 +7,6 @@ from .coinflip_buttons import Coinflip
 
 # Initialize Cog
 class DSA(commands.Cog, name="DSA"):
-    """Shows DSA info"""
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 

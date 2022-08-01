@@ -13,7 +13,6 @@ testServerID = env.server_id
 
 intents = nextcord.Intents.default()
 intents.members = True
-
 bot = commands.Bot(command_prefix=commands.when_mentioned, intents=intents)
 
 # Events
