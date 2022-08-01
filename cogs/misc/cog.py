@@ -11,11 +11,7 @@ class Basics(commands.Cog):
 
     @nextcord.slash_command(name="ping", description="Pong!", guild_ids=[testServerID])
     async def ping(self, interaction: Interaction):
-        await interaction.send("Pong!")
-
-    @nextcord.slash_command(name="say", description="Says something.", guild_ids=[testServerID])
-    async def say(self, interaction: Interaction, message: str = SlashOption(description="Enter something to say!")):
-        await interaction.send(message)
+        await interaction.send(f"Pong! (`Latency: {round(self.bot.latency * 1000)}ms`)")
 
 # Add Cog to bot
 def setup(bot):

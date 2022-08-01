@@ -81,6 +81,38 @@ class DSA(commands.Cog):
         await interaction.send(view=Coinflip(), ephemeral=True)
 
 
+    # Character Templates
+    @nextcord.slash_command(name="get_template", description="Lade das Charakter-Template als PDF herunter.", guild_ids=[testServerID])
+    async def download_template(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+
+    @nextcord.slash_command(name="import", description="Importiere einen Charakter per PDF.", guild_ids=[testServerID])
+    async def import_template(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+
+    @nextcord.slash_command(name="export", description="Exportiere einen Charakter als PDF.", guild_ids=[testServerID])
+    async def export_template(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+
+
+    # Character Editors
+    @nextcord.slash_command(name="list_chars", description="Zeigt alle gespeicherten Charaktere an.", guild_ids=[testServerID])
+    async def show_chars(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+
+    @nextcord.slash_command(name="edit_char", description="Bearbeitet einen gespeicherten Charakter.", guild_ids=[testServerID])
+    async def edit_char(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+    
+    @nextcord.slash_command(name="del_char", description="Löscht einen ausgewählten Charakter.", guild_ids=[testServerID])
+    async def delete_char(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+
+    @nextcord.slash_command(name="reset_chars", description="Löscht ALLE gespeicherten Charaktere!", guild_ids=[testServerID])
+    async def delete_all_chars(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+
+
 # Add Cog to bot
 def setup(bot):
     bot.add_cog(DSA(bot))
