@@ -16,7 +16,6 @@ intents = nextcord.Intents.default()
 intents.members = True
 
 bot = commands.Bot(command_prefix=commands.when_mentioned, intents=intents)
-#bot.remove_command("help")
 
 # Events
 @bot.event

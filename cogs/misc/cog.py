@@ -5,7 +5,8 @@ from nextcord.ext import commands
 from main import testServerID
 
 # Initialize Cog
-class Basics(commands.Cog):
+class Basics(commands.Cog, name="Misc"):
+    """Shows misc info"""
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
