@@ -2,7 +2,12 @@ token.auth
 .vscode/settings.json
 /__pycache__
 cogs/__pycache__
+<<<<<<< HEAD
 cogs/misc/__pycache__
 cogs/dsa/__pycache__
+=======
+cogs/misc/__pycache__/*
+cogs/dsa/__pycache__/*
+>>>>>>> 51126c4a7dcfdd908a79862fa169744fe07315ed
 *.pyc
 
