@@ -1,6 +1,5 @@
 import nextcord
-from nextcord.ext import commands
-from nextcord import Interaction, SlashOption
+from nextcord import Interaction
 from nextcord.ext import commands
 from main import testServerID
 

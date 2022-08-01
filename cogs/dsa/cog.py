@@ -1,6 +1,6 @@
 import nextcord
-from nextcord.ext import commands
 from nextcord import Interaction
+from nextcord.ext import commands
 from main import testServerID
 from .dice_dropdown import DiceDropdownView
 from .coinflip_buttons import Coinflip
@@ -11,13 +11,22 @@ class DSA(commands.Cog, name="DSA"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
+    # Dice & Coins
     @nextcord.slash_command(name="roll", description="Würfel werfen!", guild_ids=[testServerID])
     async def dice_roll(self, interaction: Interaction):
         await interaction.send(view=DiceDropdownView(), ephemeral=True)
 
+    @nextcord.slash_command(name="roll_multiple", description="Mehrere Würfel werfen!", guild_ids=[testServerID])
+    async def dice_roll_multiple(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
+
     @nextcord.slash_command(name="coinflip", description="Wirf eine Münze!", guild_ids=[testServerID])
     async def coin_flip(self, interaction: Interaction):
         await interaction.send(view=Coinflip(), ephemeral=True)
+
+    @nextcord.slash_command(name="coinflip_multiple", description="Wirf mehrere Münzen!", guild_ids=[testServerID])
+    async def coin_flip_multiple(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
 
 
     # Character Templates

@@ -1,16 +1,15 @@
-import nextcord
-from discord import Intents
-from nextcord import Interaction, SlashOption, ChannelType
-from nextcord.abc import GuildChannel
-from nextcord.ext import commands
 import os
 import env
+import nextcord
+from nextcord.ext import commands
 
 # Variables
 token_file = open("token.auth", "r")
 token = token_file.read()
 
+### DEBUG - REMOVE BEFORE PRODUCTIVE RELEASE!!!
 testServerID = env.server_id
+### DEBUG - REMOVE BEFORE PRODUCTIVE RELEASE!!!
 
 intents = nextcord.Intents.default()
 intents.members = True
