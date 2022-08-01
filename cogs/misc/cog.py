@@ -20,4 +20,4 @@ class Basics(commands.Cog):
 # Add Cog to bot
 def setup(bot):
     bot.add_cog(Basics(bot))
-    print ("basics.py cog loaded!")
+    print ("Basic functions loaded!")

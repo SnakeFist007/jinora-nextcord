@@ -39,6 +39,27 @@ class DiceDropdown(nextcord.ui.Select):
         else:
             await interaction.response.send_message("Bitte einen gültigen Einstieg wählen!", ephemeral=True)
 
+class Coinflip(nextcord.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.value = None
+
+    @nextcord.ui.button(label="Kopf", style=nextcord.ButtonStyle.blurple)
+    async def coin_heads(self, button: nextcord.ui.Button, interaction: Interaction):
+        flipped_coin = random.randint(0,1)
+        if flipped_coin == 0:
+            await interaction.response.send_message("`Kopf`! Du hast gewonnen!", ephemeral=False)
+        else:
+            await interaction.response.send_message("`Zahl`! Du hast verloren!", ephemeral=False)
+
+    @nextcord.ui.button(label="Zahl", style=nextcord.ButtonStyle.blurple)
+    async def coin_tails(self, button: nextcord.ui.Button, interaction: Interaction):
+        flipped_coin = random.randint(0,1)
+        if flipped_coin == 1:
+            await interaction.response.send_message("`Zahl`! Du hast gewonnen!", ephemeral=False)
+        else:
+            await interaction.response.send_message("`Kopf`! Du hast verloren!", ephemeral=False)
+
 
 class DiceDropdownView(nextcord.ui.View):
     def __init__(self):
@@ -55,7 +76,12 @@ class DSA(commands.Cog):
     async def dice_roll(self, interaction: Interaction):
         await interaction.send(view=DiceDropdownView(), ephemeral=True)
 
+    @nextcord.slash_command(name="coinflip", description="Wirf eine Münze!", guild_ids=[testServerID])
+    async def coin_flip(self, interaction: Interaction):
+        await interaction.send(view=Coinflip(), ephemeral=True)
+
+
 # Add Cog to bot
 def setup(bot):
     bot.add_cog(DSA(bot))
-    print("dsa.py cog loaded!")
+    print("DSA module loaded!")
