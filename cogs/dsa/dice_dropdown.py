@@ -1,6 +1,7 @@
 import random
 import nextcord
 from nextcord import Interaction
+from typing import Optional
 
 class DiceDropdown(nextcord.ui.Select):
     def __init__(self):
@@ -36,7 +37,6 @@ class DiceDropdown(nextcord.ui.Select):
             await interaction.response.send_message(f"`{random.randint(1,20)}` wurde gewürfelt!", ephemeral=False)
         else:
             await interaction.response.send_message("Bitte einen gültigen Einstieg wählen!", ephemeral=True)
-
 
 class DiceDropdownView(nextcord.ui.View):
     def __init__(self):
