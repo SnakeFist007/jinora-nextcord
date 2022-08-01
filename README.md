@@ -1,7 +1,7 @@
 # Lene#2184
 
 ## Invite Link
-[Add me to your server!](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877908992&scope=bot%20applications.commands)
+[Add me to your server!](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
 
 
 
