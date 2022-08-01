@@ -1,4 +1,4 @@
-# Lene#2184
+# Lene#2184 - DSA Discord Bot!
 
 ## Invite Link
 [Add me to your server!](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
