@@ -12,6 +12,7 @@ class Fortune(commands.Cog, name="Fortune"):
 
     @nextcord.slash_command(name="fortune", description="Sagt dir eine zufällige Weisheit!", guild_ids=[testServerID])
     async def fortune_cookie(self, interaction: Interaction):
+        # Replace before productive release: Huge workload, especially with bigger files...
         fortune_cookies = "database/fortune.txt"
 
         with codecs.open(fortune_cookies, "r", "utf-8") as f:
@@ -28,6 +29,7 @@ class Fortune(commands.Cog, name="Fortune"):
 
     @nextcord.slash_command(name="8ball", description="Beantwortet dir eine Frage nach bestem Gewissen!", guild_ids=[testServerID])
     async def fortune_8ball(self, interaction: Interaction, frage: str = SlashOption(description="Stell deine Frage...")):
+        # Replace before productive release: Huge workload, especially with bigger files...
         eight_ball = "database/8ball.txt" 
 
         with codecs.open(eight_ball, "r", "utf-8") as f:
