@@ -5,7 +5,6 @@ from nextcord import Interaction
 class Coinflip(nextcord.ui.View):
     def __init__(self):
         super().__init__()
-        self.value = None
 
     @nextcord.ui.button(label="Kopf", style=nextcord.ButtonStyle.blurple)
     async def coin_heads(self, button: nextcord.ui.Button, interaction: Interaction):

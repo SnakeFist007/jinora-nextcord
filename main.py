@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix=commands.when_mentioned, intents=intents)
 # Events
 @bot.event
 async def on_ready():
-    print("\n\tLene#2184 is ready!\n")
+    print("\n\tLene#2184 is ready!")
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 def main():
