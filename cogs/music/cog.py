@@ -42,13 +42,17 @@ class Music(commands.Cog):
 
     # PLAY NEW VIDEO
     @nextcord.slash_command(name="play", description="Spielt ein YouTube Video ab", guild_ids=[testServerID])
-    async def play(self, interaction: Interaction, channel: GuildChannel = SlashOption(channel_types=[ChannelType.voice], description="Voice Channel to join"), search: str = SlashOption(description="Video URL or name")):
+    async def play(self, interaction: Interaction, search: str = SlashOption(description="Video URL or name")):
         video = await wavelink.YouTubeTrack.search(query=search, return_first=True)
 
-        if not interaction.guild.voice_client:
-            vc: wavelink.Player = await channel.connect(cls=wavelink.Player)
-        else:
-            vc: wavelink.Player = interaction.guild.voice_client
+        try:            
+            if not interaction.guild.voice_client:
+                vc: wavelink.Player = await interaction.user.voice.channel.connect(cls=wavelink.Player)
+            else:
+                vc: wavelink.Player = interaction.guild.voice_client
+
+        except AttributeError:
+            return await interaction.response.send_message("Tritt zuerst einem Sprachkanal bei!", ephemeral=True)
 
         if vc.queue.is_empty and not vc.is_playing():
             await vc.play(video)
