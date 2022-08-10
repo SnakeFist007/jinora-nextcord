@@ -1,31 +1,11 @@
-# Lene#2184 - DSA Discord Bot
+# Lene#2184 - Multipurpose Discord Bot w/ DSA Features!
 
 ## Invite Link
 [Add me to your server!](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
 
 
-## Commands
-/ping
-
-/roll
-
-/coinflip
-
-### Work-in-Progress
-
-/get_template
-
-/import
-
-/export
-
-/list_chars
-
-/edit_char
-
-/del_char
-
-/reset_chars
+## Wiki
+[Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
 
 
 ## GDPR Legal Disclaimer
