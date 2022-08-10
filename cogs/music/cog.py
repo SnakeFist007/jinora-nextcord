@@ -1,4 +1,3 @@
-from time import time
 import nextcord
 from nextcord import Interaction, SlashOption, ChannelType
 from nextcord.ext import commands
