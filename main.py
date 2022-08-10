@@ -1,4 +1,3 @@
-from code import interact
 import os
 import env
 import nextcord
@@ -28,6 +27,7 @@ async def on_ready():
 @bot.slash_command(name="load", description="Loads a cog", guild_ids=[testServerID])
 @commands.is_owner()
 async def load_cog(interaction: Interaction, cog: str = SlashOption(description="Choose the cog")):
+    print(f"Loading {cog} module...")
     bot.load_extension(f"cogs.{cog}.cog")
     await interaction.response.send_message(f"Loaded cog **{cog}**!", ephemeral=True)
 
@@ -35,6 +35,7 @@ async def load_cog(interaction: Interaction, cog: str = SlashOption(description=
 @bot.slash_command(name="reload", description="Reloads a cog", guild_ids=[testServerID])
 @commands.is_owner()
 async def reload_cog(interaction: Interaction, cog: str = SlashOption(description="Choose the cog")):
+    print(f"Reloading {cog} module...")
     bot.reload_extension(f"cogs.{cog}.cog")
     await interaction.response.send_message(f"Reloaded cog **{cog}**!", ephemeral=True)
 
@@ -42,7 +43,9 @@ async def reload_cog(interaction: Interaction, cog: str = SlashOption(descriptio
 @bot.slash_command(name="unload", description="Unloads a cog", guild_ids=[testServerID])
 @commands.is_owner()
 async def unload_cog(interaction: Interaction, cog: str = SlashOption(description="Choose the cog")):
+    print(f"Unloading {cog} module...")
     bot.unload_extension(f"cogs.{cog}.cog")
+    print(f"Unloaded {cog} module!")
     await interaction.response.send_message(f"Unloaded cog **{cog}**!", ephemeral=True)
 
 
