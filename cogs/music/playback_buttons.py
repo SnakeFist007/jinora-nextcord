@@ -36,10 +36,6 @@ class ControlPanel(nextcord.ui.View):
 
     @nextcord.ui.button(label="Skip", emoji="⏭️", style=nextcord.ButtonStyle.blurple)
     async def skip(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        for child in self.children:
-            child.disabled = False
-        button.disabled = True
-
         if self.vc.queue.is_empty:
             await self.vc.stop()
             await self.vc.disconnect()
@@ -54,14 +50,13 @@ class ControlPanel(nextcord.ui.View):
             
         except wavelink.errors.QueueEmpty:
             return await interaction.response.send_message("Die Warteschlange ist leer!", ephemeral=True)
+        
+        except AttributeError:
+            pass
     
 
     @nextcord.ui.button(label="Queue", emoji="#️⃣", style=nextcord.ButtonStyle.blurple)
     async def queue(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        for child in self.children:
-            child.disabled = False
-        button.disabled = True
-
         if self.vc.queue.is_empty:
             return await interaction.response.send_message("Die Warteschlange ist leer!", ephemeral=True)
     
