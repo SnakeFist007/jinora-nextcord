@@ -34,17 +34,16 @@ class Music(commands.Cog):
         try:
             next_song = vc.queue.get()
             await vc.play(next_song)
-            # FETCH ID FROM PANEL MESSAGE -> UPDATE MESSAGEaa
+            # FETCH ID FROM PANEL MESSAGE -> UPDATE MESSAGE
         
         except wavelink.errors.QueueEmpty:
             return await vc.disconnect()
 
 
-
-    # PLAY NEW VIDEO / SONG
+    # PLAY NEW VIDEO
     @nextcord.slash_command(name="play", description="Spielt ein YouTube Video ab", guild_ids=[testServerID])
     async def play(self, interaction: Interaction, channel: GuildChannel = SlashOption(channel_types=[ChannelType.voice], description="Voice Channel to join"), search: str = SlashOption(description="Video URL or name")):
-        search = await wavelink.YouTubeTrack.search(query=search, return_first=True)
+        video = await wavelink.YouTubeTrack.search(query=search, return_first=True)
 
         if not interaction.guild.voice_client:
             vc: wavelink.Player = await channel.connect(cls=wavelink.Player)
@@ -52,7 +51,7 @@ class Music(commands.Cog):
             vc: wavelink.Player = interaction.guild.voice_client
 
         if vc.queue.is_empty and not vc.is_playing():
-            await vc.play(search)
+            await vc.play(video)
 
             em = nextcord.Embed(title=f"Spiele {vc.track.title} ab", description=f"Kanal: {vc.track.author}")
             em.add_field(name="Länge", value=f"{str(datetime.timedelta(seconds=vc.track.length))}")
@@ -63,8 +62,8 @@ class Music(commands.Cog):
             await interaction.send(embed=em, view=view)
             
         else:
-            await vc.queue.put_wait(search)
-            await interaction.response.send_message(f"***{search.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
+            await vc.queue.put_wait(video)
+            await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
 
         vc.interaction = interaction
         setattr(vc, "loop", False)
@@ -83,7 +82,7 @@ class Music(commands.Cog):
         await interaction.send("Stoppe die Wiedergabe!")     
 
 
-    # DISCONNECT (FOR DEBUG)
+    # DISCONNECT (RESET-COMMAND)
     @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots", guild_ids=[testServerID])
     @application_checks.has_permissions(moderate_members=True)
     async def music_reset(self, interaction: Interaction):

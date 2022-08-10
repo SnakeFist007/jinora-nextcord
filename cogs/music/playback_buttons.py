@@ -1,4 +1,5 @@
 import nextcord
+import wavelink
 from nextcord import Interaction
 
 class ControlPanel(nextcord.ui.View):
@@ -40,14 +41,18 @@ class ControlPanel(nextcord.ui.View):
         button.disabled = True
 
         if self.vc.queue.is_empty:
-            return await interaction.response.send_message("Die Warteschlange ist leer! Zum Beenden bitte den 'Stop'-Knopf nutzen!", ephemeral=True)
+            await self.vc.stop()
+            await self.vc.disconnect()
+            await interaction.message.delete()
 
         try:
-            next_song = self.vc.queue.get()
-            await self.vc.play(next_song)
-            await interaction.response.send_message("Überspringe den aktuellen Track!", ephemeral=True)
+            await self.vc.seek(self.vc.track.length * 1000)
+            if self.vc.is_paused():
+                await self.vc.resume()
+
+            await interaction.response.send_message("Spiele den nächsten Track!", ephemeral=True)
             
-        except Exception:
+        except wavelink.errors.QueueEmpty:
             return await interaction.response.send_message("Die Warteschlange ist leer!", ephemeral=True)
     
 
