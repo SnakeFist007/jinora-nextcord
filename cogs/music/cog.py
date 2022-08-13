@@ -62,7 +62,6 @@ class Music(commands.Cog):
         try:
             next_song = vc.queue.get()
             await vc.play(next_song)
-            # TODO: | FIXME: FETCH ID FROM PANEL MESSAGE -> UPDATE MESSAGE
         
         except wavelink.errors.QueueEmpty:
             return await vc.disconnect()
@@ -96,20 +95,6 @@ class Music(commands.Cog):
 
         vc.interaction = interaction
         setattr(vc, "loop", False)
-
-
-    # STOP PLAYBACK & DISCONNECT
-    @nextcord.slash_command(name="stop", description="Stoppt die Wiedergabe", guild_ids=[testServerID])
-    async def stop(self, interaction: Interaction):
-        if not interaction.guild.voice_client:
-            return await interaction.response.send_message("Es wird zur Zeit nichts abgespielt!", ephemeral=True)
-        else:
-            vc: wavelink.Player = interaction.guild.voice_client
-        
-        await vc.stop()
-        await vc.disconnect()
-        await interaction.send("Stoppe die Wiedergabe!")
-
 
     # DISCONNECT (RESET-COMMAND)
     @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots", guild_ids=[testServerID])

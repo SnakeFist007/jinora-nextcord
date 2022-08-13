@@ -70,5 +70,6 @@ class ControlPanel(nextcord.ui.View):
 
     @nextcord.ui.button(label="Stop", emoji="⏏️", style=nextcord.ButtonStyle.red)
     async def disconnect(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.vc.stop()
         await self.vc.disconnect()
         await interaction.message.delete()
