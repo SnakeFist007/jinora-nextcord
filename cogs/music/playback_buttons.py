@@ -11,16 +11,11 @@ class ControlPanel(nextcord.ui.View):
 
     @nextcord.ui.button(label="Play/Pause", emoji="⏯️", style=nextcord.ButtonStyle.blurple)
     async def resume_and_pause(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        for child in self.children:
-            child.disabled = False
-
         if self.vc.is_paused():
             await self.vc.resume()
-            # await interaction.message.edit(content="", view=self)
             await interaction.message.clear_reaction(emoji="⏸️")
         else:
             await self.vc.pause()
-            # await interaction.message.edit(content="**Status:** Pausiert!", view=self)
             await interaction.message.add_reaction(emoji="⏸️")
 
 
@@ -75,8 +70,5 @@ class ControlPanel(nextcord.ui.View):
 
     @nextcord.ui.button(label="Stop", emoji="⏏️", style=nextcord.ButtonStyle.red)
     async def disconnect(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        for child in self.children:
-            child.disabled = True
-
         await self.vc.disconnect()
         await interaction.message.delete()
