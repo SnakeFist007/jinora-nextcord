@@ -85,7 +85,7 @@ class Music(commands.Cog):
         if vc.queue.is_empty and not vc.is_playing():
             await vc.play(video)
             
-            em = nextcord.Embed(title=f"🎶 Musik-Spieler 🎶", color=0x3498db)
+            em = nextcord.Embed(title=f"🎶 Musik-Steuerungstafel 🎶", color=0x3498db)
             view = ControlPanel(vc, interaction)
             
             await interaction.send(embed=em, view=view)
