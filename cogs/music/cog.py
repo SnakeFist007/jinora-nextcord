@@ -3,6 +3,7 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 import wavelink
 import json
+import validators
 from main import testServerID
 from .playback_buttons import ControlPanel
 
@@ -95,6 +96,40 @@ class Music(commands.Cog):
 
         vc.interaction = interaction
         setattr(vc, "loop", False)
+
+    # CONTEXT MENU PLAY        
+    @nextcord.message_command(name="Mit Lene abspielen")
+    async def play_context(self, interaction: Interaction, message):        
+        if validators.url(message.content):
+            video = await wavelink.YouTubeTrack.search(query=message.content, return_first=True)
+            
+            try:            
+                if not interaction.guild.voice_client:
+                    vc: wavelink.Player = await interaction.user.voice.channel.connect(cls=wavelink.Player)
+                else:
+                    vc: wavelink.Player = interaction.guild.voice_client
+
+            except AttributeError:
+                return await interaction.response.send_message("Tritt zuerst einem Sprachkanal bei!", ephemeral=True)
+
+            if vc.queue.is_empty and not vc.is_playing():
+                await vc.play(video)
+                
+                em = nextcord.Embed(title=f"🎶 Musik-Spieler 🎶", color=0x3498db)
+                view = ControlPanel(vc, interaction)
+                
+                await interaction.send(embed=em, view=view)
+                
+            else:
+                await vc.queue.put_wait(video)
+                await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
+
+            vc.interaction = interaction
+            setattr(vc, "loop", False)
+            
+        else:
+            await interaction.response.send_message("Bitte eine Nachricht auswählen, die nur eine URL beinhält!", ephemeral=True)
+
 
     # DISCONNECT (RESET-COMMAND)
     @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots", guild_ids=[testServerID])
