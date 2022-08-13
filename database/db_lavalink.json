@@ -1,0 +1,14 @@
+{
+    "server_1": {
+        "host":"lavalinkinc.ml",
+        "port": 443,
+        "password": "incognito",
+        "https": true
+    },
+    "server_2": {
+        "host": "lavalink.mariliun.ml",
+        "port": 443,
+        "password": "lavaliun",
+        "https": true
+    }
+}

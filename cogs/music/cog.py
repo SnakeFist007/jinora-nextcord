@@ -1,9 +1,8 @@
 import nextcord
-from nextcord import Interaction, SlashOption, ChannelType
+from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
-from nextcord.abc import GuildChannel
 import wavelink
-import datetime
+import json
 from main import testServerID
 from .playback_buttons import ControlPanel
 
@@ -14,8 +13,37 @@ class Music(commands.Cog):
         bot.loop.create_task(self.node_connect())
 
     async def node_connect(self):
+        default_server = 2
+        backup_server = 1
+        music_json = "database/db_lavalink.json"
+
+        with open(music_json) as f:
+            data = json.load(f)
+        
         await self.bot.wait_until_ready()
-        await wavelink.NodePool.create_node(bot=self.bot, host="lavalinkinc.ml", port=443, password="incognito", https=True)
+
+        # Try to connect to primary server
+        try:
+            server = "server_" + str(default_server)
+        
+            await wavelink.NodePool.create_node(
+                bot=self.bot, 
+                host=data[server]["host"], 
+                port=data[server]["port"], 
+                password=data[server]["password"], 
+                https=data[server]["https"])
+
+        # Use backup server if it fails
+        except:
+            server = "server_" + str(backup_server)
+        
+            await wavelink.NodePool.create_node(
+                bot=self.bot, 
+                host=data[server]["host"], 
+                port=data[server]["port"], 
+                password=data[server]["password"], 
+                https=data[server]["https"])
+
 
     # Events
     @commands.Cog.listener()
@@ -34,7 +62,7 @@ class Music(commands.Cog):
         try:
             next_song = vc.queue.get()
             await vc.play(next_song)
-            # FETCH ID FROM PANEL MESSAGE -> UPDATE MESSAGE
+            # TODO: | FIXME: FETCH ID FROM PANEL MESSAGE -> UPDATE MESSAGE
         
         except wavelink.errors.QueueEmpty:
             return await vc.disconnect()
@@ -56,13 +84,10 @@ class Music(commands.Cog):
 
         if vc.queue.is_empty and not vc.is_playing():
             await vc.play(video)
-
-            em = nextcord.Embed(title=f"Spiele {vc.track.title} ab", description=f"Kanal: {vc.track.author}")
-            em.add_field(name="Länge", value=f"{str(datetime.timedelta(seconds=vc.track.length))}")
-            em.add_field(name="URL", value=f"[Klick mich!]({str(vc.track.uri)})")
             
+            em = nextcord.Embed(title=f"🎶 Musik-Spieler 🎶", color=0x3498db)
             view = ControlPanel(vc, interaction)
-
+            
             await interaction.send(embed=em, view=view)
             
         else:
@@ -83,7 +108,7 @@ class Music(commands.Cog):
         
         await vc.stop()
         await vc.disconnect()
-        await interaction.send("Stoppe die Wiedergabe!")     
+        await interaction.send("Stoppe die Wiedergabe!")
 
 
     # DISCONNECT (RESET-COMMAND)

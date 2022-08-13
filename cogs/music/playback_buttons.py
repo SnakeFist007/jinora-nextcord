@@ -16,10 +16,12 @@ class ControlPanel(nextcord.ui.View):
 
         if self.vc.is_paused():
             await self.vc.resume()
-            await interaction.message.edit(content="", view=self)
+            # await interaction.message.edit(content="", view=self)
+            await interaction.message.clear_reaction(emoji="⏸️")
         else:
             await self.vc.pause()
-            await interaction.message.edit(content="**Status:** Pausiert!", view=self)
+            # await interaction.message.edit(content="**Status:** Pausiert!", view=self)
+            await interaction.message.add_reaction(emoji="⏸️")
 
 
     @nextcord.ui.button(label="Loop", emoji="🔁", style=nextcord.ButtonStyle.blurple)
@@ -56,17 +58,17 @@ class ControlPanel(nextcord.ui.View):
     
 
     @nextcord.ui.button(label="Queue", emoji="#️⃣", style=nextcord.ButtonStyle.blurple)
-    async def queue(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        if self.vc.queue.is_empty:
-            return await interaction.response.send_message("Die Warteschlange ist leer!", ephemeral=True)
-    
-        em = nextcord.Embed(title="Aktuelle Warteschleife")
-        queue = self.vc.queue.copy()
-        song_count = 0
+    async def queue(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):   
+        em = nextcord.Embed(title="🐍 Schlange 🐍")
+        em.add_field(name=f"***Aktueller Track***", value=f"**{self.vc.track.title}**", inline=False)
 
-        for song in queue:
-            song_count += 1
-            em.add_field(name=f"**#{song_count}:** {song.title}", value=f"{str(song.uri)}", inline=False)
+        if not self.vc.queue.is_empty:
+            queue = self.vc.queue.copy()
+            song_count = 0
+            
+            for song in queue:
+                song_count += 1
+                em.add_field(name=f"**#{song_count}:** {song.title}", value=f"{str(song.uri)}", inline=False)
 
         return await interaction.response.send_message(embed=em, ephemeral=True)
 

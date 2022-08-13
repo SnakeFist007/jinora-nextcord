@@ -21,7 +21,7 @@ class DSA(commands.Cog, name="DSA"):
         await interaction.send(view=Coinflip(), ephemeral=True)
 
 
-    # Character Templates
+    # TODO: Character Templates
     # @nextcord.slash_command(name="get_template", description="Lade das Charakter-Template als PDF herunter.", guild_ids=[testServerID])
     # async def download_template(self, interaction: Interaction):
     #     await interaction.response.send_message("In developement!", ephemeral=True)
@@ -35,7 +35,7 @@ class DSA(commands.Cog, name="DSA"):
     #     await interaction.response.send_message("In developement!", ephemeral=True)
 
 
-    # Character Editors
+    # TODO: Character Editors
     # @nextcord.slash_command(name="list_chars", description="Zeigt alle gespeicherten Charaktere an.", guild_ids=[testServerID])
     # async def show_chars(self, interaction: Interaction):
     #     await interaction.response.send_message("In developement!", ephemeral=True)
