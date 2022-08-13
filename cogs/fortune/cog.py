@@ -22,9 +22,9 @@ class Fortune(commands.Cog, name="Fortune"):
         await interaction.response.send_message(f"{ran}", ephemeral=True)
 
 
-    @nextcord.slash_command(name="daily_fortune", description="Sagt dir die heutige Weisheit!", guild_ids=[testServerID])
-    async def daily_fortune(self, interaction: Interaction):
-        await interaction.response.send_message("Work-in-Progress!", ephemeral=True)
+    # @nextcord.slash_command(name="daily_fortune", description="Sagt dir die heutige Weisheit!", guild_ids=[testServerID])
+    # async def daily_fortune(self, interaction: Interaction):
+    #     await interaction.response.send_message("Work-in-Progress!", ephemeral=True)
 
 
     @nextcord.slash_command(name="8ball", description="Beantwortet dir eine Frage nach bestem Gewissen!", guild_ids=[testServerID])
