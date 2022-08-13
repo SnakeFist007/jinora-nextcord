@@ -1,7 +1,6 @@
 import random
 import nextcord
 from nextcord import Interaction
-from typing import Optional
 
 class DiceDropdown(nextcord.ui.Select):
     def __init__(self):

@@ -12,11 +12,11 @@ class DSA(commands.Cog, name="DSA"):
         self.bot = bot
 
     # Dice & Coins
-    @nextcord.slash_command(name="dice_roll", description="Würfel werfen!", guild_ids=[testServerID])
+    @nextcord.slash_command(name="diceroll", description="Würfel werfen!", guild_ids=[testServerID])
     async def dice_roll(self, interaction: Interaction):
         await interaction.send(view=DiceDropdownView(), ephemeral=True)
 
-    @nextcord.slash_command(name="coin_flip", description="Wirf eine Münze!", guild_ids=[testServerID])
+    @nextcord.slash_command(name="coinflip", description="Wirf eine Münze!", guild_ids=[testServerID])
     async def coin_flip(self, interaction: Interaction):
         await interaction.send(view=Coinflip(), ephemeral=True)
 
