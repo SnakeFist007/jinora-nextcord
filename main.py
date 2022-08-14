@@ -1,7 +1,6 @@
 import os
 import env
 import nextcord
-from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 
 # Variables
