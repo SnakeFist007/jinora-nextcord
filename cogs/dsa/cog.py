@@ -1,8 +1,8 @@
 import nextcord
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
-from typing import Optional
 from main import testServerID
+from typing import Optional
 from .dice_dropdown import DiceDropdownView
 from .coinflip_buttons import Coinflip
 
@@ -11,46 +11,74 @@ class DSA(commands.Cog, name="DSA"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    # Dice & Coins
-    @nextcord.slash_command(name="diceroll", description="Würfel werfen!", guild_ids=[testServerID])
+    # Dice commands
+    @nextcord.slash_command(name="dice", description="Verschiedene Würfel-Optionen", guild_ids=[testServerID])
+    async def dice(self, interaction: Interaction):
+        pass
+    
+    @dice.subcommand(name="roll", description="Würfel werfen!")
     async def dice_roll(self, interaction: Interaction):
         await interaction.send(view=DiceDropdownView(), ephemeral=True)
+        
+    @dice.subcommand(name="multi", description="Mehrere Würfel werfen!")
+    async def dice_multiple(self, interaction: Interaction, dice: Optional[str] = SlashOption(name="")):
+        # TODO: Think of a easily extensible dice roll format, parsable by regex
+        pass
+        
+    @dice.subcommand(name="help", description="Mehrere Würfel werfen!")
+    async def dice_multiple(self, interaction: Interaction, dice: Optional[str] = SlashOption(name="")):
+        # TODO: Explain dice roll format
+        pass
+     
+       
+    # Coin-Flip commands
+    @nextcord.slash_command(name="coin", description="Verschiedene Münz-Werf-Optionen", guild_ids=[testServerID])
+    async def coin(self, interaction: Interaction):
+        pass
 
-    @nextcord.slash_command(name="coinflip", description="Wirf eine Münze!", guild_ids=[testServerID])
+    @coin.subcommand(name="flip", description="Wirf eine Münze!")
     async def coin_flip(self, interaction: Interaction):
         await interaction.send(view=Coinflip(), ephemeral=True)
 
 
     # TODO: Character Templates
-    # @nextcord.slash_command(name="get_template", description="Lade das Charakter-Template als PDF herunter.", guild_ids=[testServerID])
-    # async def download_template(self, interaction: Interaction):
-    #     await interaction.response.send_message("In developement!", ephemeral=True)
+    @nextcord.slash_command(name="template", description="Charakter-Templates & mehr!", guild_ids=[testServerID])
+    async def template(self, interaction: Interaction):
+        pass
+        
+    @template.subcommand(name="get_template", description="Lade das Charakter-Template als PDF herunter.")
+    async def template_download(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
 
-    # @nextcord.slash_command(name="import", description="Importiere einen Charakter per PDF.", guild_ids=[testServerID])
-    # async def import_template(self, interaction: Interaction):
-    #     await interaction.response.send_message("In developement!", ephemeral=True)
+    @template.subcommand(name="import", description="Importiere einen Charakter per PDF.")
+    async def template_import(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
 
-    # @nextcord.slash_command(name="export", description="Exportiere einen Charakter als PDF.", guild_ids=[testServerID])
-    # async def export_template(self, interaction: Interaction):
-    #     await interaction.response.send_message("In developement!", ephemeral=True)
+    @template.subcommand(name="export", description="Exportiere einen Charakter als PDF.")
+    async def template_export(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
 
 
     # TODO: Character Editors
-    # @nextcord.slash_command(name="list_chars", description="Zeigt alle gespeicherten Charaktere an.", guild_ids=[testServerID])
-    # async def show_chars(self, interaction: Interaction):
-    #     await interaction.response.send_message("In developement!", ephemeral=True)
+    @nextcord.slash_command(name="character", description="Charakter-Optionen!", guild_ids=[testServerID])
+    async def character(self, interaction: Interaction):
+        pass
+           
+    @character.subcommand(name="list", description="Zeigt alle gespeicherten Charaktere an.")
+    async def chars_list(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
 
-    # @nextcord.slash_command(name="edit_char", description="Bearbeitet einen gespeicherten Charakter.", guild_ids=[testServerID])
-    # async def edit_char(self, interaction: Interaction):
-    #     await interaction.response.send_message("In developement!", ephemeral=True)
+    @character.subcommand(name="edit", description="Bearbeitet einen gespeicherten Charakter.")
+    async def char_edit(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
     
-    # @nextcord.slash_command(name="del_char", description="Löscht einen ausgewählten Charakter.", guild_ids=[testServerID])
-    # async def delete_char(self, interaction: Interaction):
-    #     await interaction.response.send_message("In developement!", ephemeral=True)
+    @character.subcommand(name="delete", description="Löscht einen ausgewählten Charakter.")
+    async def char_del(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
 
-    # @nextcord.slash_command(name="reset_chars", description="Löscht ALLE gespeicherten Charaktere!", guild_ids=[testServerID])
-    # async def delete_all_chars(self, interaction: Interaction):
-    #     await interaction.response.send_message("In developement!", ephemeral=True)
+    @character.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
+    async def char_del_all(self, interaction: Interaction):
+        await interaction.response.send_message("In developement!", ephemeral=True)
 
 
 # Add Cog to bot
