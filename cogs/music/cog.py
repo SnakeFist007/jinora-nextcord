@@ -12,32 +12,33 @@ class Music(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         bot.loop.create_task(self.node_connect())
-
+                
     async def node_connect(self):
         default_server = 2
         backup_server = 1
+        
+        # Load json file with login data
         music_json = "database/db_lavalink.json"
-
         with open(music_json) as f:
             data = json.load(f)
-        
+               
+        # Wait until the bot is ready
         await self.bot.wait_until_ready()
 
+        # TODO: Replace with proper loop
         # Try to connect to primary server
         try:
             server = "server_" + str(default_server)
-        
             await wavelink.NodePool.create_node(
-                bot=self.bot, 
-                host=data[server]["host"], 
-                port=data[server]["port"], 
-                password=data[server]["password"], 
-                https=data[server]["https"])
+                    bot=self.bot, 
+                    host=data[server]["host"], 
+                    port=data[server]["port"], 
+                    password=data[server]["password"], 
+                    https=data[server]["https"])
 
-        # Use backup server if it fails
+        # Use backup server if primary not available
         except:
             server = "server_" + str(backup_server)
-        
             await wavelink.NodePool.create_node(
                 bot=self.bot, 
                 host=data[server]["host"], 
@@ -45,12 +46,9 @@ class Music(commands.Cog):
                 password=data[server]["password"], 
                 https=data[server]["https"])
 
-
-    # Events
     @commands.Cog.listener()
     async def on_wavelink_node_ready(self, node: wavelink.Node):
         print(f"\tMusic-Mode #{node.identifier} is ready!\n")
-
 
     @commands.Cog.listener()
     async def on_wavelink_track_end(self, player: wavelink.Player, track: wavelink.Track, reason):
@@ -68,7 +66,7 @@ class Music(commands.Cog):
             return await vc.disconnect()
 
 
-    # PLAY NEW VIDEO
+    # Slash Command: Play YouTube video (either through URL or search term)
     @nextcord.slash_command(name="play", description="Spielt ein YouTube Video ab", guild_ids=[testServerID])
     async def play(self, interaction: Interaction, search: str = SlashOption(description="Video URL or name")):
         video = await wavelink.YouTubeTrack.search(query=search, return_first=True)
@@ -97,9 +95,10 @@ class Music(commands.Cog):
         vc.interaction = interaction
         setattr(vc, "loop", False)
 
-    # CONTEXT MENU PLAY        
+    # Context Menu Command: Play YouTube video through URL in message. ONLY WORKS WITH PURE URL MESSAGES!!!    
     @nextcord.message_command(name="Mit Lene abspielen")
-    async def play_context(self, interaction: Interaction, message):        
+    async def play_context(self, interaction: Interaction, message):
+        # Check if message just contains a valid URL        
         if validators.url(message.content):
             video = await wavelink.YouTubeTrack.search(query=message.content, return_first=True)
             
@@ -109,8 +108,10 @@ class Music(commands.Cog):
                 else:
                     vc: wavelink.Player = interaction.guild.voice_client
 
+            # Catch excpetion if user is not connected to a channel
             except AttributeError:
                 return await interaction.response.send_message("Tritt zuerst einem Sprachkanal bei!", ephemeral=True)
+
 
             if vc.queue.is_empty and not vc.is_playing():
                 await vc.play(video)
@@ -124,14 +125,17 @@ class Music(commands.Cog):
                 await vc.queue.put_wait(video)
                 await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
 
+            # Clear loop state
+            await interaction.message.clear_reaction(emoji="🔁")
             vc.interaction = interaction
             setattr(vc, "loop", False)
             
+        # Give error if theres text / invalid URL in the message
         else:
-            await interaction.response.send_message("Bitte eine Nachricht auswählen, die nur eine URL beinhält!", ephemeral=True)
+            await interaction.response.send_message("Bitte eine Nachricht auswählen, die **nur** eine __gültige__ URL beinhält!", ephemeral=True)
 
 
-    # DISCONNECT (RESET-COMMAND)
+    # Slash Command: Resets the bot, should there be an error / control-panel not showing up
     @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots", guild_ids=[testServerID])
     @application_checks.has_permissions(moderate_members=True)
     async def music_reset(self, interaction: Interaction):
@@ -140,9 +144,11 @@ class Music(commands.Cog):
 
         else:
             vc: wavelink.Player = interaction.guild.voice_client
+            # Clear queue, stop playback and disconnect the bot
+            vc.queue.clear()
             await vc.stop()
-            await vc.disconnect()  
-            await interaction.response.send_message("Setze Bot zurück!", ephemeral=True)                                                                                                 
+            await vc.disconnect()
+            await interaction.response.send_message("Setze die Wiedergabe zurück!", ephemeral=True)                                                                                             
             
 
 # Add Cog to bot

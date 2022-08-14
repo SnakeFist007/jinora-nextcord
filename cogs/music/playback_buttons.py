@@ -44,7 +44,8 @@ class ControlPanel(nextcord.ui.View):
                 await self.vc.resume()
 
             await interaction.response.send_message("Spiele den nächsten Track!", ephemeral=True)
-            
+        
+        # Catch exceptions that aren't really errors, and that just interrupt the commands
         except wavelink.errors.QueueEmpty:
             return await interaction.response.send_message("Die Warteschlange ist leer!", ephemeral=True)
         
@@ -70,6 +71,8 @@ class ControlPanel(nextcord.ui.View):
 
     @nextcord.ui.button(label="Stop", emoji="⏏️", style=nextcord.ButtonStyle.red)
     async def disconnect(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        # Clear queue, stop playback, disconnect the bot & delete the message
+        self.vc.queue.clear()
         await self.vc.stop()
         await self.vc.disconnect()
         await interaction.message.delete()
