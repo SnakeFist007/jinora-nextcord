@@ -47,33 +47,62 @@ class DSA(commands.Cog, name="DSA"):
     @nextcord.slash_command(name="character", description="Charakter-Optionen", guild_ids=[testServerID])
     async def character(self, interaction: Interaction):
         pass
-                 
-    @character.subcommand(name="download", description="Gibt den gespeicherten Charakter aus!")
-    async def chars_download(self, interaction: Interaction):
+    
+    @character.subcommand(name="list", description="Zeigt eine Liste aller gespeicherten Charaktere an!")
+    async def chars_list(self, interaction: Interaction):
         user_id = interaction.user.id
         path = f"database/characters/{user_id}"
+        dir_list = os.listdir(path)
+        count = 0
+        
+        em = nextcord.Embed(title="Gespeicherte Charaktere")
+        
+        for entry in dir_list:
+            count += 1
+            em.add_field(name=f"**#{count}**", value=f"{entry}", inline=False)
+            
+        return await interaction.response.send_message(embed=em, ephemeral=True)
+
+
+    @character.subcommand(name="download", description="Gibt den ausgewählten Charakter als Datei aus!")
+    async def chars_download(self, interaction: Interaction, character: Optional[str] = SlashOption()):
+        user_id = interaction.user.id
+        path = f"database/characters/{user_id}/{character}.json"
         
         if os.path.exists(path):
-            file = nextcord.File(f"{path}/{str(user_id)}")
-            await interaction.response.send_message("Dein gespeicherter Charakter!", file=file, ephemeral=True) 
+            file = nextcord.File(path)
+            await interaction.response.send_message(f"Dein gespeicherter Charakter: {character}!", file=file, ephemeral=True) 
                          
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
     
+    
+    @character.subcommand(name="delete", description="Löscht den ausgewählten Charakter!")
+    async def char_del(self, interaction: Interaction, character: Optional[str] = SlashOption()):
+        user_id = interaction.user.id
+        path = f"database/characters/{user_id}"
+        file = f"{path}/{character}.json"
+        
+        if os.path.exists(path):
+            if os.path.exists(file):
+                os.remove(file)
+                await interaction.response.send_message(f"{character} gelöscht!", ephemeral=True)
+                
+            else:
+                await interaction.response.send_message("Keinen Charakter gefunden!", ephemeral=True)              
+        else:
+            await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
+    
 
-    @character.subcommand(name="delete", description="Löscht den gespeicherten Charakter!")
-    async def char_del(self, interaction: Interaction):
+    @character.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
+    async def char_del_all(self, interaction: Interaction):
         user_id = interaction.user.id
         path = f"database/characters/{user_id}"  
         
         if os.path.exists(path):
-            json_data = self.load_json()
-            
             shutil.rmtree(path, ignore_errors=True)
-            json_data.pop(str(user_id))
-            self.save_json(json_data)
-            
-            await interaction.response.send_message("Alle gespeicherten Charaktere gelöscht!", ephemeral=True)               
+            await interaction.response.send_message("Alle gespeicherten Charaktere gelöscht!", ephemeral=True)    
+                       
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
         
