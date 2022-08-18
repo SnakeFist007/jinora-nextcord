@@ -1,4 +1,3 @@
-from genericpath import isfile
 import nextcord
 import os
 import shutil
@@ -9,7 +8,6 @@ from main import testServerID
 from typing import Optional
 from .dice_dropdown import DiceDropdownView
 from .coinflip_buttons import Coinflip
-from .character_dropdown import DelCharDropdownView, DownloadCharDropdownView
 
 # Initialize Cog
 class DSA(commands.Cog, name="DSA"):
