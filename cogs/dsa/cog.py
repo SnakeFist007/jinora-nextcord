@@ -1,7 +1,6 @@
 import nextcord
 import os
 import shutil
-import json
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from main import testServerID
@@ -14,24 +13,6 @@ class DSA(commands.Cog, name="DSA"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         
-    def load_json(self):
-        try:
-            with open("database/characters/db_characters.json", "r") as f:
-                data = json.load(f)     
-        except FileNotFoundError:
-            data = {}
-            
-        return data
-        
-    def save_json(self, data):       
-        with open("database/characters/db_characters.json", "w+") as f:
-            json.dump(data, f, indent=4)
-    
-    # TODO: Read Optolith json-files and use the character name to save the char with file & real name
-    def optolith_read(self, data):
-        pass
-
-
     # Dice commands
     @nextcord.slash_command(name="dice", description="Verschiedene Würfel-Optionen", guild_ids=[testServerID])
     async def dice(self, interaction: Interaction):
@@ -70,12 +51,10 @@ class DSA(commands.Cog, name="DSA"):
     @character.subcommand(name="download", description="Gibt den gespeicherten Charakter aus!")
     async def chars_download(self, interaction: Interaction):
         user_id = interaction.user.id
-       
         path = f"database/characters/{user_id}"
         
         if os.path.exists(path):
-            json_data = self.load_json()
-            file = nextcord.File(f"{path}/{json_data[str(user_id)]}")
+            file = nextcord.File(f"{path}/{str(user_id)}")
             await interaction.response.send_message("Dein gespeicherter Charakter!", file=file, ephemeral=True) 
                          
         else:
@@ -102,19 +81,17 @@ class DSA(commands.Cog, name="DSA"):
     @nextcord.message_command(name="Charakter speichern")
     async def char_add(self, interaction: Interaction, message):
         user_id = interaction.user.id
-        json_data = self.load_json()
         
+        # FIXME: Newly posted messages will return an empty list too, despite having an attachement
         if not str(message.attachments) == "[]":
             # Get the filename
             split_msg = str(message.attachments).split("filename='")[1]
             filename = str(split_msg).split("' ")[0]
-            
+                       
             if filename.endswith(".json"):              
                 if os.path.exists(f"database/characters/{user_id}"):
                     # File will be overwritten, should it already exist
                     await message.attachments[0].save(fp=f"database/characters/{user_id}/{filename}")
-                    json_data[f"{str(user_id)}"] = f"{filename}"
-                    self.save_json(json_data)
                                         
                     if os.path.exists(f"database/characters/{user_id}/{filename}"):
                         await interaction.response.send_message("Bestehenden Charakter erfolgreich überschrieben!", ephemeral=True)
@@ -123,10 +100,7 @@ class DSA(commands.Cog, name="DSA"):
                         
                 else:
                     os.mkdir(f"database/characters/{user_id}")
-                    await message.attachments[0].save(fp=f"database/characters/{user_id}/{filename}")
-                    json_data[f"{str(user_id)}"] = f"{filename}"
-                    self.save_json(json_data)
-                    
+                    await message.attachments[0].save(fp=f"database/characters/{user_id}/{filename}")       
                     await interaction.response.send_message("Charakter erfolgreich abgespeichert!", ephemeral=True)
             else:
                 await interaction.response.send_message("Falsches Format. Bitte nutze eine JSON-Datei!", ephemeral=True)
