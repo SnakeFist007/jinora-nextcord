@@ -28,6 +28,11 @@ class DSA(commands.Cog, name="DSA"):
     def save_json(self, data):       
         with open("database/characters/db_characters.json", "w+") as f:
             json.dump(data, f, indent=4)
+    
+    # TODO: Read Optolith json-files and use the character name to save the char with file & real name
+    def optolith_read(self, data):
+        pass
+
 
     # Dice commands
     @nextcord.slash_command(name="dice", description="Verschiedene Würfel-Optionen", guild_ids=[testServerID])
