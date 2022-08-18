@@ -5,6 +5,7 @@ from main import testServerID
 from typing import Optional
 from .dice_dropdown import DiceDropdownView
 from .coinflip_buttons import Coinflip
+from .character_dropdown import DelCharDropdownView, DownloadCharDropdownView
 
 # Initialize Cog
 class DSA(commands.Cog, name="DSA"):
@@ -41,44 +42,35 @@ class DSA(commands.Cog, name="DSA"):
         await interaction.send(view=Coinflip(), ephemeral=True)
 
 
-    # TODO: Character Templates
-    @nextcord.slash_command(name="template", description="Charakter-Templates & mehr!", guild_ids=[testServerID])
-    async def template(self, interaction: Interaction):
-        pass
-        
-    @template.subcommand(name="get_template", description="Lade das Charakter-Template als PDF herunter.")
-    async def template_download(self, interaction: Interaction):
-        await interaction.response.send_message("In developement!", ephemeral=True)
-
-    @template.subcommand(name="import", description="Importiere einen Charakter per PDF.")
-    async def template_import(self, interaction: Interaction):
-        await interaction.response.send_message("In developement!", ephemeral=True)
-
-    @template.subcommand(name="export", description="Exportiere einen Charakter als PDF.")
-    async def template_export(self, interaction: Interaction):
-        await interaction.response.send_message("In developement!", ephemeral=True)
-
-
-    # TODO: Character Editors
+    # Character Editors
     @nextcord.slash_command(name="character", description="Charakter-Optionen!", guild_ids=[testServerID])
     async def character(self, interaction: Interaction):
+        pass
+    
+    @character.subcommand(name="add", description="Fügt einen mit Optolith erstellten Charakter hinzu.")
+    async def char_add(self, interaction: Interaction):
+        await interaction.response.send_message("Bitte nutze Optolith um einen Charakter zu erstellen und lade anschließend die JSON-Datei als Antwort auf diese Nachricht hoch!", ephemeral=True)
+        # TODO: Implement file upload to bot, check for json file format and optolith formatting
+        # Create new folder for each unique Discord-ID, limit amount of total saved characters to 10, total file size to 8 MB
         pass
            
     @character.subcommand(name="list", description="Zeigt alle gespeicherten Charaktere an.")
     async def chars_list(self, interaction: Interaction):
-        await interaction.response.send_message("In developement!", ephemeral=True)
-
-    @character.subcommand(name="edit", description="Bearbeitet einen gespeicherten Charakter.")
-    async def char_edit(self, interaction: Interaction):
-        await interaction.response.send_message("In developement!", ephemeral=True)
+        # TODO: Show saved characters in an embed
+        pass
+        
+    @character.subcommand(name="download", description="Gibt den gewünschten Charakter als JSON-Datei aus.")
+    async def chars_download(self, interaction: Interaction):
+        await interaction.send(view=DownloadCharDropdownView(), ephemeral=True)
     
     @character.subcommand(name="delete", description="Löscht einen ausgewählten Charakter.")
     async def char_del(self, interaction: Interaction):
-        await interaction.response.send_message("In developement!", ephemeral=True)
+        await interaction.send(view=DelCharDropdownView(), ephemeral=True)
 
     @character.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
     async def char_del_all(self, interaction: Interaction):
-        await interaction.response.send_message("In developement!", ephemeral=True)
+        # TODO: Clear all saved characters
+        pass
 
 
 # Add Cog to bot
