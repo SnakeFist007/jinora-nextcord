@@ -11,7 +11,7 @@ The purpose of this bot is to assist with some needed things to have a DSA sessi
 ## Needed Python modules
 To install all needed modules, run:
 ```
-pip install nextcord wavelink typing validators requests
+pip install nextcord wavelink typing validators
 ```
 
 
