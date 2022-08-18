@@ -50,6 +50,26 @@ class DSA(commands.Cog, name="DSA"):
     @character.subcommand(name="add", description="Fügt einen mit Optolith erstellten Charakter hinzu.")
     async def char_add(self, interaction: Interaction):
         await interaction.response.send_message("Bitte nutze Optolith um einen Charakter zu erstellen und lade anschließend die JSON-Datei als Antwort auf diese Nachricht hoch!", ephemeral=True)
+        
+        def check(m: nextcord.Message):
+            return m.user.id == interaction.user.id and m.channel.id == interaction.channel.id 
+
+        reply = await self.bot.wait_for("message", check=check)
+        
+        if not str(reply.attachments) == "[]":
+            # Get the filename
+            split_v1 = str(reply.attachments).split("filename='")[1]
+            filename = str(split_v1).split("' ")[0]
+            
+            if filename.endswith(".json"):
+                await reply.attachments[0].save(fp=f"database/characters/{reply.user.id}/{filename}")
+                
+            else:
+                await interaction.response.send_message("Falsches Format. Bitte sende mir eine JSON-Datei!", ephemeral=True)
+        else:
+            await interaction.response.send_message("Bitte sende mir eine JSON-Datei als Anhang!", ephemeral=True)
+            
+        
         # TODO: Implement file upload to bot, check for json file format and optolith formatting
         # Create new folder for each unique Discord-ID, limit amount of total saved characters to 10, total file size to 8 MB
         # Place JSON inside Unique-ID folder and add name to the db_characters.json
