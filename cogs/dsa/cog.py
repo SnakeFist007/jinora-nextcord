@@ -2,6 +2,7 @@ from genericpath import isfile
 import nextcord
 import os
 import shutil
+import json
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from main import testServerID
@@ -14,6 +15,19 @@ from .character_dropdown import DelCharDropdownView, DownloadCharDropdownView
 class DSA(commands.Cog, name="DSA"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        
+    def load_json(self):
+        try:
+            with open("database/characters/db_characters.json", "r") as f:
+                data = json.load(f)     
+        except FileNotFoundError:
+            data = {}
+            
+        return data
+        
+    def save_json(self, data):       
+        with open("database/characters/db_characters.json", "w+") as f:
+            json.dump(data, f, indent=4)
 
     # Dice commands
     @nextcord.slash_command(name="dice", description="Verschiedene Würfel-Optionen", guild_ids=[testServerID])
@@ -46,31 +60,38 @@ class DSA(commands.Cog, name="DSA"):
 
 
     # Character Editors
-    @nextcord.slash_command(name="character", description="Charakter-Optionen!", guild_ids=[testServerID])
+    @nextcord.slash_command(name="character", description="Charakter-Optionen", guild_ids=[testServerID])
     async def character(self, interaction: Interaction):
         pass
-         
-    @character.subcommand(name="list", description="Zeigt alle gespeicherten Charaktere an.")
-    async def chars_list(self, interaction: Interaction):
-        # TODO: Show saved characters in an embed
-        pass
-        
-    @character.subcommand(name="download", description="Gibt den gewünschten Charakter als JSON-Datei aus.")
+                 
+    @character.subcommand(name="download", description="Gibt den gespeicherten Charakter aus!")
     async def chars_download(self, interaction: Interaction):
-        await interaction.send(view=DownloadCharDropdownView(), ephemeral=True)
-    
-    @character.subcommand(name="delete", description="Löscht einen ausgewählten Charakter.")
-    async def char_del(self, interaction: Interaction):
-        await interaction.send(view=DelCharDropdownView(), ephemeral=True)
-
-    @character.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
-    async def char_del_all(self, interaction: Interaction):
         user_id = interaction.user.id
+       
         path = f"database/characters/{user_id}"
         
         if os.path.exists(path):
+            json_data = self.load_json()
+            file = nextcord.File(f"{path}/{json_data[str(user_id)]}")
+            await interaction.response.send_message("Dein gespeicherter Charakter!", file=file, ephemeral=True) 
+                         
+        else:
+            await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
+    
+
+    @character.subcommand(name="delete", description="Löscht den gespeicherten Charakter!")
+    async def char_del(self, interaction: Interaction):
+        user_id = interaction.user.id
+        path = f"database/characters/{user_id}"  
+        
+        if os.path.exists(path):
+            json_data = self.load_json()
+            
             shutil.rmtree(path, ignore_errors=True)
-            await interaction.response.send_message("Alle gespeicherten Charaktere gelöscht!", ephemeral=True)      
+            json_data.pop(str(user_id))
+            self.save_json(json_data)
+            
+            await interaction.response.send_message("Alle gespeicherten Charaktere gelöscht!", ephemeral=True)               
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
         
@@ -78,16 +99,20 @@ class DSA(commands.Cog, name="DSA"):
     @nextcord.message_command(name="Charakter speichern")
     async def char_add(self, interaction: Interaction, message):
         user_id = interaction.user.id
+        json_data = self.load_json()
         
         if not str(message.attachments) == "[]":
             # Get the filename
             split_msg = str(message.attachments).split("filename='")[1]
             filename = str(split_msg).split("' ")[0]
             
-            if filename.endswith(".json"):
+            if filename.endswith(".json"):              
                 if os.path.exists(f"database/characters/{user_id}"):
                     # File will be overwritten, should it already exist
                     await message.attachments[0].save(fp=f"database/characters/{user_id}/{filename}")
+                    json_data[f"{str(user_id)}"] = f"{filename}"
+                    self.save_json(json_data)
+                                        
                     if os.path.exists(f"database/characters/{user_id}/{filename}"):
                         await interaction.response.send_message("Bestehenden Charakter erfolgreich überschrieben!", ephemeral=True)
                     else:
@@ -96,6 +121,9 @@ class DSA(commands.Cog, name="DSA"):
                 else:
                     os.mkdir(f"database/characters/{user_id}")
                     await message.attachments[0].save(fp=f"database/characters/{user_id}/{filename}")
+                    json_data[f"{str(user_id)}"] = f"{filename}"
+                    self.save_json(json_data)
+                    
                     await interaction.response.send_message("Charakter erfolgreich abgespeichert!", ephemeral=True)
             else:
                 await interaction.response.send_message("Falsches Format. Bitte nutze eine JSON-Datei!", ephemeral=True)
