@@ -52,6 +52,7 @@ class DSA(commands.Cog, name="DSA"):
         await interaction.response.send_message("Bitte nutze Optolith um einen Charakter zu erstellen und lade anschließend die JSON-Datei als Antwort auf diese Nachricht hoch!", ephemeral=True)
         # TODO: Implement file upload to bot, check for json file format and optolith formatting
         # Create new folder for each unique Discord-ID, limit amount of total saved characters to 10, total file size to 8 MB
+        # Place JSON inside Unique-ID folder and add name to the db_characters.json
         pass
            
     @character.subcommand(name="list", description="Zeigt alle gespeicherten Charaktere an.")
