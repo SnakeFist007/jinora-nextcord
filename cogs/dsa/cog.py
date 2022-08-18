@@ -49,11 +49,7 @@ class DSA(commands.Cog, name="DSA"):
     @nextcord.slash_command(name="character", description="Charakter-Optionen!", guild_ids=[testServerID])
     async def character(self, interaction: Interaction):
         pass
-    
-    @character.subcommand(name="add", description="Fügt einen mit Optolith erstellten Charakter hinzu.")
-    async def char_add_info(self, interaction: Interaction, message):
-        await interaction.response.send_message("Bitte nutze das Kontextmenü zum hinzufügen von Charakteren!", ephemeral=True)
-     
+         
     @character.subcommand(name="list", description="Zeigt alle gespeicherten Charaktere an.")
     async def chars_list(self, interaction: Interaction):
         # TODO: Show saved characters in an embed
@@ -79,7 +75,7 @@ class DSA(commands.Cog, name="DSA"):
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
         
 
-    @nextcord.message_command(name="Charakter speichern (JSON)")
+    @nextcord.message_command(name="Charakter speichern")
     async def char_add(self, interaction: Interaction, message):
         user_id = interaction.user.id
         
