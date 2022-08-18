@@ -1,6 +1,7 @@
 from genericpath import isfile
 import nextcord
 import os
+import shutil
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from main import testServerID
@@ -72,11 +73,7 @@ class DSA(commands.Cog, name="DSA"):
         path = f"database/characters/{user_id}"
         
         if os.path.exists(path):
-            for file in os.listdir(path):
-                filename = path + file
-                if os.path.isfile(filename):
-                    os.remove(file)
-            os.rmdir(path)
+            shutil.rmtree(path, ignore_errors=True)
             await interaction.response.send_message("Alle gespeicherten Charaktere gelöscht!", ephemeral=True)      
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
