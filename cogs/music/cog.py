@@ -14,6 +14,13 @@ class Music(commands.Cog):
         bot.loop.create_task(self.node_connect())
                 
     async def node_connect(self):
+        async def try_connect_wavelink(server_data):
+            await wavelink.NodePool.create_node(
+                    bot=self.bot, 
+                    host=data[server_data]["host"], 
+                    port=data[server_data]["port"], 
+                    password=data[server_data]["password"], 
+                    https=data[server_data]["https"])
         default_server = 2
         backup_server = 1
         
@@ -22,29 +29,19 @@ class Music(commands.Cog):
         with open(music_json) as f:
             data = json.load(f)
                
-        # Wait until the bot is ready
+        # Wait until the bot is ready, then proceed
         await self.bot.wait_until_ready()
-
-        # TODO: Replace with proper loop
+  
         # Try to connect to primary server
         try:
             server = "server_" + str(default_server)
-            await wavelink.NodePool.create_node(
-                    bot=self.bot, 
-                    host=data[server]["host"], 
-                    port=data[server]["port"], 
-                    password=data[server]["password"], 
-                    https=data[server]["https"])
+            try_connect_wavelink(server)
 
         # Use backup server if primary not available
         except:
             server = "server_" + str(backup_server)
-            await wavelink.NodePool.create_node(
-                bot=self.bot, 
-                host=data[server]["host"], 
-                port=data[server]["port"], 
-                password=data[server]["password"], 
-                https=data[server]["https"])
+            try_connect_wavelink(server)
+
 
     @commands.Cog.listener()
     async def on_wavelink_node_ready(self, node: wavelink.Node):

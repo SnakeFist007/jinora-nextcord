@@ -16,8 +16,10 @@ class Fortune(commands.Cog, name="Fortune"):
         
         with open(fortune_cookies, encoding="utf-8") as f:
             lines = json.load(f)
-            
-        rand_int = random.randint(1,22) # FIXME: Make dynamic, get index of last JSON entry
+        
+        length = len(lines[0])
+        
+        rand_int = random.randint(1, length)
         output = lines[str(rand_int)]
 
         await interaction.response.send_message(f"{output}", ephemeral=True)
@@ -30,7 +32,9 @@ class Fortune(commands.Cog, name="Fortune"):
         with open(eight_ball_answers, encoding="utf-8") as f:
             lines = json.load(f)
             
-        rand_int = random.randint(1,20) # FIXME: Make dynamic, get index of last JSON entry
+        length = len(lines[0])
+            
+        rand_int = random.randint(1, length)
         output = lines[str(rand_int)]
 
         await interaction.response.send_message(f"{output}", ephemeral=True)
