@@ -35,12 +35,12 @@ class Music(commands.Cog):
         # Try to connect to primary server
         try:
             server = "server_" + str(default_server)
-            try_connect_wavelink(server)
+            await try_connect_wavelink(server)
 
         # Use backup server if primary not available
         except:
             server = "server_" + str(backup_server)
-            try_connect_wavelink(server)
+            await try_connect_wavelink(server)
 
 
     @commands.Cog.listener()
