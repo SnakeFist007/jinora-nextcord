@@ -27,11 +27,12 @@ class DSA(commands.Cog, name="DSA"):
     @dice.subcommand(name="multi", description="Mehrere Würfel werfen!")
     async def dice_multiple(self, interaction: Interaction, dice: Optional[str] = SlashOption(name="")):
         # TODO: Think of a easily extensible dice roll format, parsable by regex
-        def roll(match):
-            a,b = match.group(1).split('d')
-            return str(random.randint(int(a), int(a)*int(b)))
+        pass
+        # def roll(match):
+        #     a,b = match.group(1).split('d')
+        #     return str(random.randint(int(a), int(a)*int(b)))
 
-        re.sub('(\d+d\d+)', roll, dice)
+        # re.sub('(\d+d\d+)', roll, dice)
         
        
     # Coin-Flip commands
