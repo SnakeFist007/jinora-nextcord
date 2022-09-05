@@ -12,7 +12,8 @@ class Music(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         bot.loop.create_task(self.node_connect())
-                
+    
+    # Connect to wavelink server, to be able to playback YouTube videos (2 servers configured)            
     async def node_connect(self):
         async def try_connect_wavelink(server_data):
             await wavelink.NodePool.create_node(
@@ -36,7 +37,6 @@ class Music(commands.Cog):
         try:
             server = "server_" + str(default_server)
             await try_connect_wavelink(server)
-
         # Use backup server if primary not available
         except:
             server = "server_" + str(backup_server)
@@ -47,6 +47,7 @@ class Music(commands.Cog):
     async def on_wavelink_node_ready(self, node: wavelink.Node):
         print(f"\tMusic-Mode #{node.identifier} is ready!\n")
 
+    # Queue handeling: Disconnect if empty, else play the next song
     @commands.Cog.listener()
     async def on_wavelink_track_end(self, player: wavelink.Player, track: wavelink.Track, reason):
         interaction = player.interaction
@@ -92,7 +93,7 @@ class Music(commands.Cog):
         vc.interaction = interaction
         setattr(vc, "loop", False)
 
-    # Context Menu Command: Play YouTube video through URL in message. ONLY WORKS WITH PURE URL MESSAGES!!!    
+    # Context Menu Command: Play YouTube video through URL in message. ONLY WORKS WITH PURE URL MESSAGES!    
     @nextcord.message_command(name="Mit Lene abspielen")
     async def play_context(self, interaction: Interaction, message):
         # Check if message just contains a valid URL        
@@ -132,7 +133,7 @@ class Music(commands.Cog):
             await interaction.response.send_message("Bitte eine Nachricht auswählen, die **nur** eine __gültige__ URL beinhält!", ephemeral=True)
 
 
-    # Slash Command: Resets the bot, should there be an error / control-panel not showing up
+    # Slash Command: Resets the bot, should there be any error / control-panel not showing up
     @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots", guild_ids=[testServerID])
     @application_checks.has_permissions(moderate_members=True)
     async def music_reset(self, interaction: Interaction):

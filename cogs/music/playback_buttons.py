@@ -8,7 +8,7 @@ class ControlPanel(nextcord.ui.View):
         self.vc = vc
         self.ctx = interaction
     
-
+    # Button Command: Toggle playback for currently playing track
     @nextcord.ui.button(label="Play/Pause", emoji="⏯️", style=nextcord.ButtonStyle.blurple)
     async def resume_and_pause(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
         if self.vc.is_paused():
@@ -19,6 +19,7 @@ class ControlPanel(nextcord.ui.View):
             await interaction.message.add_reaction(emoji="⏸️")
 
 
+    # Button Command: Toggle loop state for currently playing track
     @nextcord.ui.button(label="Loop", emoji="🔁", style=nextcord.ButtonStyle.blurple)
     async def loop(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
         try:
@@ -31,6 +32,7 @@ class ControlPanel(nextcord.ui.View):
             setattr(self.vc, "loop", False)
     
 
+    # Button Command: skip current song / end playback entirely if queue is empty
     @nextcord.ui.button(label="Skip", emoji="⏭️", style=nextcord.ButtonStyle.blurple)
     async def skip(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
         if self.vc.queue.is_empty:
@@ -53,6 +55,7 @@ class ControlPanel(nextcord.ui.View):
             pass
     
 
+    # Button Command: show currently queued songs in seperate embed
     @nextcord.ui.button(label="Queue", emoji="#️⃣", style=nextcord.ButtonStyle.blurple)
     async def queue(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):   
         em = nextcord.Embed(title="🐍 Schlange 🐍")
