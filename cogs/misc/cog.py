@@ -14,6 +14,11 @@ class Basics(commands.Cog, name="Misc"):
     @nextcord.slash_command(name="ping", description="Pong!", guild_ids=[testServerID])
     async def ping(self, interaction: Interaction):
         await interaction.send(f"Pong! (`Latency: {round(self.bot.latency * 1000)}ms`)")
+        
+    # Custom help command
+    @nextcord.slash_command(name="help", description="Verweist auf die Hilfe-Seite", guild_ids=[testServerID])
+    async def help(self, interaction: Interaction):
+        await interaction.response.send_message(f"Schau mal unter https://www.google.com/ nach!", ephemeral=True)
     
     # Reminder command (Supported: seconds, months, hours & days)
     @nextcord.slash_command(name="remindme", description="Lass dich an Dinge erinnern!", guild_ids=[testServerID])

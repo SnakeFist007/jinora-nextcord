@@ -1,23 +1,35 @@
 import os
+import logging
 import env
 import nextcord
 from nextcord.ext import commands
 
 # TODO: Add proper logging (save to file / crash-dumps)
 
-# Variables
+## Variables
 token_file = open("token.auth", "r")
 token = token_file.read()
-
-### DEBUG - REMOVE BEFORE PRODUCTIVE RELEASE!!!
-testServerID = env.server_id
 
 # Intents & Bot initialization
 intents = nextcord.Intents.default()
 intents.members = True
-bot = commands.Bot(intents=intents)
+bot = commands.Bot(intents=intents, help_command=None)
 
-# Events
+# Logging
+logger = logging.getLogger("nextcord")
+logger.setLevel(logging.INFO)
+
+handler = logging.FileHandler(filename="lene-nextcord.log", encoding="utf-8", mode="w")
+handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
+
+logger.addHandler(handler)
+
+### DEBUG - REMOVE BEFORE PRODUCTIVE RELEASE!!!
+testServerID = env.server_id
+
+
+## Events
+# Set activity and report online state when ready 
 @bot.event
 async def on_ready():
     print("\n\tLene#2184 is ready!")
@@ -29,18 +41,18 @@ async def on_guild_join(guild):
     print(f"Joined server {guild.id}!")
     for channel in guild.text_channels:
         if channel.permissions_for(guild.me).send_messages:
-            await channel.send("Test message!")
+            await channel.send("Vielen Dank für die Einladung! ")
         break
     # TODO: Add separate server storage (for characters)
 
-# Clean up server directory  
+# Clean up server directory
 @bot.event
 async def on_guild_remove(guild):
     print(f"Left server {guild.id}")
     # TODO: Remove separate server storage (for characters)
 
 
-# Main run function
+## Main run function
 def main():
     # Load extensions
     for folder in os.listdir("cogs"):
