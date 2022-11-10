@@ -10,3 +10,4 @@
 2022-11-10 23:22:45,508:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('remindme', 1, None)
 2022-11-10 23:22:45,785:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('play', 1, None)
 2022-11-10 23:22:46,059:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('reset', 1, None)
+sdsd

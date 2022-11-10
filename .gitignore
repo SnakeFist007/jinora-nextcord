@@ -11,3 +11,4 @@ cogs/dsa/__pycache__/*
 >>>>>>> 51126c4a7dcfdd908a79862fa169744fe07315ed
 *.pyc
 
+*.log
