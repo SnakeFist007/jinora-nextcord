@@ -3,7 +3,6 @@ import json
 import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
-from main import testServerID
 
 # Initialize Cog
 class Fortune(commands.Cog, name="Fortune"):
@@ -12,7 +11,7 @@ class Fortune(commands.Cog, name="Fortune"):
 
     # Get a daily fortune
     # TODO: Return the same fortune for the active day
-    @nextcord.slash_command(name="fortune", description="Sagt dir eine zufällige Weisheit!", guild_ids=[testServerID])
+    @nextcord.slash_command(name="fortune", description="Sagt dir eine zufällige Weisheit!")
     async def fortune_cookie(self, interaction: Interaction):
         fortune_cookies = "database/db_fortune.json"
         
@@ -27,7 +26,7 @@ class Fortune(commands.Cog, name="Fortune"):
         await interaction.response.send_message(f"{output}", ephemeral=True)
 
     # Get an 8-Ball answer for a serious question
-    @nextcord.slash_command(name="8ball", description="Beantwortet dir eine Frage nach bestem Gewissen!", guild_ids=[testServerID])
+    @nextcord.slash_command(name="8ball", description="Beantwortet dir eine Frage nach bestem Gewissen!")
     async def fortune_8ball(self, interaction: Interaction, frage: str = SlashOption(description="Stell deine Frage...")):
         eight_ball_answers = "database/db_8ball.json"
         

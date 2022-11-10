@@ -1,0 +1,12 @@
+2022-11-10 23:22:23,988:INFO:nextcord.client: logging in using static token
+2022-11-10 23:22:24,468:INFO:nextcord.gateway: Shard ID None has sent the IDENTIFY payload.
+2022-11-10 23:22:24,708:INFO:nextcord.gateway: Shard ID None has connected to Gateway: ["gateway-prd-us-east1-b-vzr4",{"micros":113695,"calls":["id_created",{"micros":2972,"calls":[]},"session_lookup_time",{"micros":695,"calls":[]},"session_lookup_finished",{"micros":8,"calls":[]},"discord-sessions-green-prd-2-262",{"micros":109681,"calls":["start_session",{"micros":86618,"calls":["discord-api-6fcb5b78d9-qlnct",{"micros":79347,"calls":["get_user",{"micros":30014},"get_guilds",{"micros":9069},"send_scheduled_deletion_message",{"micros":14},"guild_join_requests",{"micros":2},"authorized_ip_coro",{"micros":23}]}]},"starting_guild_connect",{"micros":48,"calls":[]},"presence_started",{"micros":321,"calls":[]},"guilds_started",{"micros":113,"calls":[]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":22554,"calls":[]},"connect_finished",{"micros":22559,"calls":[]},"build_ready",{"micros":18,"calls":[]},"optimize_ready",{"micros":1,"calls":[]},"split_ready",{"micros":1,"calls":[]},"clean_ready",{"micros":0,"calls":[]}]}]}] (Session ID: 885ebbe70e52444f6c5d7a277bd70ace).
+2022-11-10 23:22:24,942:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('dice', 1, None)
+2022-11-10 23:22:25,172:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('coin', 1, None)
+2022-11-10 23:22:25,483:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('character', 1, None)
+2022-11-10 23:22:25,723:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('fortune', 1, None)
+2022-11-10 23:22:25,990:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('8ball', 1, None)
+2022-11-10 23:22:26,265:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('help', 1, None)
+2022-11-10 23:22:45,508:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('remindme', 1, None)
+2022-11-10 23:22:45,785:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('play', 1, None)
+2022-11-10 23:22:46,059:INFO:nextcord.state: nextcord.ConnectionState: Registering command with signature ('reset', 1, None)

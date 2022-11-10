@@ -4,7 +4,6 @@ from nextcord.ext import commands, application_checks
 import wavelink
 import json
 import validators
-from main import testServerID
 from .playback_buttons import ControlPanel
 
 # Initialize Cog
@@ -65,7 +64,7 @@ class Music(commands.Cog):
 
 
     # Slash Command: Play YouTube video (either through URL or search term)
-    @nextcord.slash_command(name="play", description="Spielt ein YouTube Video ab", guild_ids=[testServerID])
+    @nextcord.slash_command(name="play", description="Spielt ein YouTube Video ab")
     async def play(self, interaction: Interaction, search: str = SlashOption(description="Video URL or name")):
         video = await wavelink.YouTubeTrack.search(query=search, return_first=True)
 
@@ -88,7 +87,7 @@ class Music(commands.Cog):
             
         else:
             await vc.queue.put_wait(video)
-            await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
+            await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!", ephemeral=True)
 
         vc.interaction = interaction
         setattr(vc, "loop", False)
@@ -134,7 +133,7 @@ class Music(commands.Cog):
 
 
     # Slash Command: Resets the bot, should there be any error / control-panel not showing up
-    @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots", guild_ids=[testServerID])
+    @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots")
     @application_checks.has_permissions(moderate_members=True)
     async def music_reset(self, interaction: Interaction):
         if not interaction.guild.voice_client:

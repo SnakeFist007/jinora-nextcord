@@ -5,7 +5,6 @@ import re
 import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
-from main import testServerID
 from typing import Optional
 from .dice_dropdown import DiceDropdownView
 from .coinflip_buttons import Coinflip
@@ -16,7 +15,7 @@ class DSA(commands.Cog, name="DSA"):
         self.bot = bot
         
     # DICE COMMAND HANDLER
-    @nextcord.slash_command(name="dice", description="Verschiedene Würfel-Optionen", guild_ids=[testServerID])
+    @nextcord.slash_command(name="dice", description="Verschiedene Würfel-Optionen")
     async def dice(self, interaction: Interaction):
         pass
     
@@ -38,7 +37,7 @@ class DSA(commands.Cog, name="DSA"):
         
        
     # COIN-FLIP COMMAND HANDLER
-    @nextcord.slash_command(name="coin", description="Verschiedene Münz-Werf-Optionen", guild_ids=[testServerID])
+    @nextcord.slash_command(name="coin", description="Verschiedene Münz-Werf-Optionen")
     async def coin(self, interaction: Interaction):
         pass
 
@@ -49,7 +48,7 @@ class DSA(commands.Cog, name="DSA"):
 
 
     # CHARACTER COMMAND HANDLER
-    @nextcord.slash_command(name="character", description="Charakter-Optionen", guild_ids=[testServerID])
+    @nextcord.slash_command(name="character", description="Charakter-Optionen")
     async def character(self, interaction: Interaction):
         pass
     

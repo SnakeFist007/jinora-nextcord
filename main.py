@@ -1,6 +1,5 @@
 import os
 import logging
-import env
 import nextcord
 from nextcord.ext import commands
 
@@ -23,9 +22,6 @@ handler = logging.FileHandler(filename="lene-nextcord.log", encoding="utf-8", mo
 handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 
 logger.addHandler(handler)
-
-### DEBUG - REMOVE BEFORE PRODUCTIVE RELEASE!!!
-testServerID = env.server_id
 
 
 ## Events

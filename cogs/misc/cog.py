@@ -3,7 +3,6 @@ import asyncio
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
-from main import testServerID
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
@@ -11,17 +10,17 @@ class Basics(commands.Cog, name="Misc"):
         self.bot = bot
 
     # Debug / Test-Command to see how well the bot is doing
-    @nextcord.slash_command(name="ping", description="Pong!", guild_ids=[testServerID])
+    @nextcord.slash_command(name="ping", description="Pong!")
     async def ping(self, interaction: Interaction):
         await interaction.send(f"Pong! (`Latency: {round(self.bot.latency * 1000)}ms`)")
         
     # Custom help command
-    @nextcord.slash_command(name="help", description="Verweist auf die Hilfe-Seite", guild_ids=[testServerID])
+    @nextcord.slash_command(name="help", description="Verweist auf die Hilfe-Seite")
     async def help(self, interaction: Interaction):
         await interaction.response.send_message(f"Schau mal unter https://www.google.com/ nach!", ephemeral=True)
     
     # Reminder command (Supported: seconds, months, hours & days)
-    @nextcord.slash_command(name="remindme", description="Lass dich an Dinge erinnern!", guild_ids=[testServerID])
+    @nextcord.slash_command(name="remindme", description="Lass dich an Dinge erinnern!")
     async def remind(self, interaction: Interaction, message: Optional[str] = SlashOption(), time: Optional[str] = SlashOption()):
         def convert_time(time):
             pos = ["s", "m", "h", "d"]
