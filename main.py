@@ -3,8 +3,6 @@ import logging
 import nextcord
 from nextcord.ext import commands
 
-# TODO: Add proper logging (save to file / crash-dumps)
-
 ## Variables
 token_file = open("token.auth", "r")
 token = token_file.read()
@@ -25,13 +23,13 @@ logger.addHandler(handler)
 
 
 ## Events
-# Set activity and report online state when ready 
+# ON STARTUP:       Set activity and report online state when ready 
 @bot.event
 async def on_ready():
     print("\n\tLene#2184 is ready!")
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
-# Send greeting message & create server directory
+# ON SERVER JOIN:   Send greeting message & create server directory
 @bot.event
 async def on_guild_join(guild):
     print(f"Joined server {guild.id}!")
@@ -41,7 +39,7 @@ async def on_guild_join(guild):
         break
     # TODO: Add separate server storage (for characters)
 
-# Clean up server directory
+# ON SERVER LEAVE:  Clean up server directory
 @bot.event
 async def on_guild_remove(guild):
     print(f"Left server {guild.id}")

@@ -27,8 +27,9 @@ class DSA(commands.Cog, name="DSA"):
     # Slash Command: Throw one or multiple dice after a regex input
     @dice.subcommand(name="multi", description="Mehrere Würfel werfen!")
     async def dice_multiple(self, interaction: Interaction, dice: Optional[str] = SlashOption(name="")):
-        # TODO: Think of a easily extensible dice roll format, parsable by regex
         pass
+    
+        # TODO: Think of a easily extensible dice roll format, parsable by regex
         # def roll(match):
         #     a,b = match.group(1).split('d')
         #     return str(random.randint(int(a), int(a)*int(b)))
@@ -47,14 +48,14 @@ class DSA(commands.Cog, name="DSA"):
         await interaction.send(view=Coinflip(), ephemeral=True)
 
 
-    # CHARACTER COMMAND HANDLER
+    # DSA COMMAND HANDLER
     @nextcord.slash_command(name="character", description="Charakter-Optionen")
-    async def character(self, interaction: Interaction):
+    async def dsa(self, interaction: Interaction):
         pass
     
     # Slash Command: List all saved characters of a user
-    @character.subcommand(name="list", description="Zeigt eine Liste aller gespeicherten Charaktere an!")
-    async def chars_list(self, interaction: Interaction):
+    @dsa.subcommand(name="list", description="Zeigt eine Liste aller gespeicherten Charaktere an!")
+    async def dsa_chars_list(self, interaction: Interaction):
         user_id = interaction.user.id
         path = f"database/characters/{user_id}"
         dir_list = os.listdir(path)
@@ -69,8 +70,8 @@ class DSA(commands.Cog, name="DSA"):
         return await interaction.response.send_message(embed=em, ephemeral=True)
 
     # Slash Command: Send json-file of a saved character as a Discord message to the user
-    @character.subcommand(name="download", description="Gibt den ausgewählten Charakter als Datei aus!")
-    async def chars_download(self, interaction: Interaction, character: Optional[str] = SlashOption()):
+    @dsa.subcommand(name="download", description="Gibt den ausgewählten Charakter als Datei aus!")
+    async def dsa_chars_download(self, interaction: Interaction, character: Optional[str] = SlashOption()):
         user_id = interaction.user.id
         path = f"database/characters/{user_id}/{character}.json"
         
@@ -82,8 +83,8 @@ class DSA(commands.Cog, name="DSA"):
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
     
     # Slash Command: Delete a selected character of the user (optimally with dropdown menu)
-    @character.subcommand(name="delete", description="Löscht den ausgewählten Charakter!")
-    async def char_del(self, interaction: Interaction, character: Optional[str] = SlashOption()):
+    @dsa.subcommand(name="delete", description="Löscht den ausgewählten Charakter!")
+    async def dsa_char_del(self, interaction: Interaction, character: Optional[str] = SlashOption()):
         user_id = interaction.user.id
         path = f"database/characters/{user_id}"
         file = f"{path}/{character}.json"
@@ -99,8 +100,8 @@ class DSA(commands.Cog, name="DSA"):
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
     
     # Slash Command: Delete all saved characters for the user
-    @character.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
-    async def char_del_all(self, interaction: Interaction):
+    @dsa.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
+    async def dsa_char_delAll(self, interaction: Interaction):
         user_id = interaction.user.id
         path = f"database/characters/{user_id}"  
         
@@ -112,7 +113,7 @@ class DSA(commands.Cog, name="DSA"):
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
         
     # Context Menu Command: Save json file from sent message (grab attachement)
-    @nextcord.message_command(name="Charakter speichern")
+    @nextcord.message_command(name="DSA-Charakter speichern")
     async def char_add(self, interaction: Interaction, message):
         user_id = interaction.user.id
         # FIXME: Newly posted messages will return an empty list too, despite having an attachement

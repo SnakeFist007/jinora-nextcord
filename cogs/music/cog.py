@@ -62,10 +62,15 @@ class Music(commands.Cog):
         except wavelink.errors.QueueEmpty:
             return await vc.disconnect()
 
-
+    
+    # MUSIC COMMAND HANDLER
+    @nextcord.slash_command(name="music", description="Verschiedene Musik-Optionen")
+    async def music(self, interaction: Interaction):
+        pass
+    
     # Slash Command: Play YouTube video (either through URL or search term)
-    @nextcord.slash_command(name="play", description="Spielt ein YouTube Video ab")
-    async def play(self, interaction: Interaction, search: str = SlashOption(description="Video URL or name")):
+    @music.subcommand(name="play", description="Spielt ein YouTube Video ab")
+    async def music_play(self, interaction: Interaction, search: str = SlashOption(description="Video URL or name")):
         video = await wavelink.YouTubeTrack.search(query=search, return_first=True)
 
         try:            
@@ -94,7 +99,7 @@ class Music(commands.Cog):
 
     # Context Menu Command: Play YouTube video through URL in message. ONLY WORKS WITH PURE URL MESSAGES!    
     @nextcord.message_command(name="Mit Lene abspielen")
-    async def play_context(self, interaction: Interaction, message):
+    async def context_play(self, interaction: Interaction, message):
         # Check if message just contains a valid URL        
         if validators.url(message.content):
             video = await wavelink.YouTubeTrack.search(query=message.content, return_first=True)
@@ -133,7 +138,7 @@ class Music(commands.Cog):
 
 
     # Slash Command: Resets the bot, should there be any error / control-panel not showing up
-    @nextcord.slash_command(name="reset", description="Trennt die Verbindung des Bots")
+    @music.subcommand(name="reset", description="Trennt die Verbindung des Bots")
     @application_checks.has_permissions(moderate_members=True)
     async def music_reset(self, interaction: Interaction):
         if not interaction.guild.voice_client:

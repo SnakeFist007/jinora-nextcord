@@ -5,13 +5,12 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 
 # Initialize Cog
-class Fortune(commands.Cog, name="Fortune"):
+class Mystery(commands.Cog, name="Mystery"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    # Get a daily fortune
-    # TODO: Return the same fortune for the active day
-    @nextcord.slash_command(name="fortune", description="Sagt dir eine zufällige Weisheit!")
+    # Get a fortune
+    @nextcord.slash_command(name="fortune", description="Ich sage dir eine zufällige Weisheit!")
     async def fortune_cookie(self, interaction: Interaction):
         fortune_cookies = "database/db_fortune.json"
         
@@ -25,8 +24,9 @@ class Fortune(commands.Cog, name="Fortune"):
 
         await interaction.response.send_message(f"{output}", ephemeral=True)
 
+
     # Get an 8-Ball answer for a serious question
-    @nextcord.slash_command(name="8ball", description="Beantwortet dir eine Frage nach bestem Gewissen!")
+    @nextcord.slash_command(name="8ball", description="Ich beantworte dir eine Frage nach bestem Gewissen!")
     async def fortune_8ball(self, interaction: Interaction, frage: str = SlashOption(description="Stell deine Frage...")):
         eight_ball_answers = "database/db_8ball.json"
         
@@ -43,5 +43,5 @@ class Fortune(commands.Cog, name="Fortune"):
 
 # Add Cog to bot
 def setup(bot):
-    bot.add_cog(Fortune(bot))
-    print("Fortune module loaded!")
+    bot.add_cog(Mystery(bot))
+    print("Mystery module loaded!")
