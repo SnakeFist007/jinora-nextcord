@@ -12,3 +12,4 @@ cogs/dsa/__pycache__/*
 *.pyc
 
 *.log
+lene-nextcord.log

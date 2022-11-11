@@ -1,6 +1,8 @@
 import os
+import shutil
 import logging
 import nextcord
+from nextcord import application_command
 from nextcord.ext import commands
 
 ## Variables
@@ -23,11 +25,15 @@ logger.addHandler(handler)
 
 
 ## Events
-
 # ON STARTUP:       Set activity and report online state when ready 
 @bot.event
 async def on_ready():
     print("\n\tLene#2184 is ready!")
+    try:
+        await bot.sync_application_commands()
+        print("\tSynced global commands!")
+    except Exception as e:
+        print(e)
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 
@@ -37,16 +43,16 @@ async def on_guild_join(guild):
     print(f"Joined server {guild.id}!")
     for channel in guild.text_channels:
         if channel.permissions_for(guild.me).send_messages:
-            await channel.send("Vielen Dank für die Einladung! ")
+            await channel.send("Vielen Dank für die Einladung! <3")
         break
-    # TODO: Add separate server storage (for characters)
+    os.mkdir(f"database\id_store\{guild.id}")
 
 
 # ON SERVER LEAVE:  Clean up server directory
 @bot.event
 async def on_guild_remove(guild):
     print(f"Left server {guild.id}")
-    # TODO: Remove separate server storage (for characters)
+    shutil.rmtree(f"database\id_store\{guild.id}")
 
 
 

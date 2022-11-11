@@ -1,8 +1,6 @@
 import nextcord
 import os
 import shutil
-import re
-import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
@@ -63,7 +61,8 @@ class DSA(commands.Cog, name="DSA"):
     @dsa.subcommand(name="list", description="Zeigt eine Liste aller gespeicherten Charaktere an!")
     async def dsa_chars_list(self, interaction: Interaction):
         user_id = interaction.user.id
-        path = f"database/characters/{user_id}"
+        guild_id = interaction.guild.id
+        path = f"database/characters/{guild_id}/{user_id}"
         dir_list = os.listdir(path)
         count = 0
         
@@ -80,7 +79,8 @@ class DSA(commands.Cog, name="DSA"):
     @dsa.subcommand(name="download", description="Gibt den ausgewählten Charakter als Datei aus!")
     async def dsa_chars_download(self, interaction: Interaction, character: Optional[str] = SlashOption()):
         user_id = interaction.user.id
-        path = f"database/characters/{user_id}/{character}.json"
+        guild_id = interaction.guild.id
+        path = f"database/characters/{guild_id}/{user_id}/{character}.json"
         
         if os.path.exists(path):
             file = nextcord.File(path)
@@ -94,7 +94,8 @@ class DSA(commands.Cog, name="DSA"):
     @dsa.subcommand(name="delete", description="Löscht den ausgewählten Charakter!")
     async def dsa_char_del(self, interaction: Interaction, character: Optional[str] = SlashOption()):
         user_id = interaction.user.id
-        path = f"database/characters/{user_id}"
+        guild_id = interaction.guild.id
+        path = f"database/characters/{guild_id}/{user_id}"
         file = f"{path}/{character}.json"
         
         if os.path.exists(path):
@@ -112,7 +113,8 @@ class DSA(commands.Cog, name="DSA"):
     @dsa.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
     async def dsa_char_delAll(self, interaction: Interaction):
         user_id = interaction.user.id
-        path = f"database/characters/{user_id}"  
+        guild_id = interaction.guild.id
+        path = f"database/characters/{guild_id}/{user_id}"  
         
         if os.path.exists(path):
             shutil.rmtree(path, ignore_errors=True)
@@ -122,30 +124,31 @@ class DSA(commands.Cog, name="DSA"):
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
         
         
-        
+    # FIXME: Newly posted messages will return an empty list too, despite having an attachement    
     # Context Menu Command: Save json file from sent message (grab attachement)
     @nextcord.message_command(name="DSA-Charakter speichern")
     async def char_add(self, interaction: Interaction, message):
         user_id = interaction.user.id
-        # FIXME: Newly posted messages will return an empty list too, despite having an attachement
+        guild_id = interaction.guild.id
+        
         if not str(message.attachments) == "[]":
             # Get the filename
             split_msg = str(message.attachments).split("filename='")[1]
             filename = str(split_msg).split("' ")[0]
                        
             if filename.endswith(".json"):              
-                if os.path.exists(f"database/characters/{user_id}"):
+                if os.path.exists(f"database/characters/{guild_id}/{user_id}"):
                     # File will be overwritten, should it already exist
-                    await message.attachments[0].save(fp=f"database/characters/{user_id}/{filename}")
+                    await message.attachments[0].save(fp=f"database/characters/{guild_id}/{user_id}/{filename}")
                                         
-                    if os.path.exists(f"database/characters/{user_id}/{filename}"):
+                    if os.path.exists(f"database/characters/{guild_id}/{user_id}/{filename}"):
                         await interaction.response.send_message("Bestehenden Charakter erfolgreich überschrieben!", ephemeral=True)
                     else:
                         await interaction.response.send_message("Charakter erfolgreich abgespeichert!", ephemeral=True)
                         
                 else:
-                    os.mkdir(f"database/characters/{user_id}")
-                    await message.attachments[0].save(fp=f"database/characters/{user_id}/{filename}")       
+                    os.mkdir(f"database/characters/{guild_id}/{user_id}")
+                    await message.attachments[0].save(fp=f"database/characters/{guild_id}/{user_id}/{filename}")       
                     await interaction.response.send_message("Charakter erfolgreich abgespeichert!", ephemeral=True)
             else:
                 await interaction.response.send_message("Falsches Format. Bitte nutze eine JSON-Datei!", ephemeral=True)
