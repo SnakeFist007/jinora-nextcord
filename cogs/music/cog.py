@@ -63,10 +63,12 @@ class Music(commands.Cog):
             return await vc.disconnect()
 
     
+    
     # MUSIC COMMAND HANDLER
     @nextcord.slash_command(name="music", description="Verschiedene Musik-Optionen")
     async def music(self, interaction: Interaction):
         pass
+    
     
     # Slash Command: Play YouTube video (either through URL or search term)
     @music.subcommand(name="play", description="Spielt ein YouTube Video ab")
@@ -96,6 +98,7 @@ class Music(commands.Cog):
 
         vc.interaction = interaction
         setattr(vc, "loop", False)
+
 
     # Context Menu Command: Play YouTube video through URL in message. ONLY WORKS WITH PURE URL MESSAGES!    
     @nextcord.message_command(name="Mit Lene abspielen")

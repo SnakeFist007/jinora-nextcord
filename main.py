@@ -23,11 +23,13 @@ logger.addHandler(handler)
 
 
 ## Events
+
 # ON STARTUP:       Set activity and report online state when ready 
 @bot.event
 async def on_ready():
     print("\n\tLene#2184 is ready!")
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
+
 
 # ON SERVER JOIN:   Send greeting message & create server directory
 @bot.event
@@ -39,6 +41,7 @@ async def on_guild_join(guild):
         break
     # TODO: Add separate server storage (for characters)
 
+
 # ON SERVER LEAVE:  Clean up server directory
 @bot.event
 async def on_guild_remove(guild):
@@ -46,9 +49,11 @@ async def on_guild_remove(guild):
     # TODO: Remove separate server storage (for characters)
 
 
+
 ## Main run function
 def main():
     # Load extensions
+    print("Loading modules... \n")
     for folder in os.listdir("cogs"):
         if os.path.exists(os.path.join("cogs", folder, "cog.py")):
             bot.load_extension(f"cogs.{folder}.cog")

@@ -19,10 +19,12 @@ class DSA(commands.Cog, name="DSA"):
     async def dice(self, interaction: Interaction):
         pass
     
+    
     # Slash Command: Throw a dice selected from a dropdown menu
     @dice.subcommand(name="roll", description="Würfel werfen!")
     async def dice_roll(self, interaction: Interaction):
         await interaction.send(view=DiceDropdownView(), ephemeral=True)
+    
     
     # Slash Command: Throw one or multiple dice after a regex input
     @dice.subcommand(name="multi", description="Mehrere Würfel werfen!")
@@ -36,11 +38,13 @@ class DSA(commands.Cog, name="DSA"):
 
         # re.sub('(\d+d\d+)', roll, dice)
         
-       
+    
+    
     # COIN-FLIP COMMAND HANDLER
     @nextcord.slash_command(name="coin", description="Verschiedene Münz-Werf-Optionen")
     async def coin(self, interaction: Interaction):
         pass
+
 
     # Slash Command: Flip a coin
     @coin.subcommand(name="flip", description="Wirf eine Münze!")
@@ -48,10 +52,12 @@ class DSA(commands.Cog, name="DSA"):
         await interaction.send(view=Coinflip(), ephemeral=True)
 
 
+
     # DSA COMMAND HANDLER
     @nextcord.slash_command(name="character", description="Charakter-Optionen")
     async def dsa(self, interaction: Interaction):
         pass
+    
     
     # Slash Command: List all saved characters of a user
     @dsa.subcommand(name="list", description="Zeigt eine Liste aller gespeicherten Charaktere an!")
@@ -69,6 +75,7 @@ class DSA(commands.Cog, name="DSA"):
             
         return await interaction.response.send_message(embed=em, ephemeral=True)
 
+
     # Slash Command: Send json-file of a saved character as a Discord message to the user
     @dsa.subcommand(name="download", description="Gibt den ausgewählten Charakter als Datei aus!")
     async def dsa_chars_download(self, interaction: Interaction, character: Optional[str] = SlashOption()):
@@ -81,6 +88,7 @@ class DSA(commands.Cog, name="DSA"):
                          
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
+    
     
     # Slash Command: Delete a selected character of the user (optimally with dropdown menu)
     @dsa.subcommand(name="delete", description="Löscht den ausgewählten Charakter!")
@@ -99,6 +107,7 @@ class DSA(commands.Cog, name="DSA"):
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
     
+    
     # Slash Command: Delete all saved characters for the user
     @dsa.subcommand(name="reset", description="Löscht ALLE gespeicherten Charaktere!")
     async def dsa_char_delAll(self, interaction: Interaction):
@@ -111,6 +120,8 @@ class DSA(commands.Cog, name="DSA"):
                        
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
+        
+        
         
     # Context Menu Command: Save json file from sent message (grab attachement)
     @nextcord.message_command(name="DSA-Charakter speichern")
