@@ -1,6 +1,7 @@
 import nextcord
 import os
 import shutil
+import aiosqlite
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
