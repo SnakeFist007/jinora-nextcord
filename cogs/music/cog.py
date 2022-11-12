@@ -44,7 +44,7 @@ class Music(commands.Cog):
 
     @commands.Cog.listener()
     async def on_wavelink_node_ready(self, node: wavelink.Node):
-        print(f"\tMusic-Mode #{node.identifier} is ready!\n")
+        print(f"\tMusic-Node #{node.identifier} is ready!\n")
 
     # Queue handeling: Disconnect if empty, else play the next song
     @commands.Cog.listener()
