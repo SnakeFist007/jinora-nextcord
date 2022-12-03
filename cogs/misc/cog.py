@@ -21,6 +21,7 @@ class Basics(commands.Cog, name="Misc"):
         await interaction.response.send_message(f"Schau mal unter https://www.google.com/ nach!", ephemeral=True)
     
     
+    # TODO: Add consistency check: Account for bot shutdown by saving reminders in DB
     # Reminder command (Supported: seconds, months, hours & days)
     @nextcord.slash_command(name="remindme", description="Lass dich an Dinge erinnern!")
     async def remind(self, interaction: Interaction, message: Optional[str] = SlashOption(), time: Optional[str] = SlashOption()):
