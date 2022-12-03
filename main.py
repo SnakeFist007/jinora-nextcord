@@ -43,7 +43,7 @@ async def on_ready():
         
     async with aiosqlite.connect(db_characters) as db:
         async with db.cursor() as cursor:
-            await cursor.execute("CREATE TABLE IF NOT EXISTS characters (guild INTEGER, user INTEGER, char_name TEXT, char_file BLOB)")
+            await cursor.execute("CREATE TABLE IF NOT EXISTS characters (user INTEGER, char_name TEXT, location TEXT)")
         await db.commit()
     
     try:
