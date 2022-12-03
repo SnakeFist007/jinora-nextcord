@@ -1,1 +1,8 @@
-2022-11-12 16:08:40,664:INFO:nextcord.client: logging in using static token
+2022-11-12 18:19:58,850:INFO:nextcord.client: logging in using static token
+2022-11-12 18:19:59,330:INFO:nextcord.gateway: Shard ID None has sent the IDENTIFY payload.
+2022-11-12 18:19:59,612:INFO:nextcord.gateway: Shard ID None has connected to Gateway: ["gateway-prd-us-east1-d-dpnj",{"micros":140002,"calls":["id_created",{"micros":1819,"calls":[]},"session_lookup_time",{"micros":457,"calls":[]},"session_lookup_finished",{"micros":17,"calls":[]},"discord-sessions-blue-prd-2-66",{"micros":136563,"calls":["start_session",{"micros":82338,"calls":["discord-api-8557cddd79-5kvvn",{"micros":70310,"calls":["get_user",{"micros":19741},"get_guilds",{"micros":8946},"send_scheduled_deletion_message",{"micros":12},"guild_join_requests",{"micros":2},"authorized_ip_coro",{"micros":13}]}]},"starting_guild_connect",{"micros":58,"calls":[]},"presence_started",{"micros":30165,"calls":[]},"guilds_started",{"micros":174,"calls":[]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":23790,"calls":[]},"connect_finished",{"micros":23796,"calls":[]},"build_ready",{"micros":30,"calls":[]},"optimize_ready",{"micros":0,"calls":[]},"split_ready",{"micros":1,"calls":[]},"clean_ready",{"micros":0,"calls":[]}]}]}] (Session ID: 515f1b12e1cd1ec5ea6000a864600a6a).
+2022-11-12 18:20:56,299:INFO:nextcord.client: Received signal to terminate bot and event loop.
+2022-11-12 18:20:56,299:INFO:nextcord.client: Cleaning up tasks.
+2022-11-12 18:20:56,299:INFO:nextcord.client: Cleaning up after 3 tasks.
+2022-11-12 18:20:56,425:INFO:nextcord.client: All tasks finished cancelling.
+2022-11-12 18:20:56,426:INFO:nextcord.client: Closing the event loop.

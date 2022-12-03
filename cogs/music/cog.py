@@ -100,6 +100,7 @@ class Music(commands.Cog):
         setattr(vc, "loop", False)
 
 
+    # FIXME: ONLY WORKS WITH MESSAGES POSTED BEFORE BOT STARTUP
     # Context Menu Command: Play YouTube video through URL in message. ONLY WORKS WITH PURE URL MESSAGES!    
     @nextcord.message_command(name="Mit Lene abspielen")
     async def context_play(self, interaction: Interaction, message):
@@ -131,9 +132,12 @@ class Music(commands.Cog):
                 await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
 
             # Clear loop state
-            await interaction.message.clear_reaction(emoji="🔁")
-            vc.interaction = interaction
-            setattr(vc, "loop", False)
+            try:
+                await interaction.message.clear_reaction(emoji="🔁")
+                vc.interaction = interaction
+                setattr(vc, "loop", False)
+            except AttributeError:
+                pass
             
         # Give error if theres text / invalid URL in the message
         else:
