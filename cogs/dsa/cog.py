@@ -3,7 +3,6 @@ import os
 import shutil
 import aiosqlite
 import requests
-import zipfile
 import json
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
@@ -94,6 +93,7 @@ class DSA(commands.Cog, name="DSA"):
     
     
     # TODO: optimally with dropdown menu
+    # FIXME: SQL-DB doesn't get cleared
     # Slash Command: Delete a selected character of the user
     @dsa.subcommand(name="delete", description="Löscht den ausgewählten Charakter!")
     async def dsa_char_del(self, interaction: Interaction, character: str):
@@ -103,16 +103,15 @@ class DSA(commands.Cog, name="DSA"):
         
         # Check if user has saved characters
         if os.path.exists(path):
-            
             # Check if user has saved that specific character
             if os.path.exists(file):
-                os.remove(file)
-                
                 # Remove DB entry
                 async with aiosqlite.connect(db_characters) as db:
                     async with db.cursor() as cursor:
-                        await cursor.execute(f"DELETE FROM characters WHERE char_name LIKE {character}")
+                        await cursor.execute(f"DELETE FROM characters WHERE char_name = {character}")
                     await db.commit()
+                
+                os.remove(file)
                 await interaction.response.send_message(f"{character} gelöscht!", ephemeral=True)  
                     
             else:
@@ -129,13 +128,13 @@ class DSA(commands.Cog, name="DSA"):
         path = f"database/char_storage/{user_id}"  
         
         if os.path.exists(path):
-            shutil.rmtree(path, ignore_errors=True) 
-            
             # Remove DB entry
             async with aiosqlite.connect(db_characters) as db:
                 async with db.cursor() as cursor:
                     await cursor.execute(f"DELETE FROM characters WHERE user LIKE {user_id}")
                 await db.commit()
+                
+            shutil.rmtree(path, ignore_errors=True)
             await interaction.response.send_message("Alle gespeicherten Charaktere gelöscht!", ephemeral=True)  
                        
         else:
@@ -144,7 +143,9 @@ class DSA(commands.Cog, name="DSA"):
     
     # Slash Command: Delete all saved characters for the user
     @dsa.subcommand(name="add", description="Fügt einen neuen Charakter hinzu!")
-    async def dsa_char_add(self, interaction: Interaction, char_name: str, file: nextcord.Attachment):
+    async def dsa_char_add(self, interaction: Interaction, 
+                           char_name: str  = SlashOption(description="Der Name für deinen Charakter"), 
+                           file: nextcord.Attachment = SlashOption(description="Optolith-Datei")):
         user_id = interaction.user.id
         
         if file.filename.endswith(".json"):
