@@ -1,11 +1,16 @@
 import nextcord
 import os
 import shutil
+import aiosqlite
+import requests
+import zipfile
+import json
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
 from .dice_dropdown import DiceDropdownView
 from .coinflip_buttons import Coinflip
+from main import db_characters
 
 # Initialize Cog
 class DSA(commands.Cog, name="DSA"):
@@ -123,7 +128,37 @@ class DSA(commands.Cog, name="DSA"):
         else:
             await interaction.response.send_message("Keine Charaktere gespeichert!", ephemeral=True)
         
+    
+    # Slash Command: Delete all saved characters for the user
+    @dsa.subcommand(name="add", description="Fügt einen neuen Charakter hinzu!")
+    async def dsa_char_add(self, interaction: Interaction, char_name: str, file: nextcord.Attachment):
+        user_id = interaction.user.id
+        guild_id = interaction.guild.id
         
+        if file.filename.endswith(".json"):
+            tmp_store_zip = f"database/tmp/{user_id}.zip"
+            tmp_store_json = f"database/tmp/{user_id}.json"
+            
+            with open(tmp_store_json, "w") as f:
+                json.dump(requests.get(file).json(), f)
+            
+            with zipfile.ZipFile(tmp_store_zip, "w") as f:
+                f.write(tmp_store_json)
+            char_file = open(tmp_store_zip, "r").close()
+            
+            # FIXME: Saving files doesn't work atm, but SQL statement does
+            # Create DB entry
+            async with aiosqlite.connect(db_characters) as db:
+                async with db.cursor() as cursor:
+                    params = (guild_id, user_id, char_name, char_file)
+                    await cursor.execute(f"INSERT INTO characters VALUES (?,?,?,?)", params)
+                await db.commit()
+            await interaction.response.send_message("Charakter erfolgreich gespeichert!", ephemeral=True)
+            
+        else:
+            await interaction.response.send_message("Bitte als json-Datei hochladen!", ephemeral=True)
+        
+      
     # FIXME: Newly posted messages will return an empty list too, despite having an attachement    
     # Context Menu Command: Save json file from sent message (grab attachement)
     @nextcord.message_command(name="DSA-Charakter speichern")

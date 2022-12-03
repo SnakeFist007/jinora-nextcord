@@ -8,6 +8,7 @@ from nextcord.ext import commands
 ## Variables
 token_file = open("token.auth", "r")
 db_servers = "database\servers.db"
+db_characters = "database\characters.db"
 token = token_file.read()
 
 # Intents & Bot initialization
@@ -25,13 +26,24 @@ logger.addHandler(handler)
 
 
 ## Events
-# ON STARTUP:       Set activity and report online state when ready 
+# ON STARTUP: Set activity and report online state when ready 
 @bot.event
 async def on_ready():
     print("\n\tLene#2184 is ready!")
+    if not os.path.exists(db_servers):
+        open(db_servers, "x").close()
+        
+    if not os.path.exists(db_characters):
+        open(db_characters, "x").close()
+    
     async with aiosqlite.connect(db_servers) as db:
         async with db.cursor() as cursor:
             await cursor.execute("CREATE TABLE IF NOT EXISTS servers (guild INTEGER)")
+        await db.commit()
+        
+    async with aiosqlite.connect(db_characters) as db:
+        async with db.cursor() as cursor:
+            await cursor.execute("CREATE TABLE IF NOT EXISTS characters (guild INTEGER, user INTEGER, char_name TEXT, char_file BLOB)")
         await db.commit()
     
     try:
@@ -42,7 +54,7 @@ async def on_ready():
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 
-# ON SERVER JOIN:   Send greeting message & create server directory
+# ON SERVER JOIN: Send greeting message & create server directory
 @bot.event
 async def on_guild_join(guild):
     print(f"Joined server {guild.id}!")
