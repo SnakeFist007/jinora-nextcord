@@ -7,9 +7,10 @@ import json
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
+# Imports from own code
+from main import db_characters
 from .dice_dropdown import DiceDropdownView
 from .coinflip_buttons import Coinflip
-from main import db_characters
 
 # Initialize Cog
 class DSA(commands.Cog, name="DSA"):

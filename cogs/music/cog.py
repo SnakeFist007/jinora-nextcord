@@ -3,7 +3,8 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 import wavelink
 import json
-import validators
+# import validators -- needed for context menu command
+# Imports from own code
 from .playback_buttons import ControlPanel
 
 # Initialize Cog
@@ -102,46 +103,46 @@ class Music(commands.Cog):
 
     # FIXME: ONLY WORKS WITH MESSAGES POSTED BEFORE BOT STARTUP
     # Context Menu Command: Play YouTube video through URL in message. ONLY WORKS WITH PURE URL MESSAGES!    
-    @nextcord.message_command(name="Mit Lene abspielen")
-    async def context_play(self, interaction: Interaction, message):
-        # Check if message just contains a valid URL        
-        if validators.url(message.content):
-            video = await wavelink.YouTubeTrack.search(query=message.content, return_first=True)
+    # @nextcord.message_command(name="Mit Lene abspielen")
+    # async def context_play(self, interaction: Interaction, message):
+    #     # Check if message just contains a valid URL        
+    #     if validators.url(message.content):
+    #         video = await wavelink.YouTubeTrack.search(query=message.content, return_first=True)
             
-            try:            
-                if not interaction.guild.voice_client:
-                    vc: wavelink.Player = await interaction.user.voice.channel.connect(cls=wavelink.Player)
-                else:
-                    vc: wavelink.Player = interaction.guild.voice_client
+    #         try:            
+    #             if not interaction.guild.voice_client:
+    #                 vc: wavelink.Player = await interaction.user.voice.channel.connect(cls=wavelink.Player)
+    #             else:
+    #                 vc: wavelink.Player = interaction.guild.voice_client
 
-            # Catch excpetion if user is not connected to a channel
-            except AttributeError:
-                return await interaction.response.send_message("Tritt zuerst einem Sprachkanal bei!", ephemeral=True)
+    #         # Catch excpetion if user is not connected to a channel
+    #         except AttributeError:
+    #             return await interaction.response.send_message("Tritt zuerst einem Sprachkanal bei!", ephemeral=True)
 
 
-            if vc.queue.is_empty and not vc.is_playing():
-                await vc.play(video)
+    #         if vc.queue.is_empty and not vc.is_playing():
+    #             await vc.play(video)
                 
-                em = nextcord.Embed(title=f"🎶 Musik-Spieler 🎶", color=0x3498db)
-                view = ControlPanel(vc, interaction)
+    #             em = nextcord.Embed(title=f"🎶 Musik-Spieler 🎶", color=0x3498db)
+    #             view = ControlPanel(vc, interaction)
                 
-                await interaction.send(embed=em, view=view)
+    #             await interaction.send(embed=em, view=view)
                 
-            else:
-                await vc.queue.put_wait(video)
-                await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
+    #         else:
+    #             await vc.queue.put_wait(video)
+    #             await interaction.response.send_message(f"***{video.title}*** der Wartschleife hinzugefügt!",ephemeral=True)
 
-            # Clear loop state
-            try:
-                await interaction.message.clear_reaction(emoji="🔁")
-                vc.interaction = interaction
-                setattr(vc, "loop", False)
-            except AttributeError:
-                pass
+    #         # Clear loop state
+    #         try:
+    #             await interaction.message.clear_reaction(emoji="🔁")
+    #             vc.interaction = interaction
+    #             setattr(vc, "loop", False)
+    #         except AttributeError:
+    #             pass
             
-        # Give error if theres text / invalid URL in the message
-        else:
-            await interaction.response.send_message("Bitte eine Nachricht auswählen, die **nur** eine __gültige__ URL beinhält!", ephemeral=True)
+    #     # Give error if theres text / invalid URL in the message
+    #     else:
+    #         await interaction.response.send_message("Bitte eine Nachricht auswählen, die **nur** eine __gültige__ URL beinhält!", ephemeral=True)
 
 
     # Slash Command: Resets the bot, should there be any error / control-panel not showing up
