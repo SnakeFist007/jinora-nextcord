@@ -22,7 +22,7 @@ logger.addHandler(handler)
 
 
 ## Events
-# ON STARTUP: Set activity and report online state when ready 
+# ON STARTUP
 @bot.event
 async def on_ready():
     print("\n\tLene#2184 is ready!")
@@ -34,7 +34,7 @@ async def on_ready():
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 
-# ON SERVER JOIN: Send greeting message & create server directory
+# ON SERVER JOIN
 @bot.event
 async def on_guild_join(guild):
     print(f"Joined server {guild.id}!")
@@ -46,7 +46,7 @@ async def on_guild_join(guild):
         break
 
 
-# ON SERVER LEAVE: Clean up server directory
+# ON SERVER LEAVE
 @bot.event
 async def on_guild_remove(guild):
     print(f"Left server {guild.id}!")
