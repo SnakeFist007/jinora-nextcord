@@ -25,6 +25,10 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
         else:
             return
         
+    # Status
+    @nextcord.slash_command(name="status", description="Zeigt an, ob Stable Diffusion verfügbar ist!")
+    async def sd_status(self, interaction: Interaction):
+        ...
 
 # Add Cog to bot
 def setup(bot):
