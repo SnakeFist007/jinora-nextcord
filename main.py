@@ -4,12 +4,12 @@ import logging
 import aiosqlite
 import nextcord
 from nextcord.ext import commands
+from dotenv import load_dotenv
 
 ## Variables
-token_file = open("token.auth", "r")
+load_dotenv()
 db_servers = "database\servers.db"
 db_characters = "database\characters.db"
-token = token_file.read()
 
 # Intents & Bot initialization
 intents = nextcord.Intents.default()
@@ -80,7 +80,7 @@ async def on_guild_join(guild):
         break
 
 
-# ON SERVER LEAVE:  Clean up server directory
+# ON SERVER LEAVE: Clean up server directory
 @bot.event
 async def on_guild_remove(guild):
     print(f"Left server {guild.id}!")
@@ -109,7 +109,7 @@ def main():
             bot.load_extension(f"cogs.{folder}.cog")
     
     # Start the bot
-    bot.run(token)
+    bot.run(os.getenv("TOKEN"))
 
 if __name__ == "__main__":
     main()
