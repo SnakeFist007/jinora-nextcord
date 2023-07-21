@@ -1,7 +1,6 @@
 import os
 import logging
 import nextcord
-import datetime
 from nextcord.ext import commands
 from dotenv import load_dotenv
 

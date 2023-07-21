@@ -1,5 +1,4 @@
 import nextcord
-import datetime
 from nextcord import Interaction
 from nextcord.ext import commands
 
