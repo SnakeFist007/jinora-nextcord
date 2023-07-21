@@ -1,6 +1,7 @@
 import os
 import logging
 import nextcord
+import datetime
 from nextcord.ext import commands
 from dotenv import load_dotenv
 
@@ -39,11 +40,18 @@ async def on_ready():
 async def on_guild_join(guild):
     print(f"Joined server {guild.id}!")
     
-    # Send welcome message
-    for channel in guild.text_channels:
-        if channel.permissions_for(guild.me).send_messages:
-            await channel.send("Vielen Dank für die Einladung! <3\nBenutze **/help** um mehr über meine Befehle zu lernen!")
-        break
+    # Create hello message embed
+    em = nextcord.Embed(
+        title="Danke für die Einladung! ❤️", 
+        description="Nutze `/help` um mehr über meine Befehle zu lernen.", 
+        color=0x00b0f4)
+
+    em.set_thumbnail(url="https://i.imgur.com/k9t5gF7.png")
+    em.set_footer(text="Lene#2184", icon_url="https://i.imgur.com/k9t5gF7.png")
+
+    # Send welcome message to system channel
+    if guild.system_channel is not None:
+        await guild.system_channel.send(embed=em)
 
 
 # ON SERVER LEAVE

@@ -9,16 +9,11 @@ class Basics(commands.Cog, name="Misc"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
+    # TODO: Add ping towards Stable Diffusion client
     # Debug / Test-Command to see how well the bot is doing
-    @nextcord.slash_command(name="ping", description="Pong!")
-    async def ping(self, interaction: Interaction):
+    @nextcord.slash_command(name="status", description="Pong!")
+    async def status(self, interaction: Interaction):
         await interaction.send(f"Pong! (`{round(self.bot.latency * 1000)}ms`)")
-        
-        
-    # Custom help command
-    @nextcord.slash_command(name="help", description="Verweist auf die Hilfe-Seite")
-    async def help(self, interaction: Interaction):
-        await interaction.response.send_message(f"Schau mal unter https://www.google.com/ nach!", ephemeral=True)
     
     
     # TODO: Add consistency check: Account for bot shutdown by saving reminders in DB
