@@ -11,7 +11,7 @@ from pymongo.server_api import ServerApi
 load_dotenv()
 uri = os.getenv("MONGODB")
 client = MongoClient(uri, server_api=ServerApi('1'))
-db = client.servers
+db_servers = client.servers
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
@@ -47,8 +47,8 @@ async def on_ready():
 async def on_guild_join(guild):
     logging.info(f"Joined server {guild.id}!")
     # Check if server ID has already been added to the list
-    if db.joined_servers_list.find_one( { "server_id": guild.id } ) is None:
-        db.joined_servers_list.insert_one( { "server_id": guild.id } )
+    if db_servers.joined_servers_list.find_one( { "server_id": guild.id } ) is None:
+        db_servers.joined_servers_list.insert_one( { "server_id": guild.id } )
         logging.info(f"Added server {guild.id} to database.")
     else:
         logging.warning(f"Server {guild.id} was already on the list!")
@@ -64,8 +64,8 @@ async def on_guild_join(guild):
 async def on_guild_remove(guild):
     logging.info(f"Left server {guild.id}!")
     # Check if server ID was already deleted from the list
-    if db.joined_servers_list.find_one( { "server_id": guild.id } ) is not None:
-        db.joined_servers_list.delete_one( { "server_id": guild.id } )
+    if db_servers.joined_servers_list.find_one( { "server_id": guild.id } ) is not None:
+        db_servers.joined_servers_list.delete_one( { "server_id": guild.id } )
         logging.info(f"Removed server {guild.id} from database.")
     else:
         logging.warning(f"Server {guild.id} was already removed from the list!")

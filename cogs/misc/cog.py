@@ -3,18 +3,22 @@ import asyncio
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
-from main import logging
+from main import logging, db_servers
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    # TODO: Add ping towards Stable Diffusion client
-    # Debug / Test-Command to see how well the bot is doing
+    # General stats of the bot
     @nextcord.slash_command(name="status", description="Pong!")
     async def status(self, interaction: Interaction):
-        await interaction.send(f"Pong! (`{round(self.bot.latency * 1000)}ms`)")
+        # Calculate latency
+        ping = round(self.bot.latency * 1000)
+        # Get amount of servers joined
+        count = db_servers.joined_servers_list.count_documents({})
+            
+        await interaction.send(f"Servers joined: `{count}`\nPing: `{ping}ms`", ephemeral=True)
     
 
     # Reminder command (Supported: seconds, months, hours & days)
