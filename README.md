@@ -1,5 +1,6 @@
 # Jinora - Discord Bot!
-**Supporting Slash Commands ONLY!**
+
+<img src="./database/bot-avatar-rounded.png" width="250" height="250">
 
 ## Useful links
 [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
