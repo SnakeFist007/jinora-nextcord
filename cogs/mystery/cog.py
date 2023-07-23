@@ -10,7 +10,7 @@ class Mystery(commands.Cog, name="Mystery"):
         self.bot = bot
 
     # Get a fortune
-    @nextcord.slash_command(name="fortune", description="Ich sage dir eine zufällige Weisheit!")
+    @nextcord.slash_command(name="fortune", description="Tells a random fortune!")
     async def fortune_cookie(self, interaction: Interaction):
         fortune_cookies = "database/db_fortune.json"
         
@@ -26,8 +26,8 @@ class Mystery(commands.Cog, name="Mystery"):
 
 
     # Get an 8-Ball answer for a serious question
-    @nextcord.slash_command(name="8ball", description="Ich beantworte dir eine Frage nach bestem Gewissen!")
-    async def fortune_8ball(self, interaction: Interaction, frage: str = SlashOption(description="Stell deine Frage...")):
+    @nextcord.slash_command(name="8ball", description="Answers important questions!")
+    async def fortune_8ball(self, interaction: Interaction, frage: str = SlashOption(description="Ask your question...")):
         eight_ball_answers = "database/db_8ball.json"
         
         with open(eight_ball_answers, encoding="utf-8") as f:

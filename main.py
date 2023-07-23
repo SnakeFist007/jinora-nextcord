@@ -7,12 +7,12 @@ from dotenv import load_dotenv
 ## Variables
 load_dotenv()
 
-# Intents & Bot initialization
+# * Intents & Bot initialization
 intents = nextcord.Intents.default()
 intents.members = True
 bot = commands.Bot(intents=intents, help_command=None)
 
-# Logging
+# * Logging
 logger = logging.getLogger("nextcord")
 logger.setLevel(logging.INFO)
 
@@ -22,7 +22,7 @@ logger.addHandler(handler)
 
 
 ## Events
-# ON STARTUP
+# * ON STARTUP
 @bot.event
 async def on_ready():
     print("\n\tLene#2184 is ready!")
@@ -34,15 +34,15 @@ async def on_ready():
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 
-# ON SERVER JOIN
+# * ON SERVER JOIN
 @bot.event
 async def on_guild_join(guild):
     print(f"Joined server {guild.id}!")
     
     # Create hello message embed
     em = nextcord.Embed(
-        title="Danke für die Einladung! ❤️", 
-        description="Nutze `/help` um mehr über meine Befehle zu lernen.", 
+        title="Thanks for the invite! ❤️", 
+        description="Use `/help` to learn more about my commands.", 
         color=0x00b0f4)
 
     em.set_thumbnail(url="https://i.imgur.com/k9t5gF7.png")
@@ -53,14 +53,14 @@ async def on_guild_join(guild):
         await guild.system_channel.send(embed=em)
 
 
-# ON SERVER LEAVE
+# * ON SERVER LEAVE
 @bot.event
 async def on_guild_remove(guild):
     print(f"Left server {guild.id}!")
 
 
 
-## Main run function
+## * Main run function
 def main():
     # Load extensions
     print("Loading modules... \n")
