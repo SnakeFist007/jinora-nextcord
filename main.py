@@ -9,9 +9,14 @@ from pymongo.server_api import ServerApi
 
 ## Variables
 load_dotenv()
+
+# MongoDB
 uri = os.getenv("MONGODB")
 client = MongoClient(uri, server_api=ServerApi('1'))
 db_servers = client.servers
+
+# Stable Diffusion
+url = os.getenv("URL")
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()

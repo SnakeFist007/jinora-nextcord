@@ -1,0 +1,8 @@
+{
+    "steps": 30,
+    "cfg_scale": 7,
+    "width": 512,
+    "height": 512,
+    "restore_faces": false,
+    "seed": -1
+}

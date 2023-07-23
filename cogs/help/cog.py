@@ -8,7 +8,6 @@ class Help(commands.Cog, name = "Help"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         
-     
     # Help
     @nextcord.slash_command(name="help", description="Here to help!")
     async def help(self, interaction: Interaction):
