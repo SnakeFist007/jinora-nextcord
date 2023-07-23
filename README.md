@@ -1,7 +1,5 @@
-# Lene#2184 - Multipurpose Discord Bot w/ DSA Features
+# Jinora - Discord Bot!
 **Supporting Slash Commands ONLY!**
-
-The purpose of this bot is to assist with some needed things to have a DSA session. Included is a dicerolling, coinflipping and [Optolith](https://github.com/elyukai/optolith-client) character storage. It can also be used to play YouTube videos as a music bot. 
 
 ## Useful links
 [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
