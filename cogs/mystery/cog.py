@@ -3,6 +3,7 @@ import json
 import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
+from main import logging
 
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
@@ -44,4 +45,4 @@ class Mystery(commands.Cog, name="Mystery"):
 # Add Cog to bot
 def setup(bot):
     bot.add_cog(Mystery(bot))
-    print("Mystery module loaded!")
+    logging.info("Mystery module loaded!")

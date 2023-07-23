@@ -2,6 +2,7 @@ import nextcord
 from nextcord import Interaction
 from nextcord.ext import commands
 from .DrawButtons import DrawButtons
+from main import logging
 
 # Initialize Cog
 class StableDiffusion(commands.Cog, name="StableDiffusion"):
@@ -28,4 +29,4 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
 # Add Cog to bot
 def setup(bot):
     bot.add_cog(StableDiffusion(bot))
-    print("Stable Diffusion module loaded!")
+    logging.info("Stable Diffusion module loaded!")

@@ -14,30 +14,32 @@ intents.members = True
 bot = commands.Bot(intents=intents, help_command=None)
 
 # * Logging
-logger = logging.getLogger("nextcord")
-logger.setLevel(logging.INFO)
-
-handler = logging.FileHandler(filename="jinora-nextcord.log", encoding="utf-8", mode="w")
-handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
-logger.addHandler(handler)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s : %(asctime)s - %(message)s",
+    handlers=[
+        logging.FileHandler("jinora-nextcord.log"),
+        logging.StreamHandler()
+    ]
+)
 
 ## Events
 # * ON STARTUP
 @bot.event
 async def on_ready():
-    print("\n\tJinora#2184 is ready!")
+    logging.info("Jinora#2184 is ready!")
     try:
         await bot.sync_application_commands()
-        print("\tSynced global commands!\n")
+        logging.info("Synced global commands!")
     except Exception as e:
-        print(e)
+        logging.exception(e)
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 
 # * ON SERVER JOIN
 @bot.event
 async def on_guild_join(guild):
-    print(f"Joined server {guild.id}!")
+    logging.info(f"Joined server {guild.id}!")
 
     # Send welcome message to system channel, if available
     if guild.system_channel is not None:
@@ -48,20 +50,24 @@ async def on_guild_join(guild):
 # * ON SERVER LEAVE
 @bot.event
 async def on_guild_remove(guild):
-    print(f"Left server {guild.id}!")
+    logging.info(f"Left server {guild.id}!")
 
 
 
 ## * Main run function
 def main():
     # Load extensions
-    print("Loading modules... \n")
+    logging.info("Loading modules... \n")
+
     for folder in os.listdir("cogs"):
         if os.path.exists(os.path.join("cogs", folder, "cog.py")):
             bot.load_extension(f"cogs.{folder}.cog")
     
     # Start the bot
-    bot.run(os.getenv("TOKEN"))
+    try:
+        bot.run(os.getenv("TOKEN"))
+    except Exception as e:
+        logging.exception(e)
 
 if __name__ == "__main__":
     main()

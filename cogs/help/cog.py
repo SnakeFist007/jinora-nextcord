@@ -1,7 +1,7 @@
 import nextcord
 from nextcord import Interaction
 from nextcord.ext import commands
-from main import parse_embed
+from main import parse_embed, logging
 
 # Initialize Cog
 class Help(commands.Cog, name = "Help"):
@@ -20,4 +20,4 @@ class Help(commands.Cog, name = "Help"):
 # Add Cog to bot
 def setup(bot):
     bot.add_cog(Help(bot))
-    print("Help module loaded!")
+    logging.info("Help module loaded!")

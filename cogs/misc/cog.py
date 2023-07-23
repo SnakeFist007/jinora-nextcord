@@ -3,6 +3,7 @@ import asyncio
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
+from main import logging
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
@@ -54,4 +55,4 @@ class Basics(commands.Cog, name="Misc"):
 # Add Cog to bot
 def setup(bot):
     bot.add_cog(Basics(bot))
-    print ("Basic functions loaded!")
+    logging.info("Basic functions loaded!")
