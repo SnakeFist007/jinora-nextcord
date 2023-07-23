@@ -1,4 +1,5 @@
 # Jinora - Discord Bot!
+![Python 3.6](https://img.shields.io/badge/Python-3.11.4-blue.svg)
 
 <img src="./database/bot-avatar-rounded.png" width="250" height="250">
 
