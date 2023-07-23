@@ -1,11 +1,12 @@
-# Jinora - Discord Bot!
+# Jinora - Yet Another Discord Bot!
 ![](https://img.shields.io/badge/Nextcord-2.5.0-5865F2)
 ![](https://img.shields.io/badge/Python-3.11.4-0f81c2)
 ![](https://img.shields.io/badge/MongoDB-7.0-13aa52)
 
 <img src="./database/bot-avatar-rounded.png" width="250" height="250">
 
-## Useful links
++++ Slash Commands ONLY! +++
+# Useful links
 Everything need for bot development:
 - [Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
 - [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
@@ -45,17 +46,16 @@ Colors currently implemented with a name - converted to their int value:
 | `Blurple`           |  5793266  | `#5865F2` |
 [Source](https://gist.githubusercontent.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812/raw/fd8d2d0007a1c642c790bc308f27a2f2ca5c47c7/code_colors_discordjs.md)
 
-## Needed Python modules
+# Needed Python modules
 To install all needed modules, run:
 ```
 pip install nextcord
 ```
 
-## Running the bot
+# Running the bot
 Rename `.env.example` to `.env` and fill in your Discord bot token!
 
-## GDPR Legal Disclaimer
+# GDPR Legal Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord. All files are hosted in Germany / German datacenters.
-
 
 Should you have any concerns about this, either contact me directly or do not use the bot. Thank you!
