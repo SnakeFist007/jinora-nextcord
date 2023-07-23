@@ -4,14 +4,15 @@
 <img src="./database/bot-avatar-rounded.png" width="250" height="250">
 
 ## Useful links
-[Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
-
-[Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
+Everything need for bot development:
+- [Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
+- [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
+- [Discord Developer Portal](https://discord.com/developers/applications)
 
 ## Needed Python modules
 To install all needed modules, run:
 ```
-pip install nextcord wavelink typing validators
+pip install nextcord
 ```
 
 ## Running the bot
