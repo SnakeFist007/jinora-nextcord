@@ -46,19 +46,29 @@ async def on_ready():
 @bot.event
 async def on_guild_join(guild):
     logging.info(f"Joined server {guild.id}!")
-    db.joined_servers_list.insert_one( { "server_id": guild.id } )
+    # Check if server ID has already been added to the list
+    if db.joined_servers_list.find_one( { "server_id": guild.id } ) is None:
+        db.joined_servers_list.insert_one( { "server_id": guild.id } )
+        logging.info(f"Added server {guild.id} to database.")
+    else:
+        logging.warning(f"Server {guild.id} was already on the list!")
 
     # Send welcome message to system channel, if available
     if guild.system_channel is not None:
         em = parse_embed("database/embeds/welcome_embed.json")
         await guild.system_channel.send(embed=em)
-
+    
 
 # * ON SERVER LEAVE
 @bot.event
 async def on_guild_remove(guild):
     logging.info(f"Left server {guild.id}!")
-    db.joined_servers_list.delete_one( { "server_id": guild.id } )
+    # Check if server ID was already deleted from the list
+    if db.joined_servers_list.find_one( { "server_id": guild.id } ) is not None:
+        db.joined_servers_list.delete_one( { "server_id": guild.id } )
+        logging.info(f"Removed server {guild.id} from database.")
+    else:
+        logging.warning(f"Server {guild.id} was already removed from the list!")
 
 
 ## * Main run function
