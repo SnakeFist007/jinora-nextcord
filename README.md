@@ -12,6 +12,8 @@ To install all needed modules, run:
 pip install nextcord wavelink typing validators
 ```
 
+## Running the bot
+Rename `.env.example` to `.env` and fill in your Discord bot token!
 
 ## GDPR Legal Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord. All files are hosted in Germany / German datacenters.
