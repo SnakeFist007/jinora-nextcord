@@ -1,5 +1,7 @@
 # Jinora - Discord Bot!
-![Python 3.6](https://img.shields.io/badge/Python-3.11.4-blue.svg)
+![](https://img.shields.io/badge/Nextcord-2.5.0-5865F2)
+![](https://img.shields.io/badge/Python-3.11.4-0f81c2)
+![](https://img.shields.io/badge/MongoDB-7.0-13aa52)
 
 <img src="./database/bot-avatar-rounded.png" width="250" height="250">
 
