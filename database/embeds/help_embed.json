@@ -1,0 +1,12 @@
+{
+    "title": "List of Commands",
+    "description": "`/generate` - creates an image using Stable Diffusion\n`/status` - displays Bot and Stable Diffusion status\n`/remindme` - creates a reminder\n`/8ball` - answers all your questions...\n`/fortune` - tells you a random fortune!",
+    "thumbnail": {
+        "url": "https://i.imgur.com/6vywq4p.png"
+    },
+    "color": 15844367,
+    "footer": {
+        "text": "Jinora#2184",
+        "icon_url": "https://i.imgur.com/6vywq4p.png"
+    }
+}
