@@ -4,9 +4,14 @@ import nextcord
 from nextcord.ext import commands
 from dotenv import load_dotenv
 from functions.helpers import parse_embed
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 ## Variables
 load_dotenv()
+uri = os.getenv("MONGODB")
+client = MongoClient(uri, server_api=ServerApi('1'))
+db = client.servers
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
@@ -41,6 +46,7 @@ async def on_ready():
 @bot.event
 async def on_guild_join(guild):
     logging.info(f"Joined server {guild.id}!")
+    db.joined_servers_list.insert_one( { "server_id": guild.id } )
 
     # Send welcome message to system channel, if available
     if guild.system_channel is not None:
@@ -52,13 +58,20 @@ async def on_guild_join(guild):
 @bot.event
 async def on_guild_remove(guild):
     logging.info(f"Left server {guild.id}!")
-
+    db.joined_servers_list.delete_one( { "server_id": guild.id } )
 
 
 ## * Main run function
 def main():
     # Load extensions
     logging.info("Loading modules... \n")
+    
+    # Connect to MongoDB   
+    try:
+        client.admin.command('ping')
+        logging.info("Successfully connected to MongoDB!")
+    except Exception as e:
+        logging.exception(e)
 
     for folder in os.listdir("cogs"):
         if os.path.exists(os.path.join("cogs", folder, "cog.py")):

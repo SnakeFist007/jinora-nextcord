@@ -1,12 +1,8 @@
 {
-    "title": "Thanks for the invite! ❤️",
+    "title": "Thanks for the invite! <3",
     "description": "Use `/help` to learn more about my commands.",
     "thumbnail": {
         "url": "https://i.imgur.com/6vywq4p.png"
     },
-    "color": 15844367,
-    "footer": {
-        "text": "Jinora#2184",
-        "icon_url": "https://i.imgur.com/6vywq4p.png"
-    }
+    "color": 15844367
 }

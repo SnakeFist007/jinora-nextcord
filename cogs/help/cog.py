@@ -10,11 +10,11 @@ class Help(commands.Cog, name = "Help"):
         
      
     # Help
-    @nextcord.slash_command(name = "help", description = "Here to help!")
+    @nextcord.slash_command(name="help", description="Here to help!")
     async def help(self, interaction: Interaction):
         em = parse_embed("database/embeds/help_embed.json")
 
-        await interaction.response.send_message(embed = em)
+        await interaction.response.send_message(embed=em, ephemeral=True)
 
 
 # Add Cog to bot
