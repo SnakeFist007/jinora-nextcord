@@ -14,6 +14,7 @@ load_dotenv()
 uri = os.getenv("MONGODB")
 client = MongoClient(uri, server_api=ServerApi('1'))
 db_servers = client.servers
+db_stablediffusion = client.stablediffusion
 
 # Stable Diffusion
 url = os.getenv("URL")

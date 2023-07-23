@@ -8,7 +8,7 @@ from nextcord import Interaction, SlashOption, Embed
 from nextcord.ext import commands
 from typing import Optional
 from PIL import Image
-from main import logging, url
+from main import logging, url, db_stablediffusion
 
 def prepare_directory():
     if not os.path.exists("cogs/stablediffusion/tmp"):

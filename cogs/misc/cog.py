@@ -1,9 +1,17 @@
 import nextcord
 import asyncio
-from nextcord import Interaction, SlashOption
+import requests
+import json
+from nextcord import Interaction, SlashOption, Embed
 from nextcord.ext import commands
 from typing import Optional
-from main import logging, db_servers
+from main import logging, db_servers, url
+
+def load_embed():
+    with open("database\\embeds\\status_embed.json", "r") as json_file:
+        defaults = json.load(json_file)
+        
+    return defaults
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
@@ -13,12 +21,28 @@ class Basics(commands.Cog, name="Misc"):
     # General stats of the bot
     @nextcord.slash_command(name="status", description="Pong!")
     async def status(self, interaction: Interaction):
-        # Calculate latency
-        ping = round(self.bot.latency * 1000)
+        logging.info("Checking status...")
         # Get amount of servers joined
         count = db_servers.joined_servers_list.count_documents({})
+        # Calculate latency
+        ping = round(self.bot.latency * 1000)
+        logging.info(f"Ping is {ping}ms.")
+        # Check if Stable Diffusion is running
+        try:
+            requests.get(url=f"{url}/internal/ping")
+            sd_status = "OK"
+            logging.info("Stable Diffusion is online.")
+        except Exception as e:
+            sd_status = "Offline"
+            logging.warning("Stable Diffusion is offline.")
+        
+        embed1 = load_embed()
+        embed2 = {
+            "description": f"Amount of Servers joined: `{count}`\nPing: `{ping}ms`\nStable Diffusion Status: `{sd_status}`"
+        }
+        em = Embed().from_dict(embed1 | embed2)
             
-        await interaction.send(f"Servers joined: `{count}`\nPing: `{ping}ms`", ephemeral=True)
+        await interaction.send(embed=em, ephemeral=True)
     
 
     # Reminder command (Supported: seconds, months, hours & days)
