@@ -67,3 +67,5 @@ Rename `.env.example` to `.env` and fill in your data! You need:
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
 
 Should you have any concerns about this, either contact me directly or do not use the bot. Thank you!
+
+By using this bot you agree to the conditions of the [license](/LICENSE).
