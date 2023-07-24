@@ -3,9 +3,11 @@
 ![](https://img.shields.io/badge/Python-3.11.4-0f81c2)
 ![](https://img.shields.io/badge/MongoDB-7.0-13aa52)
 
+
 <img src="./database/bot-avatar-rounded.png" width="250" height="250">
 
 **+++ Slash Commands ONLY! +++**
+
 # Useful links
 Everything need for bot development:
 - [Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
@@ -63,9 +65,22 @@ Rename `.env.example` to `.env` and fill in your data! You need:
 2. [MongoDB URI](https://account.mongodb.com/account/login)
 3. [Stable Diffusion API URL](http://127.0.0.1:7860)
 
+# Features
+- [ ] Dockerize bot
+- [x] Slash Comamnds ONLY
+- [x] Mystery Commands
+- [ ] Stable Diffusion API
+- [ ] Webhook Embedding for Moderators
+
+### Possible Features
+- [ ] Moderation Commands
+- [ ] Stable Music Player
+
 # GDPR Legal Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
 
 Should you have any concerns about this, either contact me directly or do not use the bot. Thank you!
 
-By using this bot you agree to the conditions of the [license](/LICENSE).
+<hr>
+
+This project is licensed under the [GNU General Public License 3.0](/LICENSE).
