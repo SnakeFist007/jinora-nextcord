@@ -3,21 +3,30 @@ import logging
 import nextcord
 from nextcord.ext import commands
 from dotenv import load_dotenv
-from functions.helpers import parse_embed
+from functions.helpers import parse_json, parse_embed, load_error_msg
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 ## Variables
 load_dotenv()
-
-# MongoDB
+token = os.getenv("TOKEN")
 uri = os.getenv("MONGODB")
+url = os.getenv("STABLEDIFFUSION")
+
+if not token:
+    logging.exception(".env - Bot-Token is empty!")
+    exit(1)
+if not uri:
+    logging.exception(".env - MongoDB URI is empty!")
+    exit(1)
+if not url:
+    logging.exception(".env - Stable Diffusion URL is empty!")
+    exit(1)
+
+# * MongoDB
 client = MongoClient(uri, server_api=ServerApi('1'))
 db_servers = client.servers
-db_stablediffusion = client.stablediffusion
 
-# Stable Diffusion
-url = os.getenv("URL")
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
@@ -45,6 +54,7 @@ async def on_ready():
         logging.info("Synced global commands!")
     except Exception as e:
         logging.exception(e)
+    # Set presence message
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 
@@ -79,8 +89,7 @@ async def on_guild_remove(guild):
 
 ## * Main run function
 def main():
-    # Load extensions
-    logging.info("Loading modules... \n")
+    logging.info("Loading modules...")
     
     # Connect to MongoDB   
     try:
@@ -89,13 +98,14 @@ def main():
     except Exception as e:
         logging.exception(e)
 
+    # Load cogs
     for folder in os.listdir("cogs"):
         if os.path.exists(os.path.join("cogs", folder, "cog.py")):
             bot.load_extension(f"cogs.{folder}.cog")
     
     # Start the bot
     try:
-        bot.run(os.getenv("TOKEN"))
+        bot.run(token)
     except Exception as e:
         logging.exception(e)
 

@@ -1,9 +1,25 @@
 import json
 from nextcord import Embed
 
-def parse_embed(path):
+# Load data from JSON
+def parse_json(path):
     with open(path, "r") as json_file:
         data = json.load(json_file)
     
+    return data
+
+# Load embed from JSON and parse as nextcord.Embed
+def parse_embed(path):
+    data = parse_json(path)
+    
     embed = Embed().from_dict(data)
     return embed
+
+# Default error message
+def load_error_msg():
+    with open("database\\embeds\\error_embed.json", "r") as json_file:
+        error = json.load(json_file)
+        
+    em = Embed().from_dict(error)
+        
+    return em
