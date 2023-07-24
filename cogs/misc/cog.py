@@ -3,7 +3,6 @@ import asyncio
 import requests
 from nextcord import Interaction, SlashOption, Embed
 from nextcord.ext import commands
-from typing import Optional
 from main import logging, db_servers, url, parse_json, load_error_msg
 
 
@@ -11,10 +10,30 @@ def load_embed():
     defaults = parse_json("database/embeds/status_embed.json")
     return defaults
 
+def convert_time(time):
+    pos = ["s", "m", "h", "d", "min"]
+    time_dict = {"s": 1, "m": 60, "h": 3600,
+                "d": 86400, "min": 60}
+    unit = time[-1]
+
+    # TODO: Improve error handling
+    # ! ERROR: Wrong / no unit given
+    if unit not in pos:
+        return -1
+    try:
+        val = int(time[:-1])
+    # ! ERROR: Time is not an integer
+    # TODO: Add actual Exception
+    except:
+        return -2
+
+    return val * time_dict[unit] 
+
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        
 
     # General stats of the bot
     @nextcord.slash_command(name="status", description="Pong!")
@@ -42,39 +61,31 @@ class Basics(commands.Cog, name="Misc"):
 
         await interaction.send(embed=em, ephemeral=True)
 
-    # Reminder command (Supported: seconds, months, hours & days)
 
-    @nextcord.slash_command(name="remindme", description="Reminds you about things!")
-    async def remind(self, interaction: Interaction, message: Optional[str] = SlashOption(), time: Optional[str] = SlashOption()):
-        def convert_time(time):
-            pos = ["s", "m", "h", "d", "sec", "min"]
-            time_dict = {"s": 1, "m": 60, "h": 3600,
-                         "d": 86400, "sec": 1, "min": 60}
-            unit = time[-1]
-
-            # ! ERROR: Wrong / no unit given
-            if unit not in pos:
-                return -1
-            try:
-                val = int(time[:-1])
-            # ! ERROR: Time is not an integer
-            except:
-                return -2
-
-            return val * time_dict[unit]
-
-        converted_time = convert_time(time)
+    # TODO: Create Autofeed view command
+    @nextcord.slash_command()
+    async def feeds(self, interaction: Interaction):
+        pass
+    
+    # TODO: Interval picker or as Discord Modal
+    @nextcord.slash_command()
+    async def autofeed(self, interaction: Interaction, message: str = SlashOption(), interval: str = SlashOption(), channel: nextcord.TextChannel = SlashOption()):
+        converted_time = convert_time(interval)
+        
         # ! ERROR: wrong unit
         if converted_time == -1:
             em = load_error_msg()
             await interaction.response.send_message(embed=em, ephemeral=True)
+            
         # ! ERROR: Integer Error
         elif converted_time == -2:
             em = load_error_msg()
             await interaction.response.send_message(embed=em, ephemeral=True)
+            
         # * Create reminder
         else:
-            output = f"Reminder for `{message}` set! I'll remind you in `{time}`."
+            # TODO: Autofeed command - sends a reminder every X days / X weeks / X months
+            output = f"Reminder for `{message}` set! I'll remind you in `{interval}`."
             # Set reminder
             await interaction.send(f"{interaction.user.mention} {output}", ephemeral=False)
             await asyncio.sleep(converted_time)
