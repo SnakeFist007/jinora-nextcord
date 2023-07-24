@@ -1,16 +1,13 @@
 import nextcord
 import asyncio
 import requests
-import json
 from nextcord import Interaction, SlashOption, Embed
 from nextcord.ext import commands
 from typing import Optional
-from main import logging, db_servers, url
+from main import logging, db_servers, url, parse_json, load_error_msg
 
 def load_embed():
-    with open("database\\embeds\\status_embed.json", "r") as json_file:
-        defaults = json.load(json_file)
-        
+    defaults = parse_json("database\\embeds\\status_embed.json")
     return defaults
 
 # Initialize Cog
@@ -67,16 +64,20 @@ class Basics(commands.Cog, name="Misc"):
         
         converted_time = convert_time(time)
         # ! ERROR: wrong unit
-        if converted_time == -1:    
-            await interaction.response.send_message(f"Please use a different time unit `s / sec, m / min, h, d` !", ephemeral=True)
+        if converted_time == -1:
+            em = load_error_msg()
+            await interaction.response.send_message(embed=em, ephemeral=True)
         # ! ERROR: Integer Error
         elif converted_time == -2:
-            await interaction.response.send_message(f"Time needs to be a valid number!", ephemeral=True)
+            em = load_error_msg()
+            await interaction.response.send_message(embed=em, ephemeral=True)
         # * Create reminder
         else:
             output = f"Reminder for `{message}` set! I'll remind you in `{time}`."
+            # Set reminder
             await interaction.send(f"{interaction.user.mention} {output}", ephemeral=False)
             await asyncio.sleep(converted_time)
+            # Reminder triggered
             await interaction.send(f"{interaction.user.mention} Reminder: `{message}`", ephemeral=False)
 
 

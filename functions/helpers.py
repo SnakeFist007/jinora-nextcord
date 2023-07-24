@@ -8,6 +8,13 @@ def parse_json(path):
     
     return data
 
+# Load text data from JSON
+def parse_json_utf8(path):
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    
+    return data
+    
 # Load embed from JSON and parse as nextcord.Embed
 def parse_embed(path):
     data = parse_json(path)

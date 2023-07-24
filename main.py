@@ -3,7 +3,7 @@ import logging
 import nextcord
 from nextcord.ext import commands
 from dotenv import load_dotenv
-from functions.helpers import parse_json, parse_embed, load_error_msg
+from functions.helpers import parse_json, parse_json_utf8, parse_embed, load_error_msg
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 

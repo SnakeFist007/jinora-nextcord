@@ -3,7 +3,7 @@ import json
 import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
-from main import logging
+from main import logging, parse_json_utf8
 
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
@@ -17,7 +17,8 @@ class Mystery(commands.Cog, name="Mystery"):
         
         with open(fortune_cookies, encoding="utf-8") as f:
             lines = json.load(f)
-        
+            
+        lines = parse_json_utf8(fortune_cookies)
         length = len(lines[0])
         
         rand_int = random.randint(1, length)
@@ -31,9 +32,7 @@ class Mystery(commands.Cog, name="Mystery"):
     async def fortune_8ball(self, interaction: Interaction, frage: str = SlashOption(description="Ask your question...")):
         eight_ball_answers = "database/db_8ball.json"
         
-        with open(eight_ball_answers, encoding="utf-8") as f:
-            lines = json.load(f)
-            
+        lines = parse_json_utf8(eight_ball_answers)
         length = len(lines[0])
             
         rand_int = random.randint(1, length)
