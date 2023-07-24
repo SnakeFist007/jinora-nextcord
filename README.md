@@ -51,8 +51,6 @@ Colors currently implemented with a name - converted to their int value:
 
 </details>
 
-<br>
-
 # Needed Python modules
 To install all needed modules, run:
 ```
