@@ -8,6 +8,7 @@
 
 **+++ Slash Commands ONLY! +++**
 
+
 # Useful links
 Everything need for bot development:
 - [Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
@@ -51,18 +52,38 @@ Colors currently implemented with a name - converted to their int value:
 
 </details>
 
-# Needed Python modules
-To install all needed modules, run:
-```
-pip uninstall discord.py
-pip install -r requirements
-```
+<br>
+
 
 # Running the bot
 Rename `.env.example` to `.env` and fill in your data! You need:
 1. [Discord Bot Token](https://discord.com/developers/applications)
 2. [MongoDB URI](https://account.mongodb.com/account/login)
 3. [Stable Diffusion API URL](http://127.0.0.1:7860)
+
+## Method 1: Use Docker
+Deploy the Docker image using:
+```
+docker build -t <user>/jinora-bot .
+```
+Then start:
+```
+docker run <id>
+```
+
+## Method 2: Run directly
+Alternatively, **while _not_ recommended**, you can also run it without Docker.
+
+First install all needed modules:
+```
+pip uninstall discord.py
+pip install -r requirements
+```
+
+Then start the bot:
+```
+python main.py
+```
 
 # Features
 - [x] Docker image
@@ -73,6 +94,7 @@ Rename `.env.example` to `.env` and fill in your data! You need:
 ### Possible Features
 - [ ] Moderation Commands
 - [ ] Stable Music Player
+
 
 # GDPR Legal Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
