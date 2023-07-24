@@ -1,5 +1,4 @@
 import nextcord
-import json
 import random
 from nextcord import Interaction, SlashOption, Embed
 from nextcord.ext import commands
@@ -10,12 +9,12 @@ class Mystery(commands.Cog, name="Mystery"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    # Get a fortune
-    @nextcord.slash_command(name="fortune", description="Tells a random fortune!")
-    async def fortune_cookie(self, interaction: Interaction):
-        fortune_cookies = "database/db_fortune.json"
+    # Get a random wisdom
+    @nextcord.slash_command(name="wisdom", description="Tells a random wisdom!")
+    async def wisdom(self, interaction: Interaction):
+        wisdom = "database/db_wisdom.json"
 
-        lines = parse_json_utf8(fortune_cookies)
+        lines = parse_json_utf8(wisdom)
         length = len(lines)
 
         rand_int = random.randint(1, length)
@@ -23,7 +22,7 @@ class Mystery(commands.Cog, name="Mystery"):
 
         embed1 = parse_json("database/embeds/standard_embed.json")
         embed2 = {
-            "title": "Fortune Cookie",
+            "title": "Random Wisdom",
             "description": f"{output}"
         }
         em = Embed().from_dict(embed1 | embed2)
