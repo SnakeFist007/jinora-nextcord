@@ -56,7 +56,8 @@ Colors currently implemented with a name - converted to their int value:
 # Needed Python modules
 To install all needed modules, run:
 ```
-pip install nextcord typing requests Pillow pymongo python-dotenv
+pip uninstall discord.py
+pip install -r requirements
 ```
 
 # Running the bot
@@ -66,11 +67,10 @@ Rename `.env.example` to `.env` and fill in your data! You need:
 3. [Stable Diffusion API URL](http://127.0.0.1:7860)
 
 # Features
-- [ ] Dockerize bot
-- [x] Slash Comamnds ONLY
+- [x] Docker image
 - [x] Mystery Commands
-- [ ] Stable Diffusion API
-- [ ] Webhook Embedding for Moderators
+- [ ] Integrated Stable Diffusion API
+- [ ] Webhook Implementation
 
 ### Possible Features
 - [ ] Moderation Commands

@@ -1,0 +1,6 @@
+nextcord >= 2.5.0
+typing
+requests
+Pillow
+pymongo
+python-dotenv
