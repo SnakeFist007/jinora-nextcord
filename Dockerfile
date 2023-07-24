@@ -1,9 +1,9 @@
 FROM python:3.11.4
 
+COPY requirements /bot/requirements
 WORKDIR /bot
 
-RUN pip uninstall discord.py
-RUN pip install -r requirements
+RUN pip install -r /bot/requirements
 
 COPY . .
 
