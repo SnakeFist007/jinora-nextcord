@@ -12,8 +12,12 @@ Everything need for bot development:
 - [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
 - [Embed Generator](https://embed.dan.onl)
 
-## Nextcord Colors
+<details>
+<hr>
+<summary> <b>Nextcord Color-Table</b> </summary>
+
 Colors currently implemented with a name - converted to their int value:
+
 | Name                | Int Value | Hex Code  |
 | ------------------- | :-------: | :-------: |
 | `Black`             |  2303786  | `#23272A` |
@@ -42,6 +46,10 @@ Colors currently implemented with a name - converted to their int value:
 | `White`             | 16777215  | `#FFFFFF` |
 | `Yellow`            | 16776960  | `#FFFF00` |
 [Source](https://gist.githubusercontent.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812/raw/fd8d2d0007a1c642c790bc308f27a2f2ca5c47c7/code_colors_discordjs.md)
+
+</details>
+
+<br>
 
 # Needed Python modules
 To install all needed modules, run:
