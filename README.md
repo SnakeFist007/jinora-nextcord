@@ -1,8 +1,8 @@
 # Jinora - Yet Another Discord Bot!
-![](https://img.shields.io/badge/Nextcord-2.5.0-5865F2)
-![](https://img.shields.io/badge/Python-3.11.4-0f81c2)
-![](https://img.shields.io/badge/MongoDB-7.0-13aa52)
-
+![](https://img.shields.io/badge/Python-3.11.4-0f81c2?logo=Python)
+![](https://custom-icon-badges.herokuapp.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord)
+![](https://img.shields.io/badge/MongoDB-7.0-13aa52?logo=MongoDB)
+![](https://img.shields.io/badge/Docker-4.21.1-2496ed?logo=Docker)
 
 <img src="./database/bot-avatar-rounded.png" width="250" height="250">
 
