@@ -8,7 +8,7 @@ from main import logging, db_servers, url, parse_json, load_error_msg
 
 
 def load_embed():
-    defaults = parse_json("database\\embeds\\status_embed.json")
+    defaults = parse_json("database/embeds/status_embed.json")
     return defaults
 
 # Initialize Cog

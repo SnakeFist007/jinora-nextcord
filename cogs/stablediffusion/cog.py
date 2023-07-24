@@ -20,12 +20,12 @@ def prepare_directory():
 
 # Loads default values for image generation
 def load_defaults():
-    defaults = parse_json("database\\stable_diffusion\\bot_settings.json")
+    defaults = parse_json("database/stable_diffusion/bot_settings.json")
     return defaults
 
 # Loads template for output embed
 def load_embed():
-    template = parse_json("database\\embeds\\sd_embed.json")
+    template = parse_json("database/embeds/sd_embed.json")
     return template
 
 

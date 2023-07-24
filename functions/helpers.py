@@ -24,7 +24,7 @@ def parse_embed(path):
 
 # Default error message
 def load_error_msg():
-    with open("database\\embeds\\error_embed.json", "r") as json_file:
+    with open("database/embeds/error_embed.json", "r") as json_file:
         error = json.load(json_file)
     em = Embed().from_dict(error)
         

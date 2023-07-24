@@ -56,7 +56,7 @@ Colors currently implemented with a name - converted to their int value:
 # Needed Python modules
 To install all needed modules, run:
 ```
-pip install nextcord typing requests Pillow
+pip install nextcord typing requests Pillow pymongo python-dotenv
 ```
 
 # Running the bot
