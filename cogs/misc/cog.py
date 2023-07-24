@@ -6,6 +6,7 @@ from nextcord.ext import commands
 from typing import Optional
 from main import logging, db_servers, url, parse_json, load_error_msg
 
+
 def load_embed():
     defaults = parse_json("database\\embeds\\status_embed.json")
     return defaults
@@ -32,36 +33,36 @@ class Basics(commands.Cog, name="Misc"):
         except Exception as e:
             sd_status = "Offline"
             logging.warning("Stable Diffusion is offline.")
-        
+
         embed1 = load_embed()
         embed2 = {
             "description": f"Amount of Servers joined: `{count}`\nPing: `{ping}ms`\nStable Diffusion Status: `{sd_status}`"
         }
         em = Embed().from_dict(embed1 | embed2)
-            
+
         await interaction.send(embed=em, ephemeral=True)
-    
 
     # Reminder command (Supported: seconds, months, hours & days)
+
     @nextcord.slash_command(name="remindme", description="Reminds you about things!")
     async def remind(self, interaction: Interaction, message: Optional[str] = SlashOption(), time: Optional[str] = SlashOption()):
         def convert_time(time):
             pos = ["s", "m", "h", "d", "sec", "min"]
-            time_dict = {"s": 1, "m": 60, "h": 3600, "d": 86400, "sec": 1, "min": 60}
+            time_dict = {"s": 1, "m": 60, "h": 3600,
+                         "d": 86400, "sec": 1, "min": 60}
             unit = time[-1]
-            
+
             # ! ERROR: Wrong / no unit given
             if unit not in pos:
                 return -1
             try:
                 val = int(time[:-1])
             # ! ERROR: Time is not an integer
-            except:                 
+            except:
                 return -2
-            
+
             return val * time_dict[unit]
-        
-        
+
         converted_time = convert_time(time)
         # ! ERROR: wrong unit
         if converted_time == -1:

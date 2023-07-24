@@ -15,7 +15,8 @@ tmp_path = "cogs/stablediffusion/tmp"
 def prepare_directory():
     if not os.path.exists(tmp_path):
         os.makedirs(tmp_path)
-        logging.warning("Temporary image directory missing! Creating a new one...")
+        logging.warning(
+            "Temporary image directory missing! Creating a new one...")
 
 # Loads default values for image generation
 def load_defaults():
@@ -32,22 +33,21 @@ def load_embed():
 class StableDiffusion(commands.Cog, name="StableDiffusion"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        
-        
+
     # * Generate command
     @nextcord.slash_command(name="generate", description="Generates a picture! (txt2img)")
     async def sd_generate(
-        self, interaction: Interaction, 
-        prompt: str = SlashOption(description="Insert your prompt"), 
-        negative_prompt: Optional[str] = SlashOption(description="Insert your negative prompt", required=False, default="")):
-        
+            self, interaction: Interaction,
+            prompt: str = SlashOption(description="Insert your prompt"),
+            negative_prompt: Optional[str] = SlashOption(description="Insert your negative prompt", required=False, default="")):
+
         # Put command message on hold
         await interaction.response.defer()
         logging.info("Recieving Stable Diffusion txt2img instruction...")
         message = await interaction.channel.fetch_message(int(interaction.channel.last_message_id))
-        
+
         prepare_directory()
-        
+
         # Assemble payload for Stable Diffusion
         defaults = load_defaults()
         user_input = {
@@ -55,34 +55,36 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
             "negative_prompt": negative_prompt,
         }
         prt_payload = defaults | user_input
-        
+
         # Send request to Stable Diffusion API
         try:
             logging.info(f"Sending prompt payload to {url}.")
-            res = requests.post(url=f"{url}/sdapi/v1/txt2img", json=prt_payload)
-            
+            res = requests.post(
+                url=f"{url}/sdapi/v1/txt2img", json=prt_payload)
+
         except requests.exceptions.RequestException:
             logging.exception("Stable Diffusion Server is offline!")
             em = load_error_msg()
             await interaction.channel.send(embed=em)
-            
+
         except Exception as e:
             logging.exception(e)
-            
+
             em = load_error_msg()
             await interaction.channel.send(embed=em)
-        
-        
+
         # Extract image and prepare for Discord
         try:
             r = res.json()
             for i in r["images"]:
-                image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
+                image = Image.open(io.BytesIO(
+                    base64.b64decode(i.split(",", 1)[0])))
                 image.save(f"{tmp_path}/output.png")
                 logging.info(f"Saving image to {tmp_path}/output.png.")
-        
-            file = nextcord.File(f"{tmp_path}/output.png", filename="output.png")
-        
+
+            file = nextcord.File(
+                f"{tmp_path}/output.png", filename="output.png")
+
             # Send image as response
             embed1 = load_embed()
             embed2 = {
@@ -92,16 +94,17 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
                 "description": f"Prompt: `{prompt}`"
             }
             em = Embed().from_dict(embed1 | embed2)
-            
+
             await interaction.channel.send(embed=em, file=file)
             logging.info("Sending repsonse message to channel.")
-                
+
         except (nextcord.errors.ApplicationInvokeError, UnboundLocalError):
-            logging.exception("Command failed due to Stable Diffusion being offline.")
-            
+            logging.exception(
+                "Command failed due to Stable Diffusion being offline.")
+
         except Exception as e:
             logging.exception(e)
-        
+
         # Cleanup
         finally:
             await message.delete()

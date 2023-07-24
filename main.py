@@ -7,7 +7,7 @@ from functions.helpers import parse_json, parse_json_utf8, parse_embed, load_err
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-## Variables
+# Variables
 load_dotenv()
 token = os.getenv("TOKEN")
 uri = os.getenv("MONGODB")
@@ -36,7 +36,7 @@ bot = commands.Bot(intents=intents, help_command=None)
 # * Logging
 logging.basicConfig(
     level=logging.INFO,
-    format="[%(levelname)s] %(asctime)s - %(message)s", 
+    format="[%(levelname)s] %(asctime)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
     handlers=[
         logging.FileHandler("jinora-nextcord.log"),
@@ -44,7 +44,7 @@ logging.basicConfig(
     ]
 )
 
-## Events
+# Events
 # * ON STARTUP
 @bot.event
 async def on_ready():
@@ -63,8 +63,8 @@ async def on_ready():
 async def on_guild_join(guild):
     logging.info(f"Joined server {guild.id}!")
     # Check if server ID has already been added to the list
-    if db_servers.joined_servers_list.find_one( { "server_id": guild.id } ) is None:
-        db_servers.joined_servers_list.insert_one( { "server_id": guild.id } )
+    if db_servers.joined_servers_list.find_one({"server_id": guild.id}) is None:
+        db_servers.joined_servers_list.insert_one({"server_id": guild.id})
         logging.info(f"Added server {guild.id} to database.")
     else:
         logging.warning(f"Server {guild.id} was already on the list!")
@@ -73,25 +73,26 @@ async def on_guild_join(guild):
     if guild.system_channel is not None:
         em = parse_embed("database/embeds/welcome_embed.json")
         await guild.system_channel.send(embed=em)
-    
+
 
 # * ON SERVER LEAVE
 @bot.event
 async def on_guild_remove(guild):
     logging.info(f"Left server {guild.id}!")
     # Check if server ID was already deleted from the list
-    if db_servers.joined_servers_list.find_one( { "server_id": guild.id } ) is not None:
-        db_servers.joined_servers_list.delete_one( { "server_id": guild.id } )
+    if db_servers.joined_servers_list.find_one({"server_id": guild.id}) is not None:
+        db_servers.joined_servers_list.delete_one({"server_id": guild.id})
         logging.info(f"Removed server {guild.id} from database.")
     else:
-        logging.warning(f"Server {guild.id} was already removed from the list!")
+        logging.warning(
+            f"Server {guild.id} was already removed from the list!")
 
 
-## * Main run function
+# * Main run function
 def main():
     logging.info("Loading modules...")
-    
-    # Connect to MongoDB   
+
+    # Connect to MongoDB
     try:
         client.admin.command('ping')
         logging.info("Successfully connected to MongoDB!")
@@ -102,12 +103,13 @@ def main():
     for folder in os.listdir("cogs"):
         if os.path.exists(os.path.join("cogs", folder, "cog.py")):
             bot.load_extension(f"cogs.{folder}.cog")
-    
+
     # Start the bot
     try:
         bot.run(token)
     except Exception as e:
         logging.exception(e)
+
 
 if __name__ == "__main__":
     main()
