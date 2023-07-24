@@ -10,7 +10,6 @@
 Everything need for bot development:
 - [Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
 - [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
-- [Discord Developer Portal](https://discord.com/developers/applications)
 - [Embed Generator](https://embed.dan.onl)
 
 ## Nextcord Colors
@@ -51,7 +50,10 @@ pip install nextcord typing requests Pillow
 ```
 
 # Running the bot
-Rename `.env.example` to `.env` and fill in your Discord bot token!
+Rename `.env.example` to `.env` and fill in your data! You need:
+1. [Discord Bot Token](https://discord.com/developers/applications)
+2. [MongoDB URI](https://account.mongodb.com/account/login)
+3. [Stable Diffusion API URL](http://127.0.0.1:7860)
 
 # GDPR Legal Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
