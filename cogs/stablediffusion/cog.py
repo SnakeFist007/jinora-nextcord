@@ -9,6 +9,7 @@ from typing import Optional
 from PIL import Image
 from main import logging, url, load_error_msg, parse_json
 
+
 tmp_path = "cogs/stablediffusion/tmp"
 
 # Create tmp directory for generated Stable Diffusion images
@@ -99,8 +100,7 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
             logging.info("Sending repsonse message to channel.")
 
         except (nextcord.errors.ApplicationInvokeError, UnboundLocalError):
-            logging.exception(
-                "Command failed due to Stable Diffusion being offline.")
+            logging.exception("Command failed due to Stable Diffusion being offline.")
 
         except Exception as e:
             logging.exception(e)
