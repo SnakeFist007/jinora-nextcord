@@ -3,7 +3,8 @@ import requests
 import asyncio
 from nextcord.interactions import Interaction
 from nextcord import Interaction, SlashOption, Embed
-from nextcord.ext import commands
+from nextcord.ext import commands, application_checks
+from typing import Optional
 from main import logging
 from main import db_servers, db_tasks
 from main import parse_json, set_reminder
@@ -48,21 +49,39 @@ class Basics(commands.Cog, name="Misc"):
         await interaction.send(embed=em, ephemeral=True)
 
 
-    # TODO: Create Autofeed view command
+
+    # TODO: Create Autofeed admin view command (view all feeds from server)
+    @nextcord.slash_command(name="admin_view", description="Lists all active feeds from the server")
+    @application_checks.has_permissions(administrator=True)
+    async def autofeed_admin_view(self, interaction: Interaction):
+        pass
+
+
+    # TODO: Create Autofeed view command (view all feeds from user)
     @nextcord.slash_command(name="view", description="Lists all active feeds")
     async def autofeed_view(self, interaction: Interaction):
-        open_tasks = db_tasks.open.find({})
-        if open_tasks is not None:
-            for task in open_tasks:
-                logging.info(f"Open task: {task} found!")
-                #set_reminder(task)
-        else:
-            logging.info("No open tasks!")
+        pass
             
             
+    # TODO: Create Autofeed admin delete command (delete a feed from server)
+    @nextcord.slash_command(name="admin_delete", description="Deletes a feed from the server")
+    @application_checks.has_permissions(administrator=True)
+    async def autofeed_admin_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
+                              purge: Optional[str] = SlashOption(
+                                    choices={"True": True,
+                                             "False": False}
+                                    )):
+        # db_tasks.open.delete_one({"_id": task["_id"]})
+        pass
+           
+           
     # TODO: Create Autofeed delete command
     @nextcord.slash_command(name="delete", description="Deletes a feed")
-    async def autofeed_delete(self, interaction: Interaction, feed: str = SlashOption()):
+    async def autofeed_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
+                              purge: Optional[str] = SlashOption(
+                                    choices={"True": True,
+                                             "False": False}
+                                    )):
         # db_tasks.open.delete_one({"_id": task["_id"]})
         pass
     
@@ -87,6 +106,7 @@ class Basics(commands.Cog, name="Misc"):
         task = {
             "webhook": webhook,
             "server_id": interaction.guild.id,
+            "user_id": interaction.user.id,
             "role_id": role.id,
             "day": day,
             "time": time,
@@ -96,7 +116,7 @@ class Basics(commands.Cog, name="Misc"):
         embed1 = parse_json("database/embeds/standard_embed.json")
         embed2 = {
             "title": "Reminder succesfully created!",
-            "description": f"Your reminder `{message}` for @{role.name} was set!"
+            "description": f"Your reminder `{message}` for <&@{role.name}> was set!"
         }
         em = Embed().from_dict(embed1 | embed2)
               
