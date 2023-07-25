@@ -15,7 +15,9 @@ Everything need for bot development:
 - [Embed Generator](https://embed.dan.onl)
 
 <details>
+
 <hr>
+
 <summary> <b>Nextcord Color-Table</b> </summary>
 
 Colors currently implemented with a name - converted to their int value:
@@ -93,6 +95,9 @@ python main.py
 ### Possible Features
 - [ ] Moderation Commands
 - [ ] Stable Music Player
+
+### ToDos
+- [ ] Permissions (not just Administrator for the bot)
 
 
 # GDPR Legal Disclaimer
