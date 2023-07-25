@@ -1,17 +1,22 @@
 import os
 import logging
 import nextcord
+import asyncio
 from nextcord.ext import commands
 from dotenv import load_dotenv
-from functions.helpers import parse_json, parse_json_utf8, parse_embed, load_error_msg
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from discord_webhook import DiscordWebhook as Webhook
+from datetime import datetime, timedelta
+from dateutil import tz
+from functions.helpers import parse_json, parse_json_utf8, parse_embed, load_error_msg
 
 # Variables
 load_dotenv()
 token = os.getenv("TOKEN")
 uri = os.getenv("MONGODB")
 url = os.getenv("STABLEDIFFUSION")
+timezone = os.getenv("TIMEZONE")
 
 if not token:
     logging.exception(".env - Bot-Token is empty!")
@@ -26,7 +31,9 @@ if not url:
 # * MongoDB
 client = MongoClient(uri, server_api=ServerApi('1'))
 db_servers = client.servers
-
+db_roles = client.servers.roles
+db_reminders = client.reminders
+db_tasks = client.tasks
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
@@ -44,10 +51,62 @@ logging.basicConfig(
     ]
 )
 
+
+# * Reminders
+def get_weekday(desired_day, zone):
+    next_day = (desired_day - datetime.now(zone).weekday()) % 7
+    if next_day == 0:
+        next_day = 7
+    result = datetime.now(zone) + timedelta(days=next_day)
+    
+    return result
+
+
+async def set_reminder(task, timezone):
+    webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
+    zone = tz.gettz(timezone)
+    dt_time = datetime.strptime(task["time"], "%H:%M")
+    
+    next_date = get_weekday(task["day"], zone)
+    
+    # Prepare message
+    embed1 = parse_json("database/embeds/standard_embed.json")
+    embed2 = {
+        "title": "Reminder!",
+        "description": f"{task['message']}"
+    }
+    em = embed1 | embed2
+    
+    webhook.add_embed(em)
+    
+    # Create scheduled reminder
+    next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
+    wait_time = (next_reminder - datetime.now(zone)).total_seconds()
+    logging.info(f"Setting reminder timer for {wait_time} seconds...")
+    
+    await asyncio.sleep(wait_time)
+    
+    try:
+        webhook.execute()
+        logging.info(f"Sending embed through webhook: {task['webhook']}")
+    except Exception as e:
+        logging.exception(e)
+
+
 # Events
 # * ON STARTUP
 @bot.event
 async def on_ready():
+    # Grab open tasks from MongoDB
+    logging.info("Grabbing open tasks from database...")
+    open_tasks = db_tasks.open.find({})
+    if open_tasks:
+        for task in open_tasks:
+            logging.info(f"Open task: {task} found!")
+            asyncio.create_task(set_reminder(task, timezone))
+    else:
+        logging.info("No open tasks!")
+        
     logging.info("Jinora#2184 is ready!")
     try:
         await bot.sync_application_commands()

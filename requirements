@@ -4,3 +4,4 @@ requests
 Pillow
 pymongo
 python-dotenv
+discord-webhook
