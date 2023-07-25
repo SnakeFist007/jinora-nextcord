@@ -8,7 +8,6 @@
 
 **+++ Slash Commands ONLY! +++**
 
-
 # Useful links
 Everything need for bot development:
 - [Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
@@ -56,6 +55,7 @@ Colors currently implemented with a name - converted to their int value:
 
 
 # Running the bot
+
 Rename `.env.example` to `.env` and fill in your data! You need:
 1. [Discord Bot Token](https://discord.com/developers/applications)
 2. [MongoDB URI](https://account.mongodb.com/account/login)
@@ -72,11 +72,10 @@ docker run <id>
 ```
 
 ## Method 2: Run directly
-Alternatively, **while _not_ recommended**, you can also run it without Docker.
+Alternatively, **while _not_ recommended**, you can run it without Docker.
 
 First install all needed modules:
 ```
-pip uninstall discord.py
 pip install -r requirements
 ```
 
@@ -89,7 +88,7 @@ python main.py
 - [x] Docker image
 - [x] Mystery Commands
 - [ ] Integrated Stable Diffusion API
-- [ ] Webhook Implementation
+- [x] Webhook Implementation
 
 ### Possible Features
 - [ ] Moderation Commands
