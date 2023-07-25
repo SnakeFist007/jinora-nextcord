@@ -116,7 +116,7 @@ class Basics(commands.Cog, name="Misc"):
         embed1 = parse_json("database/embeds/standard_embed.json")
         embed2 = {
             "title": "Reminder succesfully created!",
-            "description": f"Your reminder `{message}` for <&@{role.name}> was set!"
+            "description": f"Your reminder `{message}` for <&@{role.id}> was set!"
         }
         em = Embed().from_dict(embed1 | embed2)
               
