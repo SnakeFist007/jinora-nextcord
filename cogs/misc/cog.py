@@ -68,8 +68,8 @@ class Basics(commands.Cog, name="Misc"):
     @application_checks.has_permissions(administrator=True)
     async def autofeed_admin_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
                               purge: Optional[str] = SlashOption(
-                                    choices={"True": True,
-                                             "False": False}
+                                    choices={"True": "True",
+                                             "False": "False"}
                                     )):
         # db_tasks.open.delete_one({"_id": task["_id"]})
         pass
@@ -79,8 +79,8 @@ class Basics(commands.Cog, name="Misc"):
     @nextcord.slash_command(name="delete", description="Deletes a feed")
     async def autofeed_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
                               purge: Optional[str] = SlashOption(
-                                    choices={"True": True,
-                                             "False": False}
+                                    choices={"True": "True",
+                                             "False": "False"}
                                     )):
         # db_tasks.open.delete_one({"_id": task["_id"]})
         pass
