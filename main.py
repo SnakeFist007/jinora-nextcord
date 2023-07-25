@@ -53,6 +53,7 @@ logging.basicConfig(
 
 
 # * Reminders
+# Calculate next occurance of weekday
 def get_weekday(desired_day, zone):
     next_day = (desired_day - datetime.now(zone).weekday()) % 7
     if next_day == 0:
@@ -61,12 +62,13 @@ def get_weekday(desired_day, zone):
     
     return result
 
-
+# Generate reminder & send reminder when ready
 async def set_reminder(task, timezone):
     webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
     zone = tz.gettz(timezone)
     dt_time = datetime.strptime(task["time"], "%H:%M")
     
+    # Get next occurance
     next_date = get_weekday(task["day"], zone)
     
     # Prepare message
@@ -79,7 +81,7 @@ async def set_reminder(task, timezone):
     
     webhook.add_embed(em)
     
-    # Create scheduled reminder
+    # Start scheduled reminder
     next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
     wait_time = (next_reminder - datetime.now(zone)).total_seconds()
     logging.info(f"Setting reminder timer for {wait_time} seconds...")

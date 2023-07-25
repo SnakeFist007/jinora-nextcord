@@ -15,6 +15,11 @@ def load_embed():
     defaults = parse_json("database/embeds/status_embed.json")
     return defaults
 
+def convert_day(day):
+    key = { 0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday" }
+    
+    return key[day]
+
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
@@ -47,47 +52,10 @@ class Basics(commands.Cog, name="Misc"):
         em = Embed().from_dict(embed1 | embed2)
 
         await interaction.send(embed=em, ephemeral=True)
-
-
-
-    # TODO: Create Autofeed admin view command (view all feeds from server)
-    @nextcord.slash_command(name="admin_view", description="Lists all active feeds from the server")
-    @application_checks.has_permissions(administrator=True)
-    async def autofeed_admin_view(self, interaction: Interaction):
-        pass
-
-
-    # TODO: Create Autofeed view command (view all feeds from user)
-    @nextcord.slash_command(name="view", description="Lists all active feeds")
-    async def autofeed_view(self, interaction: Interaction):
-        pass
-            
-            
-    # TODO: Create Autofeed admin delete command (delete a feed from server)
-    @nextcord.slash_command(name="admin_delete", description="Deletes a feed from the server")
-    @application_checks.has_permissions(administrator=True)
-    async def autofeed_admin_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
-                              purge: Optional[str] = SlashOption(
-                                    choices={"True": "True",
-                                             "False": "False"}
-                                    )):
-        # db_tasks.open.delete_one({"_id": task["_id"]})
-        pass
-           
-           
-    # TODO: Create Autofeed delete command
-    @nextcord.slash_command(name="delete", description="Deletes a feed")
-    async def autofeed_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
-                              purge: Optional[str] = SlashOption(
-                                    choices={"True": "True",
-                                             "False": "False"}
-                                    )):
-        # db_tasks.open.delete_one({"_id": task["_id"]})
-        pass
     
     
-    @nextcord.slash_command(name="autofeed", description="Creates a recurring reminder")
-    async def autofeed_create(self, interaction: Interaction,  
+    @nextcord.slash_command(name="feed", description="Creates a recurring reminder")
+    async def feed_create(self, interaction: Interaction,  
                        role: nextcord.Role = SlashOption(), 
                        day: int = SlashOption(
                            choices={
@@ -116,7 +84,7 @@ class Basics(commands.Cog, name="Misc"):
         embed1 = parse_json("database/embeds/standard_embed.json")
         embed2 = {
             "title": "Reminder succesfully created!",
-            "description": f"Your reminder `{message}` for <&@{role.id}> was set!"
+            "description": f"Your reminder `{message}` for <&@{role.id}> was set! Running every {convert_day(day)} at {time}."
         }
         em = Embed().from_dict(embed1 | embed2)
               
@@ -124,6 +92,66 @@ class Basics(commands.Cog, name="Misc"):
         asyncio.create_task(set_reminder(task, timezone))
         
         await interaction.response.send_message(embed=em, ephemeral=True)
+        
+    
+    @nextcord.slash_command(name="view", description="Lists all active feeds")
+    async def feed_view(self, interaction: Interaction):
+        embed1 = parse_json("database/embeds/standard_embed.json")
+        embed2 = { "title": "Active Feeds" }
+        em = Embed.from_dict(embed1 | embed2)
+        
+        open_tasks = list(db_tasks.open.find({"user_id": interaction.user.id, "server_id": interaction.guild.id}))
+        if open_tasks:
+            for index, task in enumerate(open_tasks):
+                em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
+                             value=f"<&@{task['role_id']}> {task['message']}")
+        else:
+            em.add_field(name="No feeds found!",
+                         value="Add a feed with the `/feed` command.")
+            
+        await interaction.response.send_message(embed=em, ephemeral=True)
+    
+    
+    @nextcord.slash_command(name="admin_view", description="Lists all active feeds from the server")
+    @application_checks.has_permissions(administrator=True)
+    async def feed_admin_view(self, interaction: Interaction):
+        embed1 = parse_json("database/embeds/standard_embed.json")
+        embed2 = { "title": "Active Feeds" }
+        em = Embed.from_dict(embed1 | embed2)
+        
+        open_tasks = list(db_tasks.open.find({"server_id": interaction.guild.id}))
+        if open_tasks:
+            for index, task in enumerate(open_tasks):
+                em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
+                             value=f"<&@{task['role_id']}> {task['message']}")
+        else:
+            em.add_field(name="No feeds found!",
+                         value="Add a feed with the `/feed` command.")
+            
+        await interaction.response.send_message(embed=em, ephemeral=True)
+            
+           
+    # TODO: Create Autofeed delete command
+    @nextcord.slash_command(name="delete", description="Deletes a feed")
+    async def feed_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
+                              purge: Optional[str] = SlashOption(
+                                    choices={"True": "True",
+                                             "False": "False"}
+                                    )):
+        # db_tasks.open.delete_one({"_id": task["_id"]})
+        pass
+    
+    
+    # TODO: Create Autofeed admin delete command (delete a feed from server)
+    @nextcord.slash_command(name="admin_delete", description="Deletes a feed from the server")
+    @application_checks.has_permissions(administrator=True)
+    async def feed_admin_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
+                              purge: Optional[str] = SlashOption(
+                                    choices={"True": "True",
+                                             "False": "False"}
+                                    )):
+        # db_tasks.open.delete_one({"_id": task["_id"]})
+        pass
 
 
 # Add Cog to bot
