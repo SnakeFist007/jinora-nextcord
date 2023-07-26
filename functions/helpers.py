@@ -19,6 +19,7 @@ def parse_json_utf8(path):
     
     return data
 
+
 # * Fuse 2 JSON objects
 def fuse_json(json1, json2):
     return json1 | json2
@@ -46,6 +47,7 @@ def embed_defaults_thumbnail():
     return parse_json_raw(f"{embed_path}/defaults.json", "default_thumbnail")
 
 
+
 # ! EXTERNAL USE ONLY!
 # Returns JSON object
 def bake_raw(raw):
@@ -54,12 +56,14 @@ def bake_raw(raw):
 def bake_raw_thumbnail(raw):
     return embed_defaults_thumbnail() | raw
 
+
 # Returns nextcord.Embed() object
 def bake_embed(raw):
     return Embed().from_dict(embed_defaults() | raw)
 
 def bake_embed_thumbnail(raw):
     return Embed().from_dict(embed_defaults_thumbnail() | raw)
+
 
 
 # ! INTERNAL USE ONLY!
@@ -73,26 +77,28 @@ def create_embed_thumbnail(path, pointer):
     return Embed().from_dict(embed_defaults_thumbnail() | raw)
 
 
-# Pre-built embeds
-# * ON_JOIN Welcome message
+
+# * Pre-built embeds
+# ON_JOIN Welcome message
 def em_welcome():
     return create_embed_thumbnail(f"{embed_path}/messages.json", "welcome")
 
-# * /help message
+# /help message
 def em_help():
     return create_embed(f"{embed_path}/messages.json", "help")
 
-# * /generate message
+# /generate message
 def raw_generate():
     return parse_json_raw(f"{embed_path}/messages.json", "stablediffusion")
 
-# * ERROR: Default message
+# ERROR: Default message
 def em_error():
     return create_embed(f"{embed_path}/errors.json", "error_default")
 
-# * ERROR: Insufficient perms
+# ERROR: Insufficient perms
 def em_error_perms():
     return create_embed(f"{embed_path}/errors.json", "error_permissions")
 
+# ERROR: Stable Diffusion is offline
 def em_error_offline():
     return create_embed(f"{embed_path}/errors.json", "error_offline")
