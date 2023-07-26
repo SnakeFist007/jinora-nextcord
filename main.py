@@ -3,6 +3,7 @@ import logging
 import nextcord
 import asyncio
 from nextcord.ext import commands
+from dpyConsole import Console
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -49,6 +50,7 @@ db_tasks = client.tasks
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
 bot = commands.Bot(intents=intents, help_command=None)
+console = Console(bot)
 
 
 # * Reminders
@@ -92,7 +94,7 @@ async def set_reminder(task, timezone):
         logging.exception(e)
 
 
-# Events
+# Events              
 # * ON STARTUP
 @bot.event
 async def on_ready():
@@ -144,6 +146,16 @@ async def on_guild_remove(guild):
         logging.warning(f"Server {guild.id} was already removed from the list!")
 
 
+# * CONSOLE COMMANDS
+# Reload all cogs
+@console.command()
+async def reload():
+    logging.warning("Reloading all cogs!")
+    for folder in os.listdir("cogs"):
+        if os.path.exists(os.path.join("cogs", folder, "cog.py")):
+            bot.reload_extension(f"cogs.{folder}.cog")
+            
+
 # * Main run function
 def main():
     logging.info("Loading modules...")
@@ -162,6 +174,7 @@ def main():
 
     # Start the bot
     try:
+        console.start()
         bot.run(token)
     except Exception as e:
         logging.exception(e)

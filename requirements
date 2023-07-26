@@ -6,3 +6,6 @@ pymongo
 python-dotenv
 discord-webhook
 python-dateutil
+discord.py
+setuptools~=54.0.0
+discord.py-Console
