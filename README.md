@@ -87,17 +87,17 @@ python main.py
 ```
 
 # Features
-- [x] Docker image
+- [x] Deployable via Docker
+- [x] Reminders over Webhook Implementation
+- [x] Integrated Stable Diffusion API (local servers only)
 - [x] Mystery Commands
-- [ ] Integrated Stable Diffusion API
-- [x] Webhook Implementation
 
-### Possible Features
+## Possible Features
 - [ ] Moderation Commands
-- [ ] Stable Music Player
+- [ ] Stable Music Player (via Wavelink)
 
-### ToDos
-- [ ] Permissions (not just Administrator for the bot)
+## To-Dos
+- [ ] Fine-tuned Permissions (not just Administrator for the bot)
 
 
 # GDPR Legal Disclaimer
