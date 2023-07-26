@@ -1,6 +1,6 @@
 import nextcord
 import random
-from nextcord import Interaction, SlashOption, Embed
+from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from main import logging, parse_json_utf8, bake_embed
 

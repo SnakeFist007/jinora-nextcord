@@ -3,8 +3,8 @@ import requests
 import io
 import base64
 import os
-from nextcord import Interaction, SlashOption, Embed
-from nextcord.ext import commands, application_checks
+from nextcord import Interaction, SlashOption
+from nextcord.ext import commands
 from typing import Optional
 from PIL import Image
 from main import logging, url, parse_json, em_error, em_error_offline, fuse_json, raw_generate, bake_embed

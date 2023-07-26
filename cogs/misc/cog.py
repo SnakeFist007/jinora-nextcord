@@ -1,13 +1,13 @@
 import nextcord
 import asyncio
 from nextcord.interactions import Interaction
-from nextcord import Interaction, SlashOption, Embed
+from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 from typing import Optional
 from main import logging
 from main import db_servers, db_tasks
 from main import parse_json, set_reminder, bake_embed
-from main import url, timezone
+from main import timezone
 
 
 def load_embed():
