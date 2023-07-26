@@ -43,8 +43,6 @@ if not url:
 # * MongoDB
 client = MongoClient(uri, server_api=ServerApi('1'))
 db_servers = client.servers
-db_roles = client.servers.roles
-db_reminders = client.reminders
 db_tasks = client.tasks
 
 # * Intents & Bot initialization
