@@ -37,17 +37,17 @@ class Basics(commands.Cog, name="Misc"):
         ping = round(self.bot.latency * 1000)
         logging.info(f"Ping is {ping}ms.")
         # Check if Stable Diffusion is running
-        try:
-            requests.get(url=f"{url}/internal/ping")
-            sd_status = "OK"
-            logging.info("Stable Diffusion is online.")
-        except Exception as e:
-            sd_status = "Offline"
-            logging.warning("Stable Diffusion is offline.")
+        # try:
+        #     requests.get(url=f"{url}/internal/ping")
+        #     sd_status = "OK"
+        #     logging.info("Stable Diffusion is online.")
+        # except Exception as e:
+        #     sd_status = "Offline"
+        #     logging.warning("Stable Diffusion is offline.")
 
         embed1 = load_embed()
         embed2 = {
-            "description": f"Amount of Servers joined: `{count}`\nPing: `{ping}ms`\nStable Diffusion Status: `{sd_status}`"
+            "description": f"Amount of Servers joined: `{count}`\nPing: `{ping}ms`"
         }
         em = Embed().from_dict(embed1 | embed2)
 
