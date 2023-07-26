@@ -4,10 +4,10 @@ import io
 import base64
 import os
 from nextcord import Interaction, SlashOption, Embed
-from nextcord.ext import commands
+from nextcord.ext import commands, application_checks
 from typing import Optional
 from PIL import Image
-from main import logging, url, load_error_msg, parse_json
+from main import logging, url, load_error_msg, parse_json, load_perms_msg
 
 
 tmp_path = "cogs/stablediffusion/tmp"
@@ -29,6 +29,11 @@ def load_embed():
     template = parse_json("database/embeds/sd_embed.json")
     return template
 
+def is_me(server_id):
+    def predicate(interaction: Interaction):
+        return interaction.guild.id == server_id
+    return application_checks.check(predicate)
+
 
 # Initialize Cog
 class StableDiffusion(commands.Cog, name="StableDiffusion"):
@@ -37,6 +42,7 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
 
     # * Generate command
     @nextcord.slash_command(name="generate", description="Generates a picture! (txt2img)")
+    @is_me("1040391660560986274")
     async def sd_generate(
             self, interaction: Interaction,
             prompt: str = SlashOption(description="Insert your prompt"),
@@ -114,6 +120,13 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
                 logging.info("Removed temporary files.")
             except OSError as e:
                 logging.exception(e)
+                
+                
+    @sd_generate.error
+    async def sd_generate_error(self, ctx, error):
+        if isinstance(error, nextcord.errors.ApplicationCheckFailure):
+            em = load_perms_msg()
+            await ctx.response.send_message(embed=em, ephemeral=True)
 
 # Add Cog to bot
 def setup(bot):

@@ -29,3 +29,7 @@ def load_error_msg():
     em = Embed().from_dict(error)
         
     return em
+
+# Insufficient perms
+def load_perms_msg(): 
+    return parse_embed("database/embeds/perms_embed.json")
