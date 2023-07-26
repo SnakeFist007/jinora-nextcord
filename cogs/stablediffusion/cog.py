@@ -7,7 +7,7 @@ from nextcord import Interaction, SlashOption, Embed
 from nextcord.ext import commands, application_checks
 from typing import Optional
 from PIL import Image
-from main import logging, url, load_error_msg, parse_json, load_perms_msg
+from main import logging, url, parse_json, em_error, em_error_offline, fuse_json, raw_generate, bake_embed
 
 
 tmp_path = "cogs/stablediffusion/tmp"
@@ -24,16 +24,6 @@ def load_defaults():
     defaults = parse_json("database/stable_diffusion/bot_settings.json")
     return defaults
 
-# Loads template for output embed
-def load_embed():
-    template = parse_json("database/embeds/sd_embed.json")
-    return template
-
-def is_me(server_id):
-    def predicate(interaction: Interaction):
-        return interaction.guild.id == server_id
-    return application_checks.check(predicate)
-
 
 # Initialize Cog
 class StableDiffusion(commands.Cog, name="StableDiffusion"):
@@ -42,7 +32,6 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
 
     # * Generate command
     @nextcord.slash_command(name="generate", description="Generates a picture! (txt2img)")
-    @is_me("1040391660560986274")
     async def sd_generate(
             self, interaction: Interaction,
             prompt: str = SlashOption(description="Insert your prompt"),
@@ -71,14 +60,11 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
 
         except requests.exceptions.RequestException:
             logging.exception("Stable Diffusion Server is offline!")
-            em = load_error_msg()
-            await interaction.channel.send(embed=em)
+            await interaction.channel.send(embed=em_error_offline())
 
         except Exception as e:
             logging.exception(e)
-
-            em = load_error_msg()
-            await interaction.channel.send(embed=em)
+            await interaction.channel.send(embed=em_error())
 
         # Extract image and prepare for Discord
         try:
@@ -93,14 +79,13 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
                 f"{tmp_path}/output.png", filename="output.png")
 
             # Send image as response
-            embed1 = load_embed()
-            embed2 = {
+            embed = {
                 "image": {
                     "url": "attachment://output.png"
                 },
                 "description": f"Prompt: `{prompt}`"
             }
-            em = Embed().from_dict(embed1 | embed2)
+            em = bake_embed(fuse_json(raw_generate(), embed))
 
             await interaction.channel.send(embed=em, file=file)
             logging.info("Sending repsonse message to channel.")
@@ -121,12 +106,6 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
             except OSError as e:
                 logging.exception(e)
                 
-                
-    @sd_generate.error
-    async def sd_generate_error(self, ctx, error):
-        if isinstance(error, nextcord.errors.ApplicationCheckFailure):
-            em = load_perms_msg()
-            await ctx.response.send_message(embed=em, ephemeral=True)
 
 # Add Cog to bot
 def setup(bot):

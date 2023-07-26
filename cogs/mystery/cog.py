@@ -2,7 +2,7 @@ import nextcord
 import random
 from nextcord import Interaction, SlashOption, Embed
 from nextcord.ext import commands
-from main import logging, parse_json_utf8, parse_json
+from main import logging, parse_json_utf8, bake_embed
 
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
@@ -20,14 +20,12 @@ class Mystery(commands.Cog, name="Mystery"):
         rand_int = random.randint(1, length)
         output = lines[str(rand_int)]
 
-        embed1 = parse_json("database/embeds/standard_embed.json")
-        embed2 = {
+        embed = {
             "title": "Random Wisdom",
             "description": f"{output}"
         }
-        em = Embed().from_dict(embed1 | embed2)
 
-        await interaction.response.send_message(embed=em, ephemeral=True)
+        await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
 
     # Get an 8-Ball answer for a serious question
     @nextcord.slash_command(name="8ball", description="Answers important questions!")
@@ -40,14 +38,12 @@ class Mystery(commands.Cog, name="Mystery"):
         rand_int = random.randint(1, length)
         output = lines[str(rand_int)]
         
-        embed1 = parse_json("database/embeds/standard_embed.json")
-        embed2 = {
+        embed = {
             "title": "8-Ball Answer",
             "description": f"{output}"
         }
-        em = Embed().from_dict(embed1 | embed2)
 
-        await interaction.response.send_message(embed=em, ephemeral=True)
+        await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
 
 
 # Add Cog to bot

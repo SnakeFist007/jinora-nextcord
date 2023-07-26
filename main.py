@@ -72,14 +72,12 @@ async def set_reminder(task, timezone):
     next_date = get_weekday(task["day"], zone)
     
     # Prepare message
-    embed1 = parse_json("database/embeds/standard_embed.json")
-    embed2 = {
+    embed = {
         "title": "Reminder!",
         "description": f"{task['message']}"
     }
-    em = embed1 | embed2
     
-    webhook.add_embed(em)
+    webhook.add_embed(bake_raw(embed))
     
     # Start scheduled reminder
     next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
@@ -132,8 +130,7 @@ async def on_guild_join(guild):
 
     # Send welcome message to system channel, if available
     if guild.system_channel is not None:
-        em = parse_embed("database/embeds/welcome_embed.json")
-        await guild.system_channel.send(embed=em)
+        await guild.system_channel.send(embed=em_welcome())
 
 
 # * ON SERVER LEAVE
@@ -145,8 +142,7 @@ async def on_guild_remove(guild):
         db_servers.joined_servers_list.delete_one({"server_id": guild.id})
         logging.info(f"Removed server {guild.id} from database.")
     else:
-        logging.warning(
-            f"Server {guild.id} was already removed from the list!")
+        logging.warning(f"Server {guild.id} was already removed from the list!")
 
 
 # * Main run function

@@ -1,5 +1,4 @@
 import nextcord
-import requests
 import asyncio
 from nextcord.interactions import Interaction
 from nextcord import Interaction, SlashOption, Embed
@@ -7,7 +6,7 @@ from nextcord.ext import commands, application_checks
 from typing import Optional
 from main import logging
 from main import db_servers, db_tasks
-from main import parse_json, set_reminder
+from main import parse_json, set_reminder, bake_embed
 from main import url, timezone
 
 
@@ -36,22 +35,12 @@ class Basics(commands.Cog, name="Misc"):
         # Calculate latency
         ping = round(self.bot.latency * 1000)
         logging.info(f"Ping is {ping}ms.")
-        # Check if Stable Diffusion is running
-        # try:
-        #     requests.get(url=f"{url}/internal/ping")
-        #     sd_status = "OK"
-        #     logging.info("Stable Diffusion is online.")
-        # except Exception as e:
-        #     sd_status = "Offline"
-        #     logging.warning("Stable Diffusion is offline.")
 
-        embed1 = load_embed()
-        embed2 = {
+        embed = {
             "description": f"Amount of Servers joined: `{count}`\nPing: `{ping}ms`"
         }
-        em = Embed().from_dict(embed1 | embed2)
 
-        await interaction.send(embed=em, ephemeral=True)
+        await interaction.send(embed=bake_embed(embed), ephemeral=True)
     
     
     @nextcord.slash_command(name="feed", description="Create recurring reminders for the server")
@@ -85,24 +74,21 @@ class Basics(commands.Cog, name="Misc"):
             "message": message
         }
         
-        embed1 = parse_json("database/embeds/standard_embed.json")
-        embed2 = {
+        embed = {
             "title": "Reminder succesfully created!",
             "description": f"Your reminder `{message}` for <&@{role.id}> was set! Running every {convert_day(day)} at {time}."
         }
-        em = Embed().from_dict(embed1 | embed2)
               
         db_tasks.open.insert_one(task)
         asyncio.create_task(set_reminder(task, timezone))
         
-        await interaction.response.send_message(embed=em, ephemeral=True)
+        await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
         
     
     @main.subcommand(name="view", description="Lists all active feeds")
     async def feed_view(self, interaction: Interaction):
-        embed1 = parse_json("database/embeds/standard_embed.json")
-        embed2 = { "title": "Active Feeds" }
-        em = Embed.from_dict(embed1 | embed2)
+        embed = { "title": "Active Feeds" }
+        em = bake_embed(embed)
         
         open_tasks = list(db_tasks.open.find({"user_id": interaction.user.id, "server_id": interaction.guild.id}))
         if open_tasks:
@@ -135,9 +121,8 @@ class Basics(commands.Cog, name="Misc"):
     @main_group.subcommand(name="view", description="Lists all active feeds from the server")
     @application_checks.has_permissions(administrator=True)
     async def feed_admin_view(self, interaction: Interaction):
-        embed1 = parse_json("database/embeds/standard_embed.json")
-        embed2 = { "title": "Active Feeds" }
-        em = Embed.from_dict(embed1 | embed2)
+        embed = { "title": "Active Feeds" }
+        em = bake_embed(embed)
         
         open_tasks = list(db_tasks.open.find({"server_id": interaction.guild.id}))
         if open_tasks:

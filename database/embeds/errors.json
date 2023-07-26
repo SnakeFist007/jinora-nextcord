@@ -9,5 +9,9 @@
     "error_permissions": {
         "title": "Insufficient permissions!",
         "description": "I'm sorry, but you can't use that command."
+    },
+    "error_offline": {
+        "title": "Stable Diffusion is offline!",
+        "description": "I'm very sorry to say this, but the image generation service is currently unavailable."
     }
 }
