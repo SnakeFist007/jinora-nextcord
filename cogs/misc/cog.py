@@ -94,7 +94,7 @@ class Basics(commands.Cog, name="Misc"):
         if open_tasks:
             for index, task in enumerate(open_tasks):
                 em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
-                             value=f"<&@{task['role_id']}> {task['message']}")
+                             value=f"<@&{task['role_id']}> {task['message']}")
         else:
             em.add_field(name="No feeds found!",
                          value="Add a feed with the `/feed` command.")
