@@ -1,0 +1,13 @@
+{
+    "error_default": {
+        "title": "Something went wrong!",
+        "description": "I'm sorry, this shouldn't have happened..."
+    },
+    "error_exception": {
+        "title": "Exception occured!"      
+    },
+    "error_permissions": {
+        "title": "Insufficient permissions!",
+        "description": "I'm sorry, but you can't use that command."
+    }
+}

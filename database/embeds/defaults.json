@@ -1,0 +1,19 @@
+{
+    "defaults": {
+        "footer": {
+            "text": "Jinora#2184",
+            "icon_url": "https://i.imgur.com/6vywq4p.png"
+        },
+        "color": 15844367
+    },
+    "defaults_thumbnail": {
+        "thumbnail": {
+            "url": "https://i.imgur.com/6vywq4p.png"
+        },
+        "footer": {
+            "text": "Jinora#2184",
+            "icon_url": "https://i.imgur.com/6vywq4p.png"
+        },
+        "color": 15844367
+    }
+}

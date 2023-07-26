@@ -1,0 +1,18 @@
+{
+    "help": {
+        "title": "List of Commands",
+        "description": "`/generate` - creates an image using Stable Diffusion\n`/status` - displays Bot and Stable Diffusion status\n`/remindme` - creates a reminder\n`/8ball` - answers all your questions...\n`/fortune` - tells you a random fortune!"
+    },
+    "stablediffusion": {
+        "author": {
+            "name": "Generation complete!"
+        }
+    },
+    "status": {
+        "title": "Status Page"
+    },
+    "welcome": {
+        "title": "Thanks for the invite! <3",
+        "description": "Use `/help` to learn more about my commands."
+    }
+}

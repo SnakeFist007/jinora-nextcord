@@ -15,7 +15,7 @@ def parse_json_utf8(path):
     
     return data
     
-# Load embed from JSON and parse as nextcord.Embed
+# Load embed from JSON and parse as nextcord.Embed()
 def parse_embed(path):
     data = parse_json(path)
     embed = Embed().from_dict(data)
