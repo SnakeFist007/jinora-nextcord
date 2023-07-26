@@ -5,3 +5,4 @@ Pillow
 pymongo
 python-dotenv
 discord-webhook
+python-dateutil

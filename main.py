@@ -37,7 +37,6 @@ db_tasks = client.tasks
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
-intents.members = True
 bot = commands.Bot(intents=intents, help_command=None)
 
 # * Logging
