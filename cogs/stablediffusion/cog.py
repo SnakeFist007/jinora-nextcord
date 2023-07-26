@@ -10,7 +10,9 @@ from PIL import Image
 from main import logging, url, parse_json, em_error, em_error_offline, fuse_json, raw_generate, bake_embed
 
 
+# Variables
 tmp_path = "cogs/stablediffusion/tmp"
+gen_settings = "database/stable_diffusion/gen_settings.json"
 
 # Create tmp directory for generated Stable Diffusion images
 def prepare_directory():
@@ -21,7 +23,7 @@ def prepare_directory():
 
 # Loads default values for image generation
 def load_defaults():
-    defaults = parse_json("database/stable_diffusion/bot_settings.json")
+    defaults = parse_json(gen_settings)
     return defaults
 
 
