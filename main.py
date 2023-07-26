@@ -18,6 +18,17 @@ uri = os.getenv("MONGODB")
 url = os.getenv("STABLEDIFFUSION")
 timezone = os.getenv("TIMEZONE")
 
+# * Logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(levelname)s] %(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    handlers=[
+        logging.FileHandler("jinora-nextcord.log"),
+        logging.StreamHandler(),
+    ]
+)
+
 if not token:
     logging.exception(".env - Bot-Token is empty!")
     exit(1)
@@ -38,17 +49,6 @@ db_tasks = client.tasks
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
 bot = commands.Bot(intents=intents, help_command=None)
-
-# * Logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(levelname)s] %(asctime)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-    handlers=[
-        logging.FileHandler("jinora-nextcord.log"),
-        logging.StreamHandler()
-    ]
-)
 
 
 # * Reminders

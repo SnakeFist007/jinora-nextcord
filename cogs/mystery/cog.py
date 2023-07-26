@@ -29,7 +29,7 @@ class Mystery(commands.Cog, name="Mystery"):
 
     # Get an 8-Ball answer for a serious question
     @nextcord.slash_command(name="8ball", description="Answers important questions!")
-    async def fortune_8ball(self, interaction: Interaction, frage: str = SlashOption(description="Ask your question...")):
+    async def fortune_8ball(self, interaction: Interaction, question: str = SlashOption(description="Ask your question...")):
         eight_ball_answers = "database/db_8ball.json"
 
         lines = parse_json_utf8(eight_ball_answers)
@@ -39,8 +39,8 @@ class Mystery(commands.Cog, name="Mystery"):
         output = lines[str(rand_int)]
         
         embed = {
-            "title": "8-Ball Answer",
-            "description": f"{output}"
+            "title": f"{output}",
+            "description": "Asking the real questions here!"
         }
 
         await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
