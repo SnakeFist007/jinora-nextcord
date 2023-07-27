@@ -7,7 +7,8 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from typing import Optional
 from PIL import Image
-from main import logging, URL
+from main import logging
+from main import URL
 from main import parse_json, fuse_json, raw_generate, bake_embed
 from main import em_error, em_error_offline
 
