@@ -1,24 +1,15 @@
 import nextcord
-import asyncio
+import aiohttp
 from nextcord.interactions import Interaction
 from nextcord import Interaction, SlashOption
-from nextcord.ext import commands, application_checks
-from typing import Optional
+from nextcord.ext import commands
 from main import logging
-from main import db_servers, db_tasks
-from main import parse_json, set_reminder, bake_embed
-from main import TIMEZONE
+from main import db_servers
+from main import parse_json, bake_embed, bake_embed_thumbnail, em_error
+from main import WEATHER
 
 
-def load_embed():
-    defaults = parse_json("database/embeds/status_embed.json")
-    return defaults
-
-def convert_day(day):
-    key = { 0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday" }
-    
-    return key[day]
-
+CONDITIONS = "database/weather_conditions.json"
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
@@ -41,112 +32,40 @@ class Basics(commands.Cog, name="Misc"):
         }
 
         await interaction.send(embed=bake_embed(embed), ephemeral=True)
-    
-    
-    @nextcord.slash_command(name="feed", description="Create recurring reminders for the server")
-    async def main(self, interaction: Interaction):
-        pass
-    
-    
-    @main.subcommand(name="add", description="Creates a reminder")
-    async def feed_add(self, interaction: Interaction,  
-                       role: nextcord.Role = SlashOption(), 
-                       day: int = SlashOption(
-                           choices={
-                               "Monday": 0,
-                               "Tuesday": 1,
-                               "Wednesday": 2,
-                               "Thursday": 3,
-                               "Friday": 4,
-                               "Saturday": 5,
-                               "Sunday": 6 
-                               }),
-                       time: str = SlashOption(),
-                       message: str = SlashOption(),
-                       webhook: str = SlashOption()):
         
-        task = {
-            "webhook": webhook,
-            "server_id": interaction.guild.id,
-            "user_id": interaction.user.id,
-            "role_id": role.id,
-            "day": day,
-            "time": time,
-            "message": message
+    # Weather command
+    @nextcord.slash_command(name="weather", description="Tells the weather!")
+    async def weather(self, interaction: Interaction, location: str = SlashOption()):
+        url = "https://api.weatherapi.com/v1/current.json"
+        params = {
+            "key": WEATHER,
+            "q": location
         }
         
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, params=params) as res:
+                    data = await res.json()
+                    
+            city = data["location"]["name"]
+            condition = data["current"]["condition"]["text"]
+            emoji_db = parse_json(CONDITIONS)
+            emoji = emoji_db[condition.lower()]["emoji"]
+        except KeyError:
+            await interaction.send(embed=em_error())
+            return
+                
         embed = {
-            "title": "Reminder succesfully created!",
-            "description": f"Your reminder `{message}` for <&@{role.id}> was set! Running every {convert_day(day)} at {time}."
+            "title": f"{emoji} Weather report for: {city}", 
+            "description": f"My sources say that the current condition in {city} is {condition.lower()}!"
         }
-              
-        db_tasks.open.insert_one(task)
-        asyncio.create_task(set_reminder(task, TIMEZONE))
-        
-        await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
-        
-    
-    @main.subcommand(name="view", description="Lists all active feeds")
-    async def feed_view(self, interaction: Interaction):
-        embed = { "title": "Active Feeds" }
-        em = bake_embed(embed)
-        
-        open_tasks = list(db_tasks.open.find({"user_id": interaction.user.id, "server_id": interaction.guild.id}))
-        if open_tasks:
-            for index, task in enumerate(open_tasks):
-                em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
-                             value=f"<@&{task['role_id']}> {task['message']}")
-        else:
-            em.add_field(name="No feeds found!",
-                         value="Add a feed with the `/feed` command.")
-            
-        await interaction.response.send_message(embed=em, ephemeral=True)
-    
-        
-    # TODO: Create Autofeed delete command
-    @main.subcommand(name="delete", description="Deletes a feed")
-    async def feed_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
-                              purge: Optional[str] = SlashOption(
-                                    choices={"True": "True",
-                                             "False": "False"}
-                                    )):
-        # db_tasks.open.delete_one({"_id": task["_id"]})
-        pass
-    
-    
-    @main.subcommand(name="admin", description="Admin commands")
-    async def main_group(self, interaction: nextcord.Interaction):
-        pass
-    
-    
-    @main_group.subcommand(name="view", description="Lists all active feeds from the server")
-    @application_checks.has_permissions(administrator=True)
-    async def feed_admin_view(self, interaction: Interaction):
-        embed = { "title": "Active Feeds" }
-        em = bake_embed(embed)
-        
-        open_tasks = list(db_tasks.open.find({"server_id": interaction.guild.id}))
-        if open_tasks:
-            for index, task in enumerate(open_tasks):
-                em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
-                             value=f"<&@{task['role_id']}> {task['message']}")
-        else:
-            em.add_field(name="No feeds found!",
-                         value="Add a feed with the `/feed` command.")
-            
-        await interaction.response.send_message(embed=em, ephemeral=True)
-    
-    
-    # TODO: Create Autofeed admin delete command (delete a feed from server)
-    @main_group.subcommand(name="delete", description="Deletes a feed from the server")
-    @application_checks.has_permissions(administrator=True)
-    async def feed_admin_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
-                              purge: Optional[str] = SlashOption(
-                                    choices={"True": "True",
-                                             "False": "False"}
-                                    )):
-        # db_tasks.open.delete_one({"_id": task["_id"]})
-        pass
+        em = bake_embed_thumbnail(embed)
+                
+        em.add_field(name="Temperature", value=f"{data['current']['temp_c']}° C")
+        em.add_field(name="Humidity", value=f"{data['current']['humidity']}%")
+        em.add_field(name="Wind Speeds", value=f"{int(data['current']['wind_kph'])} km/h")
+                
+        await interaction.send(embed=em, ephemeral=True)
 
 
 # Add Cog to bot

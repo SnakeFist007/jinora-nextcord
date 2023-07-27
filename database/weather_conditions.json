@@ -1,0 +1,194 @@
+{
+    "sunny": {
+        "emoji": "☀️",
+        "thumbnail": "..."
+    },
+    "partly cloudy": {
+        "emoji": "🌤️",
+        "thumbnail": "..."
+    },
+    "cloudy": {
+        "emoji": "☁️",
+        "thumbnail": "..."
+    },
+    "overcast": {
+        "emoji": "☁️",
+        "thumbnail": "..."
+    },
+    "mist": {
+        "emoji": "🌫️",
+        "thumbnail": "..."
+    },
+    "patchy rain possible": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "patchy snow possible": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "patchy sleet possible": {
+        "emoji": "🌨️",
+        "thumbnail": "..."
+    },
+    "patchy freezing drizzle possible": {
+        "emoji": "🌨️",
+        "thumbnail": "..."
+    },
+    "thundery outbreaks possible": {
+        "emoji": "⛈️",
+        "thumbnail": "..."
+    },
+    "blowing snow": {
+        "emoji": "🌨️",
+        "thumbnail": "..."
+    },
+    "blizzard": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "fog": {
+        "emoji": "🌁",
+        "thumbnail": "..."
+    },
+    "freezing fog": {
+        "emoji": "🌁",
+        "thumbnail": "..."
+    },
+    "patchy light drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "light drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "freezing drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "heavy freezing drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "patchy light rain": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "light rain": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "moderate rain at times": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "moderate rain": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "heavy rain at times": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "heavy rain": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "light freezing rain": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy freezing rain": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "light sleet": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy sleet": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "patchy light snow": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "light snow": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "patchy moderate snow": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "moderate snow": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "patchy heavy snow": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "heavy snow": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "ice pellets": {
+        "emoji": "🌧️",
+        "thumbnail": "..."
+    },
+    "light rain shower": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy rain shower": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "torrential rain shower": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "light sleet showers": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy sleet showers": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "light snow showers": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy snow showers": {
+        "emoji": "❄️",
+        "thumbnail": "..."
+    },
+    "light showers of ice pellets": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy showers of ice pellets": {
+        "emoji": "🌦️",
+        "thumbnail": "..."
+    },
+    "patchy light rain with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy rain with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "..."
+    },
+    "patchy light snow with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "..."
+    },
+    "moderate or heavy snow with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "..."
+    }
+}
