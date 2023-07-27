@@ -102,7 +102,6 @@ python main.py
 - [ ] Fine-tuned Permissions (not just Administrator for the bot)
 
 <br>
-<br>
 
 # GDPR Legal Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
