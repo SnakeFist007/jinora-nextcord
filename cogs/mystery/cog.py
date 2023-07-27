@@ -3,7 +3,7 @@ import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from main import logging
-from main import parse_json_utf8, bake_embed
+from main import parse_json_utf8, raw_mystery, convert_raw
 
 
 # Initialize Cog
@@ -27,8 +27,9 @@ class Mystery(commands.Cog, name="Mystery"):
             "title": "Random Wisdom",
             "description": f"{output}"
         }
+        em = raw_mystery() | embed
 
-        await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
+        await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
 
     # TODO: Give the 8-Ball answers a Jinora personality
     # Get an 8-Ball answer for a serious question
@@ -46,8 +47,9 @@ class Mystery(commands.Cog, name="Mystery"):
             "title": f"{output}",
             "description": "Asking the real questions here!"
         }
+        em = raw_mystery() | embed
 
-        await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
+        await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
 
 
 # Add Cog to bot

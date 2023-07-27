@@ -46,6 +46,9 @@ def __embed_defaults():
 def __embed_defaults_thumbnail():
     return parse_json_raw(f"{EMBED_PATH}/defaults.json", "default_thumbnail")
 
+def __embed_question_thumbnail():
+    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "question_thumbnail")
+
 
 # * RAW BUILDER
 # Returns JSON object
@@ -77,18 +80,25 @@ def create_embed_thumbnail(path, pointer):
 
 
 
-# * Pre-built embeds
+# * Pre-built raws
 # ON_JOIN Welcome message
 def em_welcome():
     return create_embed_thumbnail(f"{EMBED_PATH}/messages.json", "welcome")
 
-# /help message
-def em_help():
-    return create_embed(f"{EMBED_PATH}/messages.json", "help")
+# /8ball and /wisdom
+def raw_mystery():
+    return __embed_question_thumbnail()
 
 # /generate message
 def raw_generate():
     return parse_json_raw(f"{EMBED_PATH}/messages.json", "stablediffusion")
+
+
+# * Pre-built embeds
+# /help message
+def em_help():
+    return create_embed(f"{EMBED_PATH}/messages.json", "help")
+
 
 # ERROR: Default message
 def em_error():
