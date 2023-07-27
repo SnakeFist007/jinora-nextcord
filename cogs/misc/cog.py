@@ -51,6 +51,7 @@ class Basics(commands.Cog, name="Misc"):
             condition = data["current"]["condition"]["text"]
             emoji_db = parse_json(CONDITIONS)
             emoji = emoji_db[condition.lower()]["emoji"]
+            thumbnail = emoji_db[condition.lower()]["thumbnail"]
         except KeyError:
             await interaction.send(embed=em_error())
             return
@@ -64,6 +65,9 @@ class Basics(commands.Cog, name="Misc"):
         em.add_field(name="Temperature", value=f"{data['current']['temp_c']}° C")
         em.add_field(name="Humidity", value=f"{data['current']['humidity']}%")
         em.add_field(name="Wind Speeds", value=f"{int(data['current']['wind_kph'])} km/h")
+        
+        # TODO: Add different Jinora thumbnails for weather conditions
+        # em.set_thumbnail(url=thumbnail)
                 
         await interaction.send(embed=em, ephemeral=True)
 
