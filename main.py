@@ -80,7 +80,7 @@ async def set_reminder(task, timezone):
     await asyncio.sleep(wait_time)
     try:
         webhook.execute()
-        logging.info(f"Sending embed through webhook: {task['webhook']}")
+        logging.info(f"Reminder triggered: Sending embed through webhook: {task['webhook']}")
         # Set new reminder
         set_reminder(task, timezone)
     except Exception as e:
