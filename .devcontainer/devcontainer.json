@@ -7,6 +7,26 @@
 		"context": "..",
 		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
 		"dockerfile": "../Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.autopep8",
+				"aaron-bond.better-comments",
+				"adpyke.codesnap",
+				"naumovs.color-highlight",
+				"PeterSchmalfeldt.explorer-exclude",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"ms-python.isort",
+				"simonguo.vscode-markdown-table-sort",
+				"IBM.output-colorizer",
+				"christian-kohler.path-intellisense",
+				"ms-python.vscode-pylance",
+				"ms-python.python",
+				"Gruntfuggly.todo-tree"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
