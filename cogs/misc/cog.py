@@ -29,6 +29,7 @@ class Basics(commands.Cog, name="Misc"):
         logging.info(f"Ping is {ping}ms.")
 
         embed = {
+            "title": "Status Page",
             "description": f"Amount of Servers joined: `{count}`\nPing: `{ping}ms`"
         }
 
@@ -59,7 +60,7 @@ class Basics(commands.Cog, name="Misc"):
             return
                 
         embed = {
-            "title": f"{emoji} Weather report for: {city}", 
+            "title": f"Jinora's Weather Report Service {emoji}", 
             "description": f"My sources say that the current condition in {city} is {condition.lower()}!"
         }
         em = bake_embed_thumbnail(embed)
@@ -97,7 +98,7 @@ class Basics(commands.Cog, name="Misc"):
             return
                 
         embed = {
-            "title": f"{emoji} Astro report for: {city}", 
+            "title": f"Jinora's Astro Report Service {emoji}", 
             "description": f"The current moon phase in {city} is {moon_phase.lower()}!"
         }
         em = bake_embed_thumbnail(embed)

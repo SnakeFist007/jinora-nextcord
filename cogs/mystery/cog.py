@@ -9,6 +9,7 @@ from main import parse_json_utf8, raw_mystery, convert_raw, bake_embed
 
 WISDOM = "database/mystery/db_wisdom.json"
 EIGHT_BALL = "database/mystery/db_8ball.json"
+JOKE_BLACKLIST = ["racist", "sexist", "nsfw"]
 
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
@@ -54,8 +55,7 @@ class Mystery(commands.Cog, name="Mystery"):
     @nextcord.slash_command(name="joke", description="Tells a joke!")
     async def joke(self, interaction: Interaction):
         j = await Jokes()
-        blacklist = ["racist", "sexist", "nsfw"]
-        joke = await j.get_joke(blacklist=blacklist)
+        joke = await j.get_joke(blacklist=JOKE_BLACKLIST)
         
         if joke["type"] == "single":
             embed = {
