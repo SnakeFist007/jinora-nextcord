@@ -1,5 +1,4 @@
 import os
-import logging
 import nextcord
 import asyncio
 from nextcord.ext import commands
@@ -11,6 +10,7 @@ from discord_webhook import DiscordWebhook as Webhook
 from datetime import datetime, timedelta
 from dateutil import tz
 from functions.helpers import *
+from functions.logging import logging
 
 
 # Setup

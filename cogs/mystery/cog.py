@@ -5,6 +5,7 @@ from nextcord.ext import commands
 from main import logging
 from main import parse_json_utf8, bake_embed
 
+
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
     def __init__(self, bot: commands.Bot):
