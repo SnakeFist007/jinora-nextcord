@@ -1,0 +1,34 @@
+{
+    "new moon": {
+        "emoji": "🌑",
+        "thumbnail": "..."
+    },
+    "waxing crescent": {
+        "emoji": "🌒",
+        "thumbnail": "..."
+    },
+    "first quarter": {
+        "emoji": "🌓",
+        "thumbnail": "..."
+    },
+    "waxing gibbous": {
+        "emoji": "🌔",
+        "thumbnail": "..."
+    },
+    "full moon": {
+        "emoji": "🌕",
+        "thumbnail": "..."
+    },
+    "waning gibbous": {
+        "emoji": "🌖",
+        "thumbnail": "..."
+    },
+    "last quarter": {
+        "emoji": "🌗",
+        "thumbnail": "..."
+    },
+    "waning crescent": {
+        "emoji": "🌘",
+        "thumbnail": "..."
+    }
+}

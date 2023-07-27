@@ -11,6 +11,7 @@ from main import WEATHER
 
 
 CONDITIONS = "database/weather_conditions.json"
+MOON_PHASES = "database/moon_phases.json"
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
@@ -34,16 +35,16 @@ class Basics(commands.Cog, name="Misc"):
 
         await interaction.send(embed=bake_embed(embed), ephemeral=True)
         
+        
     # Weather command
     @nextcord.slash_command(name="weather", description="Tells the weather!")
     async def weather(self, interaction: Interaction, location: str = SlashOption()):
-        url = "https://api.weatherapi.com/v1/current.json"
-        params = {
-            "key": WEATHER,
-            "q": location
-        }
-        
         try:
+            url = "https://api.weatherapi.com/v1/current.json"
+            params = {
+                "key": WEATHER,
+                "q": location
+            }
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, params=params) as res:
                     data = await res.json()
@@ -54,7 +55,7 @@ class Basics(commands.Cog, name="Misc"):
             emoji = emoji_db[condition.lower()]["emoji"]
             thumbnail = emoji_db[condition.lower()]["thumbnail"]
         except KeyError:
-            await interaction.send(embed=em_error())
+            await interaction.send(embed=em_error(), ephemeral=True)
             return
                 
         embed = {
@@ -71,8 +72,45 @@ class Basics(commands.Cog, name="Misc"):
         # em.set_thumbnail(url=thumbnail)
                 
         await interaction.send(embed=em, ephemeral=True)
+        
+        
+    # Astro command
+    @nextcord.slash_command(name="astro", description="Tells the moon phase!")
+    async def astro(self, interaction: Interaction, location: str = SlashOption()):
+        try:
+            url = "https://api.weatherapi.com/v1/astronomy.json"
+            params = {
+                "key": WEATHER,
+                "q": location
+            }
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, params=params) as res:
+                    data = await res.json()
+                    
+            city = data["location"]["name"]
+            moon_phase = data["astronomy"]["astro"]["moon_phase"]
+            emoji_db = parse_json(MOON_PHASES)
+            emoji = emoji_db[moon_phase.lower()]["emoji"]
+        except KeyError:
+            await interaction.send(embed=em_error(), ephemeral=True)
+                
+        embed = {
+            "title": f"{emoji} Astro report for: {city}", 
+            "description": f"The current moon phase in {city} is {moon_phase.lower()}!"
+        }
+        em = bake_embed_thumbnail(embed)
+                
+        em.add_field(name="Moonrise", value=f"{data['astronomy']['astro']['moonrise']}")
+        em.add_field(name="Moonset", value=f"{data['astronomy']['astro']['moonset']}")
+        em.add_field(name="Moon Illumination", value=f"{data['astronomy']['astro']['moon_illumination']}%")
+        
+        # TODO: Add nightly Jinora thumbnail
+        # em.set_thumbnail(url=thumbnail)
+                
+        await interaction.send(embed=em, ephemeral=True)
 
 
+    # Joke command
     @nextcord.slash_command(name="joke", description="Tells a joke!")
     async def joke(self, interaction: Interaction):
         j = await Jokes()

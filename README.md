@@ -91,7 +91,7 @@ python main.py
 - [x] Reminders over Webhook Implementation
 - [x] Integrated Stable Diffusion API (local servers only)
 - [x] Joke, 8-Ball & Wisdom Commands
-- [x] Weather Command
+- [x] Weather & Astro Command
 
 ## Possible Features
 - Moderation Commands
