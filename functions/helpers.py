@@ -33,7 +33,7 @@ def parse_json_raw(path, pointer):
     return raw[pointer]
     
 # * Convert raw JSON data to nextcord.Embed()
-def covert_raw(raw):
+def convert_raw(raw):
     return Embed().from_dict(raw)
 
 
