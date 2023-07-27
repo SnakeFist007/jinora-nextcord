@@ -3,6 +3,7 @@ import aiohttp
 from nextcord.interactions import Interaction
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
+from jokeapi import Jokes
 from main import logging
 from main import db_servers
 from main import parse_json, bake_embed, bake_embed_thumbnail, em_error
@@ -70,6 +71,25 @@ class Basics(commands.Cog, name="Misc"):
         # em.set_thumbnail(url=thumbnail)
                 
         await interaction.send(embed=em, ephemeral=True)
+
+
+    @nextcord.slash_command(name="joke", description="Tells a joke!")
+    async def joke(self, interaction: Interaction):
+        j = await Jokes()
+        blacklist = ["racist", "sexist", "nsfw"]
+        joke = await j.get_joke(blacklist=blacklist)
+        
+        if joke["type"] == "single":
+            embed = {
+                "title": joke["joke"] 
+            }
+        else:
+            embed = {
+                "title": joke['setup'],
+                "description": f"||{joke['delivery']}||"
+            }         
+        
+        await interaction.send(embed=bake_embed(embed), ephemeral=True)
 
 
 # Add Cog to bot
