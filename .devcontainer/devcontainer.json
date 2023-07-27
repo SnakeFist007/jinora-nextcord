@@ -24,7 +24,11 @@
 				"christian-kohler.path-intellisense",
 				"ms-python.vscode-pylance",
 				"ms-python.python",
-				"Gruntfuggly.todo-tree"
+				"Gruntfuggly.todo-tree",
+				"KevinRose.vsc-python-indent",
+				"vscode-icons-team.vscode-icons",
+				"icrawl.discord-vscode",
+				"hnw.vscode-auto-open-markdown-preview"
 			]
 		}
 	}
