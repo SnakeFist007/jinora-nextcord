@@ -4,5 +4,7 @@
     "width": 512,
     "height": 512,
     "restore_faces": false,
-    "seed": -1
+    "seed": -1,
+    "enable_hr": false,
+    "sampler_index": "DPM++ 2M Karras"
 }
