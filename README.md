@@ -62,6 +62,8 @@ Rename `.env.example` to `.env` and fill in your data! You need:
 1. [Discord Bot Token](https://discord.com/developers/applications)
 2. [MongoDB URI](https://account.mongodb.com/account/login)
 3. [Stable Diffusion API URL](http://127.0.0.1:7860)
+4. [Weather API](https://www.weatherapi.com)
+5. [Timezone TZ identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 ## Method 1: Use Docker
 Deploy the Docker image using:
