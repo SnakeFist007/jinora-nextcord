@@ -11,7 +11,6 @@ class Mystery(commands.Cog, name="Mystery"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    # TODO: Give the wisdoms a Jinora personality, remove old cookie messages
     # Get a random wisdom
     @nextcord.slash_command(name="wisdom", description="Tells a random wisdom!")
     async def wisdom(self, interaction: Interaction):
@@ -31,7 +30,6 @@ class Mystery(commands.Cog, name="Mystery"):
 
         await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
 
-    # TODO: Give the 8-Ball answers a Jinora personality
     # Get an 8-Ball answer for a serious question
     @nextcord.slash_command(name="8ball", description="Answers important questions!")
     async def fortune_8ball(self, interaction: Interaction, question: str = SlashOption(description="Ask your question...")):
