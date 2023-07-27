@@ -1,7 +1,8 @@
 import nextcord
 from nextcord import Interaction
 from nextcord.ext import commands
-from main import logging, em_help
+from main import logging
+from main import em_help
 
 # Initialize Cog
 class Help(commands.Cog, name="Help"):

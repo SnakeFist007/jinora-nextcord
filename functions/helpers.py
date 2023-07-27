@@ -2,7 +2,7 @@ import json
 from nextcord import Embed
 
 
-embed_path = "database/embeds"
+EMBED_PATH = "database/embeds"
 
 # Basic functions
 # * Load data from JSON
@@ -40,11 +40,11 @@ def covert_raw(raw):
 # Default embed options
 # * Load embed defaults
 def embed_defaults():
-    return parse_json_raw(f"{embed_path}/defaults.json", "default")
+    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "default")
 
 # * Load embed defaults w/ thumbnail
 def embed_defaults_thumbnail():
-    return parse_json_raw(f"{embed_path}/defaults.json", "default_thumbnail")
+    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "default_thumbnail")
 
 
 
@@ -81,24 +81,24 @@ def create_embed_thumbnail(path, pointer):
 # * Pre-built embeds
 # ON_JOIN Welcome message
 def em_welcome():
-    return create_embed_thumbnail(f"{embed_path}/messages.json", "welcome")
+    return create_embed_thumbnail(f"{EMBED_PATH}/messages.json", "welcome")
 
 # /help message
 def em_help():
-    return create_embed(f"{embed_path}/messages.json", "help")
+    return create_embed(f"{EMBED_PATH}/messages.json", "help")
 
 # /generate message
 def raw_generate():
-    return parse_json_raw(f"{embed_path}/messages.json", "stablediffusion")
+    return parse_json_raw(f"{EMBED_PATH}/messages.json", "stablediffusion")
 
 # ERROR: Default message
 def em_error():
-    return create_embed(f"{embed_path}/errors.json", "error_default")
+    return create_embed(f"{EMBED_PATH}/errors.json", "error_default")
 
 # ERROR: Insufficient perms
 def em_error_perms():
-    return create_embed(f"{embed_path}/errors.json", "error_permissions")
+    return create_embed(f"{EMBED_PATH}/errors.json", "error_permissions")
 
 # ERROR: Stable Diffusion is offline
 def em_error_offline():
-    return create_embed(f"{embed_path}/errors.json", "error_offline")
+    return create_embed(f"{EMBED_PATH}/errors.json", "error_offline")

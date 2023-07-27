@@ -27,10 +27,10 @@ logging.basicConfig(
 
 # * Load .env
 load_dotenv()
-token = os.getenv("TOKEN")
-uri = os.getenv("MONGODB")
-url = os.getenv("STABLEDIFFUSION")
-timezone = os.getenv("TIMEZONE")
+TOKEN = os.getenv("TOKEN")
+URI = os.getenv("MONGODB")
+URL = os.getenv("STABLEDIFFUSION")
+TIMEZONE = os.getenv("TIMEZONE")
 
 # Check if .env is filled out correctly
 def check_dotenv(var, error):
@@ -38,13 +38,13 @@ def check_dotenv(var, error):
         logging.critical(f".env - {error} is empty!")
         exit(1)
         
-check_dotenv(token, "Bot-Token")
-check_dotenv(uri, "MongoDB URI")
-check_dotenv(url, "Stable Diffusion URL")
-check_dotenv(timezone, "Timezone")
+check_dotenv(TOKEN, "Bot-Token")
+check_dotenv(URI, "MongoDB URI")
+check_dotenv(URL, "Stable Diffusion URL")
+check_dotenv(TIMEZONE, "Timezone")
 
 # * MongoDB
-client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(URI, server_api=ServerApi('1'))
 db_servers = client.servers
 db_tasks = client.tasks
 
@@ -108,7 +108,7 @@ async def on_ready():
     if open_tasks:
         for task in open_tasks:
             logging.info(f"Open task: {task} found!")
-            asyncio.create_task(set_reminder(task, timezone))
+            asyncio.create_task(set_reminder(task, TIMEZONE))
     else:
         logging.info("No open tasks!")
     
@@ -186,7 +186,7 @@ def main():
     try:
         logging.info("Starting bot...")
         console.start()
-        bot.run(token)
+        bot.run(TOKEN)
     except Exception as e:
         logging.exception(e)
 

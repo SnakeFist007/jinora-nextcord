@@ -7,7 +7,7 @@ from typing import Optional
 from main import logging
 from main import db_servers, db_tasks
 from main import parse_json, set_reminder, bake_embed
-from main import timezone
+from main import TIMEZONE
 
 
 def load_embed():
@@ -80,7 +80,7 @@ class Basics(commands.Cog, name="Misc"):
         }
               
         db_tasks.open.insert_one(task)
-        asyncio.create_task(set_reminder(task, timezone))
+        asyncio.create_task(set_reminder(task, TIMEZONE))
         
         await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
         
