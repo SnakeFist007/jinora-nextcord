@@ -39,42 +39,41 @@ def covert_raw(raw):
 
 # Default embed options
 # * Load embed defaults
-def embed_defaults():
+def __embed_defaults():
     return parse_json_raw(f"{EMBED_PATH}/defaults.json", "default")
 
 # * Load embed defaults w/ thumbnail
-def embed_defaults_thumbnail():
+def __embed_defaults_thumbnail():
     return parse_json_raw(f"{EMBED_PATH}/defaults.json", "default_thumbnail")
 
 
-
-# ! EXTERNAL USE ONLY!
+# * RAW BUILDER
 # Returns JSON object
 def bake_raw(raw):
-    return embed_defaults() | raw
+    return __embed_defaults() | raw
 
 def bake_raw_thumbnail(raw):
-    return embed_defaults_thumbnail() | raw
+    return __embed_defaults_thumbnail() | raw
 
 
+# * EMBED BUILDER
 # Returns nextcord.Embed() object
 def bake_embed(raw):
-    return Embed().from_dict(embed_defaults() | raw)
+    return Embed().from_dict(__embed_defaults() | raw)
 
 def bake_embed_thumbnail(raw):
-    return Embed().from_dict(embed_defaults_thumbnail() | raw)
+    return Embed().from_dict(__embed_defaults_thumbnail() | raw)
 
 
-
-# ! INTERNAL USE ONLY!
+# * HYBRID BUILDER
 # Returns nextcord.Embed() object
 def create_embed(path, pointer):
     raw = parse_json_raw(path, pointer)
-    return Embed().from_dict(embed_defaults() | raw)
+    return Embed().from_dict(__embed_defaults() | raw)
 
 def create_embed_thumbnail(path, pointer):
     raw = parse_json_raw(path, pointer)
-    return Embed().from_dict(embed_defaults_thumbnail() | raw)
+    return Embed().from_dict(__embed_defaults_thumbnail() | raw)
 
 
 
