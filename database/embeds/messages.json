@@ -1,7 +1,42 @@
 {
     "help": {
         "title": "List of Commands",
-        "description": "`/generate` - creates an image using Stable Diffusion\n`/status` - displays Bot and Stable Diffusion status\n`/remindme` - creates a reminder\n`/8ball` - answers all your questions...\n`/fortune` - tells you a random fortune!"
+        "fields": [{
+                "name": "/status",
+                "value": "Displays bot status and statistics."
+            },
+            {
+                "name": "/feed",
+                "value": "Creates recurring reminders."
+            },
+            {
+                "name": "/8ball",
+                "value": "An answer for all your questions...",
+                "inline": true
+            },
+            {
+                "name": "/wisdom",
+                "value": "Tells you a random wisdom!",
+                "inline": true
+            },
+            {
+                "name": "/joke",
+                "value": "Tells a joke!"
+            },
+            {
+                "name": "/weather",
+                "value": "Gives a weather report.",
+                "inline": true
+            },
+            {
+                "name": "/astro",
+                "value": "Gives a moon phase report.",
+                "inline": true
+            },
+            {
+                "name": "/generate",
+                "value": "Creates an image using Stable Diffusion."
+            }]
     },
     "stablediffusion": {
         "author": {

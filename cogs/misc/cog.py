@@ -60,12 +60,12 @@ class Basics(commands.Cog, name="Misc"):
             return
                 
         embed = {
-            "title": f"Jinora's Weather Report Service {emoji}", 
+            "title": f"{emoji} Jinora's Weather Report Service", 
             "description": f"My sources say that the current condition in {city} is {condition.lower()}!"
         }
         em = bake_embed_thumbnail(embed)
                 
-        em.add_field(name="Temperature", value=f"{data['current']['temp_c']}° C")
+        em.add_field(name="Temperature", value=f"{data['current']['temp_c']}°C")
         em.add_field(name="Humidity", value=f"{data['current']['humidity']}%")
         em.add_field(name="Wind Speeds", value=f"{int(data['current']['wind_kph'])} km/h")
         
@@ -98,7 +98,7 @@ class Basics(commands.Cog, name="Misc"):
             return
                 
         embed = {
-            "title": f"Jinora's Astro Report Service {emoji}", 
+            "title": f"{emoji} Jinora's Astro Report Service", 
             "description": f"The current moon phase in {city} is {moon_phase.lower()}!"
         }
         em = bake_embed_thumbnail(embed)
