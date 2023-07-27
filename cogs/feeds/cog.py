@@ -1,10 +1,11 @@
 import nextcord
 import asyncio
+import uuid
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 from typing import Optional
 from main import logging
-from main import set_reminder, bake_embed
+from main import set_reminder, bake_embed, em_error
 from main import db_tasks
 from main import TIMEZONE
 
@@ -41,9 +42,10 @@ class Feeds(commands.Cog, name="Feeds"):
                        time: str = SlashOption(),
                        message: str = SlashOption(),
                        webhook: str = SlashOption()):
-        
+        uuid_id = uuid.uuid4()
         task = {
             "webhook": webhook,
+            "internal_id": f"{uuid_id}",
             "server_id": interaction.guild.id,
             "user_id": interaction.user.id,
             "role_id": role.id,
@@ -54,7 +56,7 @@ class Feeds(commands.Cog, name="Feeds"):
         
         embed = {
             "title": "Reminder succesfully created!",
-            "description": f"Your reminder `{message}` for <&@{role.id}> was set! Running every {convert_day(day)} at {time}."
+            "description": f"Your reminder `{message}` for <@&{role.id}> was set! Running every {convert_day(day)} at {time}."
         }
               
         db_tasks.open.insert_one(task)
@@ -72,7 +74,7 @@ class Feeds(commands.Cog, name="Feeds"):
         if open_tasks:
             for index, task in enumerate(open_tasks):
                 em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
-                             value=f"<@&{task['role_id']}> {task['message']}")
+                             value=f"<@&{task['role_id']}> {task['message']}\n**ID:** {task['internal_id']}")
         else:
             em.add_field(name="No feeds found!",
                          value="Add a feed with the `/feed` command.")
@@ -80,15 +82,22 @@ class Feeds(commands.Cog, name="Feeds"):
         await interaction.response.send_message(embed=em, ephemeral=True)
     
         
-    # TODO: Create Autofeed delete command
     @main.subcommand(name="delete", description="Deletes a feed")
-    async def feed_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
-                              purge: Optional[str] = SlashOption(
-                                    choices={"True": "True",
-                                             "False": "False"}
-                                    )):
-        # db_tasks.open.delete_one({"_id": task["_id"]})
-        pass
+    async def feed_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
+        embed = {
+                "title": "Feed deletion successful!",
+                "description": f"Deleted feed: {feed_id}"
+            }
+        em = bake_embed(embed)
+        
+        try:
+            logging.warning(f"Deleting entry {feed_id} from task database!")
+            db_tasks.open.delete_one({"internal_id": feed_id})
+            await interaction.send(embed=em, ephemeral=True)
+        except Exception as e:
+            logging.exception(e)
+            await interaction.send(embed=em_error(), ephemeral=True)
+            return
     
     
     @main.subcommand(name="admin", description="Admin commands")
@@ -99,7 +108,9 @@ class Feeds(commands.Cog, name="Feeds"):
     @main_group.subcommand(name="view", description="Lists all active feeds from the server")
     @application_checks.has_permissions(administrator=True)
     async def feed_admin_view(self, interaction: Interaction):
-        embed = { "title": "Active Feeds" }
+        embed = { 
+                 "title": "Active Server-Feeds" 
+            }
         em = bake_embed(embed)
         
         open_tasks = list(db_tasks.open.find({"server_id": interaction.guild.id}))
@@ -114,16 +125,23 @@ class Feeds(commands.Cog, name="Feeds"):
         await interaction.response.send_message(embed=em, ephemeral=True)
     
     
-    # TODO: Create Autofeed admin delete command (delete a feed from server)
     @main_group.subcommand(name="delete", description="Deletes a feed from the server")
     @application_checks.has_permissions(administrator=True)
-    async def feed_admin_delete(self, interaction: Interaction, feed: Optional[str] = SlashOption(), 
-                              purge: Optional[str] = SlashOption(
-                                    choices={"True": "True",
-                                             "False": "False"}
-                                    )):
-        # db_tasks.open.delete_one({"_id": task["_id"]})
-        pass
+    async def feed_admin_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
+        embed = {
+                "title": "Feed deletion successful!",
+                "description": f"Deleted feed {feed_id}."
+            }
+        em = bake_embed(embed)
+        
+        try:
+            logging.warning(f"Deleting entry {feed_id} from task database!")
+            db_tasks.open.delete_one({"internal_id": feed_id})
+            await interaction.send(embed=em, ephemeral=True)
+        except Exception as e:
+            logging.exception(e)
+            await interaction.send(embed=em_error(), ephemeral=True)
+            return
 
 
 # Add Cog to bot
