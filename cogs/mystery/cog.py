@@ -4,7 +4,7 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from jokeapi import Jokes
 from main import logging
-from main import parse_json_utf8, raw_mystery, convert_raw, bake_embed
+from main import parse_json_utf8, raw_mystery, convert_raw, raw_joke
 
 
 WISDOM = "database/mystery/db_wisdom.json"
@@ -65,9 +65,10 @@ class Mystery(commands.Cog, name="Mystery"):
             embed = {
                 "title": joke['setup'],
                 "description": f"||{joke['delivery']}||"
-            }         
+            }
+        em = raw_joke() | embed
         
-        await interaction.send(embed=bake_embed(embed), ephemeral=True)
+        await interaction.send(embed=convert_raw(em), ephemeral=True)
 
 
 # Add Cog to bot

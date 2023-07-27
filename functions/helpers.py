@@ -49,6 +49,9 @@ def __embed_defaults_thumbnail():
 def __embed_question_thumbnail():
     return parse_json_raw(f"{EMBED_PATH}/defaults.json", "question_thumbnail")
 
+def __embed_laughing_thumbnail():
+    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "laughing_thumbnail")
+
 
 # * RAW BUILDER
 # Returns JSON object
@@ -88,6 +91,10 @@ def em_welcome():
 # /8ball and /wisdom
 def raw_mystery():
     return __embed_question_thumbnail()
+
+# /joke
+def raw_joke():
+    return __embed_laughing_thumbnail()
 
 # /generate message
 def raw_generate():
