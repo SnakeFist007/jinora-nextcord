@@ -5,6 +5,7 @@ from nextcord.ext import commands
 from main import logging
 from main import parse_json_utf8, raw_mystery, convert_raw
 
+
 WISDOM = "database/mystery/db_wisdom.json"
 EIGHT_BALL = "database/mystery/db_8ball.json"
 
