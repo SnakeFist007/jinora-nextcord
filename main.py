@@ -147,14 +147,20 @@ async def on_guild_remove(guild):
 
 
 # * CONSOLE COMMANDS
+# Console help
+@console.command()
+async def help():
+    print("$ Following commands are available: help, reload")
+    
 # Hot-reload all cogs
 @console.command()
 async def reload():
+    print("$ Hot-reloading all cogs!")
     logging.warning("Reloading all cogs!")
     for folder in os.listdir("cogs"):
         if os.path.exists(os.path.join("cogs", folder, "cog.py")):
             bot.reload_extension(f"cogs.{folder}.cog")
-            
+
 
 
 # * Main run function
