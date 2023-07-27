@@ -2,8 +2,9 @@ import nextcord
 import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
+from jokeapi import Jokes
 from main import logging
-from main import parse_json_utf8, raw_mystery, convert_raw
+from main import parse_json_utf8, raw_mystery, convert_raw, bake_embed
 
 
 WISDOM = "database/mystery/db_wisdom.json"
@@ -47,6 +48,26 @@ class Mystery(commands.Cog, name="Mystery"):
         em = raw_mystery() | embed
 
         await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
+        
+    
+    # Joke command
+    @nextcord.slash_command(name="joke", description="Tells a joke!")
+    async def joke(self, interaction: Interaction):
+        j = await Jokes()
+        blacklist = ["racist", "sexist", "nsfw"]
+        joke = await j.get_joke(blacklist=blacklist)
+        
+        if joke["type"] == "single":
+            embed = {
+                "title": joke["joke"] 
+            }
+        else:
+            embed = {
+                "title": joke['setup'],
+                "description": f"||{joke['delivery']}||"
+            }         
+        
+        await interaction.send(embed=bake_embed(embed), ephemeral=True)
 
 
 # Add Cog to bot
