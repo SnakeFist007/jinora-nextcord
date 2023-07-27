@@ -66,10 +66,12 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
         except requests.exceptions.RequestException:
             logging.exception("Stable Diffusion Server is offline!")
             await interaction.channel.send(embed=em_error_offline())
+            return
 
         except Exception as e:
             logging.exception(e)
             await interaction.channel.send(embed=em_error())
+            return
 
         # Extract image and prepare for Discord
         try:
@@ -97,9 +99,11 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
 
         except (nextcord.errors.ApplicationInvokeError, UnboundLocalError):
             logging.exception("Command failed due to Stable Diffusion being offline.")
+            return
 
         except Exception as e:
             logging.exception(e)
+            return
 
         # Cleanup
         finally:
