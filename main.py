@@ -2,7 +2,6 @@ import os
 import nextcord
 import asyncio
 from nextcord.ext import commands
-from dpyConsole import Console
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -11,6 +10,7 @@ from datetime import datetime, timedelta
 from dateutil import tz
 from functions.helpers import *
 from functions.logging import logging
+from functions.nextcordConsole.console import Console
 
 
 # Setup
