@@ -19,7 +19,7 @@ class Basics(commands.Cog, name="Misc"):
         
 
     # General stats of the bot
-    @nextcord.slash_command(name="status", description="Pong!")
+    @nextcord.slash_command(name="status", description="Bot status and statistics!")
     async def status(self, interaction: Interaction):
         logging.info("Checking status...")
         # Get amount of servers joined
@@ -30,14 +30,14 @@ class Basics(commands.Cog, name="Misc"):
 
         embed = {
             "title": "Status Page",
-            "description": f"Amount of Servers joined: `{count}`\nPing: `{ping}ms`"
+            "description": f"Ping: `{ping}ms`\nAmount of Servers joined: `{count}`"
         }
 
         await interaction.send(embed=bake_embed(embed), ephemeral=True)
         
         
     # Weather command
-    @nextcord.slash_command(name="weather", description="Tells the weather!")
+    @nextcord.slash_command(name="weather", description="Generates a weather report!")
     async def weather(self, interaction: Interaction, location: str = SlashOption()):
         try:
             url = "https://api.weatherapi.com/v1/current.json"
@@ -75,7 +75,7 @@ class Basics(commands.Cog, name="Misc"):
         
         
     # Astro command
-    @nextcord.slash_command(name="astro", description="Tells the moon phase!")
+    @nextcord.slash_command(name="astro", description="Generates an astro report!")
     async def astro(self, interaction: Interaction, location: str = SlashOption()):
         try:
             url = "https://api.weatherapi.com/v1/astronomy.json"

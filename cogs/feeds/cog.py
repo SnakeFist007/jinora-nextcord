@@ -19,13 +19,15 @@ class Feeds(commands.Cog, name="Feeds"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         
-        
-    @nextcord.slash_command(name="feed", description="Create recurring reminders for the server")
+    
+    # Command group: /feed ...
+    @nextcord.slash_command(name="feed", description="Recurring reminders!")
     async def main(self, interaction: Interaction):
         pass
     
     
-    @main.subcommand(name="add", description="Creates a reminder")
+    # Add feeds & start reminder countdown
+    @main.subcommand(name="add", description="Creates a recurring reminder.")
     async def feed_add(self, interaction: Interaction,  
                        role: nextcord.Role = SlashOption(), 
                        day: int = SlashOption(
@@ -64,7 +66,8 @@ class Feeds(commands.Cog, name="Feeds"):
         await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
         
     
-    @main.subcommand(name="view", description="Lists all active feeds")
+    # Shows all currently active feeds for the user
+    @main.subcommand(name="view", description="Lists all active feeds.")
     async def feed_view(self, interaction: Interaction):
         embed = { "title": "Active Feeds" }
         em = bake_embed(embed)
@@ -80,8 +83,9 @@ class Feeds(commands.Cog, name="Feeds"):
             
         await interaction.response.send_message(embed=em, ephemeral=True)
     
-        
-    @main.subcommand(name="delete", description="Deletes a feed")
+    
+    # Deletes a feed by its uuid from the user
+    @main.subcommand(name="delete", description="Deletes a feed by its ID.")
     async def feed_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
         embed = {
                 "title": "Feed deletion successful!",
@@ -99,12 +103,14 @@ class Feeds(commands.Cog, name="Feeds"):
             return
     
     
-    @main.subcommand(name="admin", description="Admin commands")
+    # Command subgroup: /feed admin ...
+    @main.subcommand(name="admin", description="Feed admin tools!")
     async def main_group(self, interaction: nextcord.Interaction):
         pass
     
     
-    @main_group.subcommand(name="view", description="Lists all active feeds from the server")
+    # Shows all currently active feeds for the server
+    @main_group.subcommand(name="view", description="Lists all active feeds from the server.")
     @application_checks.has_permissions(administrator=True)
     async def feed_admin_view(self, interaction: Interaction):
         embed = { 
@@ -124,7 +130,8 @@ class Feeds(commands.Cog, name="Feeds"):
         await interaction.response.send_message(embed=em, ephemeral=True)
     
     
-    @main_group.subcommand(name="delete", description="Deletes a feed from the server")
+    # Deletes a feed by its uuid from the server
+    @main_group.subcommand(name="delete", description="Deletes a feed from the server.")
     @application_checks.has_permissions(administrator=True)
     async def feed_admin_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
         embed = {

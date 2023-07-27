@@ -36,8 +36,8 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
         self.bot = bot
 
     # * Generate command
-    @nextcord.slash_command(name="generate", description="Generates a picture! (txt2img)")
-    async def sd_generate(
+    @nextcord.slash_command(name="txt2img", description="Generates a picture!")
+    async def sd_txt2img(
             self, interaction: Interaction,
             prompt: str = SlashOption(description="Insert your prompt"),
             negative_prompt: Optional[str] = SlashOption(description="Insert your negative prompt", required=False, default="")):
@@ -63,18 +63,7 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
             res = requests.post(
                 url=f"{URL}/sdapi/v1/txt2img", json=prt_payload)
 
-        except requests.exceptions.RequestException:
-            logging.exception("Stable Diffusion Server is offline!")
-            await interaction.channel.send(embed=em_error_offline())
-            return
-
-        except Exception as e:
-            logging.exception(e)
-            await interaction.channel.send(embed=em_error())
-            return
-
-        # Extract image and prepare for Discord
-        try:
+            # Extract image and prepare for Discord
             r = res.json()
             for i in r["images"]:
                 image = Image.open(io.BytesIO(
@@ -97,12 +86,14 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
             await interaction.channel.send(embed=em, file=file)
             logging.info("Sending repsonse message to channel.")
 
-        except (nextcord.errors.ApplicationInvokeError, UnboundLocalError):
-            logging.exception("Command failed due to Stable Diffusion being offline.")
+        except (requests.exceptions.RequestException, requests.exceptions.ConnectionError, ConnectionRefusedError, nextcord.errors.ApplicationInvokeError, UnboundLocalError):
+            logging.exception("Stable Diffusion Server is offline!")
+            await interaction.channel.send(embed=em_error_offline())
             return
 
         except Exception as e:
             logging.exception(e)
+            await interaction.channel.send(embed=em_error())
             return
 
         # Cleanup
