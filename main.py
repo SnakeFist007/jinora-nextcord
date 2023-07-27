@@ -58,19 +58,18 @@ def get_weekday(desired_day, zone):
 
 # Generate reminder & send reminder when ready
 async def set_reminder(task, timezone):
-    webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
-    zone = tz.gettz(timezone)
-    dt_time = datetime.strptime(task["time"], "%H:%M")
-    
-    # Get next occurance
-    next_date = get_weekday(task["day"], zone)
-    
     # Prepare message
+    webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
     embed = {
         "title": "Reminder!",
         "description": f"{task['message']}"
     }
     webhook.add_embed(bake_raw(embed))
+    
+    # Get next occurance
+    zone = tz.gettz(timezone)
+    dt_time = datetime.strptime(task["time"], "%H:%M")
+    next_date = get_weekday(task["day"], zone)
     
     # Start scheduled reminder
     next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
@@ -82,6 +81,8 @@ async def set_reminder(task, timezone):
     try:
         webhook.execute()
         logging.info(f"Sending embed through webhook: {task['webhook']}")
+        # Set new reminder
+        set_reminder(task, timezone)
     except Exception as e:
         logging.exception(e)
 
