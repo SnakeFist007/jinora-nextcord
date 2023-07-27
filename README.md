@@ -91,6 +91,7 @@ python main.py
 - [x] Reminders over Webhook Implementation
 - [x] Integrated Stable Diffusion API (local servers only)
 - [x] 8-Ball & Wisdom Commands
+- [ ] Localization (🇩🇪, 🇬🇧, 🇫🇷)
 
 ## Possible Features
 - [ ] Moderation Commands
