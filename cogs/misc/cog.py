@@ -54,7 +54,8 @@ class Basics(commands.Cog, name="Misc"):
             emoji_db = parse_json(CONDITIONS)
             emoji = emoji_db[condition.lower()]["emoji"]
             thumbnail = emoji_db[condition.lower()]["thumbnail"]
-        except KeyError:
+        except KeyError as e:
+            logging.exception(e)
             await interaction.send(embed=em_error(), ephemeral=True)
             return
                 
@@ -68,8 +69,7 @@ class Basics(commands.Cog, name="Misc"):
         em.add_field(name="Humidity", value=f"{data['current']['humidity']}%")
         em.add_field(name="Wind Speeds", value=f"{int(data['current']['wind_kph'])} km/h")
         
-        # TODO: Add different Jinora thumbnails for weather conditions
-        # em.set_thumbnail(url=thumbnail)
+        em.set_thumbnail(url=thumbnail)
                 
         await interaction.send(embed=em, ephemeral=True)
         
@@ -91,7 +91,9 @@ class Basics(commands.Cog, name="Misc"):
             moon_phase = data["astronomy"]["astro"]["moon_phase"]
             emoji_db = parse_json(MOON_PHASES)
             emoji = emoji_db[moon_phase.lower()]["emoji"]
-        except KeyError:
+            thumbnail = emoji_db[moon_phase.lower()]["thumbnail"]
+        except KeyError as e:
+            logging.exception(e)
             await interaction.send(embed=em_error(), ephemeral=True)
             return
                 
@@ -105,8 +107,7 @@ class Basics(commands.Cog, name="Misc"):
         em.add_field(name="Moonset", value=f"{data['astronomy']['astro']['moonset']}")
         em.add_field(name="Moon Illumination", value=f"{data['astronomy']['astro']['moon_illumination']}%")
         
-        # TODO: Add nightly Jinora thumbnail
-        # em.set_thumbnail(url=thumbnail)
+        em.set_thumbnail(url=thumbnail)
                 
         await interaction.send(embed=em, ephemeral=True)
 
