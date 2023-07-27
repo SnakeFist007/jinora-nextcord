@@ -87,6 +87,7 @@ async def set_reminder(task, timezone):
         set_reminder(task, timezone)
     except Exception as e:
         logging.exception(e)
+        return
 
 
 
@@ -111,6 +112,7 @@ async def on_ready():
         logging.info("Synced global commands!")
     except Exception as e:
         logging.exception(e)
+        return
         
     # Set presence message
     logging.info("Setting presence message...")
@@ -173,6 +175,7 @@ def main():
         logging.info("Successfully connected to MongoDB!")
     except Exception as e:
         logging.exception(e)
+        return
 
     # Load cogs
     logging.info("Loading modules...")
@@ -187,6 +190,7 @@ def main():
         bot.run(TOKEN)
     except Exception as e:
         logging.exception(e)
+        return
 
 
 if __name__ == "__main__":
