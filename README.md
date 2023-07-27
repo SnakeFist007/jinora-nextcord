@@ -96,7 +96,7 @@ python main.py
 - [ ] Moderation Commands
 
 ## Cancelled Features
-- Stable Music Player (via [Wavelink](https://github.com/PythonistaGuild/Wavelink) & [Lavalink-Servers](https://github.com/DarrenOfficial/lavalink-list)) -> not supported!
+- Stable Music Player (via [Wavelink](https://github.com/PythonistaGuild/Wavelink), [Mafic](https://github.com/ooliver1/mafic) & [Lavalink-Servers](https://github.com/DarrenOfficial/lavalink-list)) -> doesn't work properly!
 
 ## To-Dos
 - [ ] Fine-tuned Permissions (not just Administrator for the bot)
