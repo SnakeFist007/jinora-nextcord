@@ -91,10 +91,10 @@ python main.py
 - [x] Reminders over Webhook Implementation
 - [x] Integrated Stable Diffusion API (local servers only)
 - [x] 8-Ball & Wisdom Commands
-- [ ] Localization (🇩🇪, 🇬🇧, 🇫🇷)
 
 ## Possible Features
-- [ ] Moderation Commands
+- Moderation Commands
+- Localization (🇩🇪, 🇬🇧, 🇫🇷)
 
 ## Cancelled Features
 - Stable Music Player (via [Wavelink](https://github.com/PythonistaGuild/Wavelink), [Mafic](https://github.com/ooliver1/mafic) & [Lavalink-Servers](https://github.com/DarrenOfficial/lavalink-list)) -> doesn't work properly!
