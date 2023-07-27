@@ -10,8 +10,8 @@ from main import parse_json, bake_embed, bake_embed_thumbnail, em_error
 from main import WEATHER
 
 
-CONDITIONS = "database/weather_conditions.json"
-MOON_PHASES = "database/moon_phases.json"
+CONDITIONS = "database/weather/weather_conditions.json"
+MOON_PHASES = "database/weather/moon_phases.json"
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):

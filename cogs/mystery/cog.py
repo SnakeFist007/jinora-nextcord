@@ -5,6 +5,8 @@ from nextcord.ext import commands
 from main import logging
 from main import parse_json_utf8, raw_mystery, convert_raw
 
+WISDOM = "database/mystery/db_wisdom.json"
+EIGHT_BALL = "database/mystery/db_8ball.json"
 
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
@@ -14,9 +16,7 @@ class Mystery(commands.Cog, name="Mystery"):
     # Get a random wisdom
     @nextcord.slash_command(name="wisdom", description="Tells a random wisdom!")
     async def wisdom(self, interaction: Interaction):
-        wisdom = "database/db_wisdom.json"
-
-        lines = parse_json_utf8(wisdom)
+        lines = parse_json_utf8(WISDOM)
         length = len(lines)
 
         rand_int = random.randint(1, length)
@@ -33,9 +33,7 @@ class Mystery(commands.Cog, name="Mystery"):
     # Get an 8-Ball answer for a serious question
     @nextcord.slash_command(name="8ball", description="Answers important questions!")
     async def fortune_8ball(self, interaction: Interaction, question: str = SlashOption(description="Ask your question...")):
-        eight_ball_answers = "database/db_8ball.json"
-
-        lines = parse_json_utf8(eight_ball_answers)
+        lines = parse_json_utf8(EIGHT_BALL)
         length = len(lines)
 
         rand_int = random.randint(1, length)
