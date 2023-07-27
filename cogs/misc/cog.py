@@ -47,6 +47,7 @@ class Basics(commands.Cog, name="Misc"):
     async def main(self, interaction: Interaction):
         pass
     
+    
     @main.subcommand(name="add", description="Creates a reminder")
     async def feed_add(self, interaction: Interaction,  
                        role: nextcord.Role = SlashOption(), 
