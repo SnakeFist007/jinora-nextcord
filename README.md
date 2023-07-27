@@ -90,7 +90,7 @@ python main.py
 - [x] Deployable via Docker
 - [x] Reminders over Webhook Implementation
 - [x] Integrated Stable Diffusion API (local servers only)
-- [x] 8-Ball & Wisdom Commands
+- [x] Joke, 8-Ball & Wisdom Commands
 - [x] Weather Command
 
 ## Possible Features
