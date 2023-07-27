@@ -12,13 +12,8 @@ from datetime import datetime, timedelta
 from dateutil import tz
 from functions.helpers import *
 
-# Variables
-load_dotenv()
-token = os.getenv("TOKEN")
-uri = os.getenv("MONGODB")
-url = os.getenv("STABLEDIFFUSION")
-timezone = os.getenv("TIMEZONE")
 
+# Setup
 # * Logging
 logging.basicConfig(
     level=logging.INFO,
@@ -30,15 +25,23 @@ logging.basicConfig(
     ]
 )
 
-if not token:
-    logging.exception(".env - Bot-Token is empty!")
-    exit(1)
-if not uri:
-    logging.exception(".env - MongoDB URI is empty!")
-    exit(1)
-if not url:
-    logging.exception(".env - Stable Diffusion URL is empty!")
-    exit(1)
+# * Load .env
+load_dotenv()
+token = os.getenv("TOKEN")
+uri = os.getenv("MONGODB")
+url = os.getenv("STABLEDIFFUSION")
+timezone = os.getenv("TIMEZONE")
+
+# Check if .env is filled out correctly
+def check_dotenv(var, error):
+    if not var:
+        logging.critical(f".env - {error} is empty!")
+        exit(1)
+        
+check_dotenv(token, "Bot-Token")
+check_dotenv(uri, "MongoDB URI")
+check_dotenv(url, "Stable Diffusion URL")
+check_dotenv(timezone, "Timezone")
 
 # * MongoDB
 client = MongoClient(uri, server_api=ServerApi('1'))
@@ -51,6 +54,8 @@ bot = commands.Bot(intents=intents, help_command=None)
 console = Console(bot)
 
 
+
+# Functions
 # * Reminders
 # Calculate next occurance of weekday
 def get_weekday(desired_day, zone):
@@ -60,6 +65,7 @@ def get_weekday(desired_day, zone):
     result = datetime.now(zone) + timedelta(days=next_day)
     
     return result
+
 
 # Generate reminder & send reminder when ready
 async def set_reminder(task, timezone):
@@ -75,7 +81,6 @@ async def set_reminder(task, timezone):
         "title": "Reminder!",
         "description": f"{task['message']}"
     }
-    
     webhook.add_embed(bake_raw(embed))
     
     # Start scheduled reminder
@@ -83,13 +88,14 @@ async def set_reminder(task, timezone):
     wait_time = (next_reminder - datetime.now(zone)).total_seconds()
     logging.info(f"Setting reminder timer for {wait_time} seconds...")
     
+    # Wait until date, then send webhook
     await asyncio.sleep(wait_time)
-    
     try:
         webhook.execute()
         logging.info(f"Sending embed through webhook: {task['webhook']}")
     except Exception as e:
         logging.exception(e)
+
 
 
 # Events              
@@ -105,14 +111,17 @@ async def on_ready():
             asyncio.create_task(set_reminder(task, timezone))
     else:
         logging.info("No open tasks!")
-        
+    
+    # Send ready message, sync commands    
     logging.info("Jinora#2184 is ready!")
     try:
         await bot.sync_application_commands()
         logging.info("Synced global commands!")
     except Exception as e:
         logging.exception(e)
+        
     # Set presence message
+    logging.info("Setting presence message...")
     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="you <3"))
 
 
@@ -120,6 +129,7 @@ async def on_ready():
 @bot.event
 async def on_guild_join(guild):
     logging.info(f"Joined server {guild.id}!")
+    
     # Check if server ID has already been added to the list
     if db_servers.joined_servers_list.find_one({"server_id": guild.id}) is None:
         db_servers.joined_servers_list.insert_one({"server_id": guild.id})
@@ -136,6 +146,7 @@ async def on_guild_join(guild):
 @bot.event
 async def on_guild_remove(guild):
     logging.info(f"Left server {guild.id}!")
+    
     # Check if server ID was already deleted from the list
     if db_servers.joined_servers_list.find_one({"server_id": guild.id}) is not None:
         db_servers.joined_servers_list.delete_one({"server_id": guild.id})
@@ -144,8 +155,9 @@ async def on_guild_remove(guild):
         logging.warning(f"Server {guild.id} was already removed from the list!")
 
 
+
 # * CONSOLE COMMANDS
-# Reload all cogs
+# Hot-reload all cogs
 @console.command()
 async def reload():
     logging.warning("Reloading all cogs!")
@@ -154,10 +166,9 @@ async def reload():
             bot.reload_extension(f"cogs.{folder}.cog")
             
 
+
 # * Main run function
 def main():
-    logging.info("Loading modules...")
-
     # Connect to MongoDB
     try:
         client.admin.command('ping')
@@ -166,12 +177,14 @@ def main():
         logging.exception(e)
 
     # Load cogs
+    logging.info("Loading modules...")
     for folder in os.listdir("cogs"):
         if os.path.exists(os.path.join("cogs", folder, "cog.py")):
             bot.load_extension(f"cogs.{folder}.cog")
 
     # Start the bot
     try:
+        logging.info("Starting bot...")
         console.start()
         bot.run(token)
     except Exception as e:
