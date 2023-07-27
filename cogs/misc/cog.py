@@ -93,6 +93,7 @@ class Basics(commands.Cog, name="Misc"):
             emoji = emoji_db[moon_phase.lower()]["emoji"]
         except KeyError:
             await interaction.send(embed=em_error(), ephemeral=True)
+            return
                 
         embed = {
             "title": f"{emoji} Astro report for: {city}", 
