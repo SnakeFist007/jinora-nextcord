@@ -3,7 +3,6 @@ import asyncio
 import uuid
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
-from typing import Optional
 from main import logging
 from main import set_reminder, bake_embed, em_error
 from main import db_tasks
