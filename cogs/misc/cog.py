@@ -6,7 +6,7 @@ from nextcord.ext import commands
 from main import logging
 from main import db_servers
 from main import parse_json, bake_embed, bake_embed_thumbnail, em_error
-from main import WEATHER
+from main import WEATHER, VERSION
 
 
 CONDITIONS = "database/weather/weather_conditions.json"
@@ -30,7 +30,7 @@ class Basics(commands.Cog, name="Misc"):
 
         embed = {
             "title": "Status Page",
-            "description": f"Ping: `{ping}ms`\nAmount of Servers joined: `{count}`"
+            "description": f"Version: {VERSION}\nPing: `{ping}ms`\nAmount of Servers joined: `{count}`"
         }
 
         await interaction.send(embed=bake_embed(embed), ephemeral=True)

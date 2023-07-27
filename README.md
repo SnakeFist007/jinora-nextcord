@@ -96,6 +96,7 @@ python main.py
 - [x] Weather & Astro Command
 
 ## Possible Features
+- Meme Command
 - Moderation Commands
 - Localization (🇩🇪, 🇬🇧, 🇫🇷)
 

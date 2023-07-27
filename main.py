@@ -14,6 +14,8 @@ from functions.nextcordConsole.console import Console
 
 
 # Setup
+VERSION="1.0.0"
+
 # * Load .env
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
