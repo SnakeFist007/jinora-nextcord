@@ -91,10 +91,6 @@ def raw_mystery():
 def raw_joke():
     return __embed_laughing_thumbnail()
 
-# /generate message
-def raw_generate():
-    return parse_json_raw(embeds / "messages.json", "stablediffusion")
-
 
 # * Pre-built embeds
 # /help message

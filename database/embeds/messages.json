@@ -32,16 +32,7 @@
                 "name": "/astro",
                 "value": "Gives a moon phase report.",
                 "inline": true
-            },
-            {
-                "name": "/generate",
-                "value": "Creates an image using Stable Diffusion."
             }]
-    },
-    "stablediffusion": {
-        "author": {
-            "name": "Generation complete!"
-        }
     },
     "status": {
         "title": "Status Page"

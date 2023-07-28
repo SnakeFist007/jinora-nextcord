@@ -21,7 +21,6 @@ VERSION="1.0.0"
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 URI = os.getenv("MONGODB")
-URL = os.getenv("STABLEDIFFUSION")
 TIMEZONE = os.getenv("TIMEZONE")
 WEATHER = os.getenv("WEATHER")
 
@@ -33,7 +32,6 @@ def check_dotenv(var, error):
         
 check_dotenv(TOKEN, "Bot-Token")
 check_dotenv(URI, "MongoDB URI")
-check_dotenv(URL, "Stable Diffusion URL")
 check_dotenv(TIMEZONE, "Timezone")
 check_dotenv(WEATHER, "Weather API")
 

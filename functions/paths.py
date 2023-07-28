@@ -6,9 +6,6 @@ base_path = Path(".")
 cogs = base_path / "cogs"
 embeds = base_path / "database/embeds"
 
-# /txt2image
-tmp_path = base_path / "cogs/stablediffusion/tmp"
-gen_settings = base_path / "database/stable_diffusion/gen_settings.json"
 # /mystery
 wisdom = base_path / "database/mystery/db_wisdom.json"
 eight_ball = base_path / "database/mystery/db_8ball.json"
