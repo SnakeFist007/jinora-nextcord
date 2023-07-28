@@ -94,6 +94,7 @@ python main.py
 - [x] Stable Diffusion API
 - [x] Joke, 8-Ball & Wisdom Commands
 - [x] Weather & Astro Command
+- [ ] User & Sever-Info Commands
 
 ## Possible Features
 - Meme Command
