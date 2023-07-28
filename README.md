@@ -107,6 +107,9 @@ python main.py
 - [ ] Fine-tuned Permissions (not just Administrator for the bot)
 - [ ] Pathlib for filepaths
 - [ ] Centralized file for all paths
+- [ ] Replace /feed delete & /feed admin delete with Dropdown Menu
+- [ ] Limit recurring reminder to 10
+- [ ] Limit reminders to Moderators (manage_message permissions only)
 
 <br>
 
