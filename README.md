@@ -91,15 +91,19 @@ python main.py
 # Features
 - [ ] Deployable via Docker & docker-compose
 - [x] Reminders over Webhook Implementation
+- [ ] Create recurring events
 - [x] Stable Diffusion API
 - [x] Joke, 8-Ball & Wisdom Commands
 - [x] Weather & Astro Command
 - [ ] User & Sever-Info Commands
+- [ ] Question of the Day!
+- [ ] Pomodoro Sessions
 
 ## Possible Features
 - Meme Command
 - Moderation Commands
 - Localization (🇩🇪, 🇬🇧, 🇫🇷)
+- Suggest a Book
 
 ## Cancelled Features
 - Stable Music Player (via [Wavelink](https://github.com/PythonistaGuild/Wavelink), [Mafic](https://github.com/ooliver1/mafic) & [Lavalink-Servers](https://github.com/DarrenOfficial/lavalink-list)) -> doesn't work properly!
@@ -112,6 +116,7 @@ python main.py
 - [ ] Limit recurring reminder to 10
 - [ ] Limit reminders to Moderators (manage_message permissions only)
 - [ ] Add DM support for most commands, restrict those that can't be used outside guilds
+- [ ] Find QotD API, maybe use Reddit API or implement datastore
 
 <br>
 
