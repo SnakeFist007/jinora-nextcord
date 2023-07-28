@@ -110,6 +110,7 @@ python main.py
 - [ ] Replace /feed delete & /feed admin delete with Dropdown Menu
 - [ ] Limit recurring reminder to 10
 - [ ] Limit reminders to Moderators (manage_message permissions only)
+- [ ] Add DM support for most commands, restrict those that can't be used outside guilds
 
 <br>
 
