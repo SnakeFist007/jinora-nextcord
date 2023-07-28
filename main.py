@@ -11,6 +11,7 @@ from dateutil import tz
 from functions.helpers import *
 from functions.logging import logging
 from functions.nextcordConsole.console import Console
+from functions.paths import *
 
 
 # Setup
@@ -163,9 +164,9 @@ async def help():
 async def reload():
     print("$ Hot-reloading all cogs!")
     logging.warning("Reloading all cogs!")
-    for folder in os.listdir("cogs"):
-        if os.path.exists(os.path.join("cogs", folder, "cog.py")):
-            bot.reload_extension(f"cogs.{folder}.cog")
+    for folder in cogs.iterdir():
+        if (folder / "cog.py").exists():
+            bot.reload_extension(f"cogs.{folder.name}.cog")
 
 
 
@@ -181,9 +182,9 @@ def main():
 
     # Load cogs
     logging.info("Loading modules...")
-    for folder in os.listdir("cogs"):
-        if os.path.exists(os.path.join("cogs", folder, "cog.py")):
-            bot.load_extension(f"cogs.{folder}.cog")
+    for folder in cogs.iterdir():
+        if (folder / "cog.py").exists():
+            bot.load_extension(f"cogs.{folder.name}.cog")
 
     # Start the bot
     try:

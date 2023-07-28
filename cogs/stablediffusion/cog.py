@@ -8,25 +8,20 @@ from nextcord.ext import commands
 from typing import Optional
 from PIL import Image
 from main import logging
-from main import URL
+from main import URL, tmp_path, gen_settings
 from main import parse_json, fuse_json, raw_generate, bake_embed
 from main import em_error, em_error_offline
 
 
-# Variables
-TMP_PATH = "cogs/stablediffusion/tmp"
-GEN_SETTINGS = "database/stable_diffusion/gen_settings.json"
-
 # Create tmp directory for generated Stable Diffusion images
 def prepare_directory():
-    if not os.path.exists(TMP_PATH):
-        os.makedirs(TMP_PATH)
-        logging.warning(
-            "Temporary image directory missing! Creating a new one...")
+    if not os.path.exists(tmp_path):
+        os.makedirs(tmp_path)
+        logging.warning("Temporary image directory missing! Creating a new one...")
 
 # Loads default values for image generation
 def load_defaults():
-    defaults = parse_json(GEN_SETTINGS)
+    defaults = parse_json(gen_settings)
     return defaults
 
 
@@ -68,11 +63,11 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
             for i in r["images"]:
                 image = Image.open(io.BytesIO(
                     base64.b64decode(i.split(",", 1)[0])))
-                image.save(f"{TMP_PATH}/output.png")
-                logging.info(f"Saving image to {TMP_PATH}/output.png.")
+                image.save(f"{tmp_path}/output.png")
+                logging.info(f"Saving image to {tmp_path}/output.png.")
 
             file = nextcord.File(
-                f"{TMP_PATH}/output.png", filename="output.png")
+                f"{tmp_path}/output.png", filename="output.png")
 
             # Send image as response
             embed = {
@@ -100,8 +95,8 @@ class StableDiffusion(commands.Cog, name="StableDiffusion"):
         finally:
             await message.delete()
             try:
-                for f in os.listdir(TMP_PATH):
-                    os.remove(os.path.join(TMP_PATH, f))
+                for f in os.listdir(tmp_path):
+                    os.remove(os.path.join(tmp_path, f))
                 logging.info("Removed temporary files.")
             except OSError as e:
                 logging.exception(e)

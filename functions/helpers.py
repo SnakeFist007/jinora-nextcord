@@ -1,8 +1,7 @@
 import json
 from nextcord import Embed
+from functions.paths import *
 
-
-EMBED_PATH = "database/embeds"
 
 # Basic functions
 # * Load data from JSON
@@ -14,7 +13,7 @@ def parse_json(path):
 
 # * Load text data from JSON
 def parse_json_utf8(path):
-    with open(path, encoding="utf-8") as f:
+    with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
     
     return data
@@ -40,17 +39,17 @@ def convert_raw(raw):
 # Default embed options
 # * Load embed defaults
 def __embed_defaults():
-    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "default")
+    return parse_json_raw(embeds / "defaults.json", "default")
 
 # * Load embed defaults w/ thumbnail
 def __embed_defaults_thumbnail():
-    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "default_thumbnail")
+    return parse_json_raw(embeds / "defaults.json", "default_thumbnail")
 
 def __embed_question_thumbnail():
-    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "question_thumbnail")
+    return parse_json_raw(embeds / "defaults.json", "question_thumbnail")
 
 def __embed_laughing_thumbnail():
-    return parse_json_raw(f"{EMBED_PATH}/defaults.json", "laughing_thumbnail")
+    return parse_json_raw(embeds / "defaults.json", "laughing_thumbnail")
 
 
 # * RAW BUILDER
@@ -84,10 +83,6 @@ def create_embed_thumbnail(path, pointer):
 
 
 # * Pre-built raws
-# ON_JOIN Welcome message
-def em_welcome():
-    return create_embed_thumbnail(f"{EMBED_PATH}/messages.json", "welcome")
-
 # /8ball and /wisdom
 def raw_mystery():
     return __embed_question_thumbnail()
@@ -98,23 +93,27 @@ def raw_joke():
 
 # /generate message
 def raw_generate():
-    return parse_json_raw(f"{EMBED_PATH}/messages.json", "stablediffusion")
+    return parse_json_raw(embeds / "messages.json", "stablediffusion")
 
 
 # * Pre-built embeds
 # /help message
 def em_help():
-    return create_embed(f"{EMBED_PATH}/messages.json", "help")
+    return create_embed(embeds / "messages.json", "help")
+
+# ON_JOIN Welcome message
+def em_welcome():
+    return create_embed_thumbnail(embeds / "messages.json", "welcome")
 
 
 # ERROR: Default message
 def em_error():
-    return create_embed(f"{EMBED_PATH}/errors.json", "error_default")
+    return create_embed(embeds / "errors.json", "error_default")
 
 # ERROR: Insufficient perms
 def em_error_perms():
-    return create_embed(f"{EMBED_PATH}/errors.json", "error_permissions")
+    return create_embed(embeds / "errors.json", "error_permissions")
 
 # ERROR: Stable Diffusion is offline
 def em_error_offline():
-    return create_embed(f"{EMBED_PATH}/errors.json", "error_offline")
+    return create_embed(embeds / "errors.json", "error_offline")

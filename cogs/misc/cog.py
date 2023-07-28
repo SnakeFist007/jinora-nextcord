@@ -4,13 +4,10 @@ from nextcord.interactions import Interaction
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from main import logging
-from main import db_servers
+from main import db_servers, conditions, moon_phases
 from main import parse_json, bake_embed, bake_embed_thumbnail, em_error
 from main import WEATHER, VERSION
 
-
-CONDITIONS = "database/weather/weather_conditions.json"
-MOON_PHASES = "database/weather/moon_phases.json"
 
 # Initialize Cog
 class Basics(commands.Cog, name="Misc"):
@@ -51,7 +48,7 @@ class Basics(commands.Cog, name="Misc"):
                     
             city = data["location"]["name"]
             condition = data["current"]["condition"]["text"]
-            emoji_db = parse_json(CONDITIONS)
+            emoji_db = parse_json(conditions)
             emoji = emoji_db[condition.lower()]["emoji"]
             thumbnail = emoji_db[condition.lower()]["thumbnail"]
         except KeyError as e:
@@ -89,7 +86,7 @@ class Basics(commands.Cog, name="Misc"):
                     
             city = data["location"]["name"]
             moon_phase = data["astronomy"]["astro"]["moon_phase"]
-            emoji_db = parse_json(MOON_PHASES)
+            emoji_db = parse_json(moon_phases)
             emoji = emoji_db[moon_phase.lower()]["emoji"]
             thumbnail = emoji_db[moon_phase.lower()]["thumbnail"]
         except KeyError as e:
