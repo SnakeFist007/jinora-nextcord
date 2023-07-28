@@ -105,6 +105,9 @@ python main.py
 - Localization (🇩🇪, 🇬🇧, 🇫🇷)
 - Suggest a Book
 - Tarot Card Draw & Reader
+- Tips on meditation and techniques
+- Tips for lucid dreaming
+- Tips for personal development (MBTI, Enneagram, ...)
 
 ## Cancelled Features
 - Stable Music Player (via [Wavelink](https://github.com/PythonistaGuild/Wavelink), [Mafic](https://github.com/ooliver1/mafic) & [Lavalink-Servers](https://github.com/DarrenOfficial/lavalink-list)) -> doesn't work properly!
