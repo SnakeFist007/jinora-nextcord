@@ -114,14 +114,14 @@ the community.
 
 ## Repository Features
 Any feature added has to fit the general image of the repository and align with these 8 guidelines:
-	1.	Relevance: Ensure that each feature aligns with the purpose and theme of your server. Features should be useful and interesting to the majority of your server members.
-	2.	Ease of Use: Make sure the bot’s commands are easy to understand and use. Too many commands and options can confuse users and make the bot feel overwhelming.
-	3.	Performance: Adding too many features can potentially impact the bot’s performance, leading to delays or lag in responses.
-	4.	User Feedback: Listen to your server members’ feedback. They can provide valuable insights on which features they enjoy and which ones they find less useful.
-	5.	Organization: Group related features together and consider using categories or menus to organize the bot’s commands. This can make the bot feel more intuitive to navigate.
-	6.	Documentation: Provide clear and concise documentation for each feature. This way, users can easily understand what the bot can do and how to use its features effectively.
-	7.	Server Size: Consider the size of your server community. A smaller server might not need as many features compared to a larger, more diverse community.
-	8.	Bot’s Purpose: If your bot has a specific niche or theme, focus on features that enhance that niche rather than adding unrelated functionalities.
+1. **Relevance:** Ensure that each feature aligns with the purpose and theme of your server. Features should be useful and interesting to the majority of your server members.
+2. **Ease of Use:** Make sure the bot’s commands are easy to understand and use. Too many commands and options can confuse users and make the bot feel overwhelming.
+3. **Performance:** Adding too many features can potentially impact the bot’s performance, leading to delays or lag in responses.
+4. **User Feedback:** Listen to your server members’ feedback. They can provide valuable insights on which features they enjoy and which ones they find less useful.
+5. **Organization:** Group related features together and consider using categories or menus to organize the bot’s commands. This can make the bot feel more intuitive to navigate.
+6. **Documentation:** Provide clear and concise documentation for each feature. This way, users can easily understand what the bot can do and how to use its features effectively.
+7. **Server Size:** Consider the size of your server community. A smaller server might not need as many features compared to a larger, more diverse community.
+8. **Bot’s Purpose:** If your bot has a specific niche or theme, focus on features that enhance that niche rather than adding unrelated functionalities.
 
 
 ## Attribution
