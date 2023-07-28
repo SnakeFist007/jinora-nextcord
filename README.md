@@ -104,6 +104,7 @@ python main.py
 - Moderation Commands
 - Localization (🇩🇪, 🇬🇧, 🇫🇷)
 - Suggest a Book
+- Tarot Card Draw & Reader
 
 ## Cancelled Features
 - Stable Music Player (via [Wavelink](https://github.com/PythonistaGuild/Wavelink), [Mafic](https://github.com/ooliver1/mafic) & [Lavalink-Servers](https://github.com/DarrenOfficial/lavalink-list)) -> doesn't work properly!
