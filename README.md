@@ -100,8 +100,6 @@ python main.py
 - [ ] Pomodoro Sessions
 
 ## Possible Features
-- Meme Command
-- Moderation Commands
 - Localization (🇩🇪, 🇬🇧, 🇫🇷)
 - Suggest a Book
 - Tarot Card Draw & Reader
@@ -114,8 +112,6 @@ python main.py
 
 ## To-Dos
 - [ ] Fine-tuned Permissions (not just Administrator for the bot)
-- [ ] Pathlib for filepaths
-- [ ] Centralized file for all paths
 - [ ] Replace /feed delete & /feed admin delete with Dropdown Menu
 - [ ] Limit recurring reminder to 10
 - [ ] Limit reminders to Moderators (manage_message permissions only)
