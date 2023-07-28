@@ -89,9 +89,9 @@ python main.py
 ```
 
 # Features
-- [x] Deployable via Docker
+- [ ] Deployable via Docker & docker-compose
 - [x] Reminders over Webhook Implementation
-- [x] Integrated Stable Diffusion API (local servers only)
+- [x] Stable Diffusion API
 - [x] Joke, 8-Ball & Wisdom Commands
 - [x] Weather & Astro Command
 
@@ -105,6 +105,8 @@ python main.py
 
 ## To-Dos
 - [ ] Fine-tuned Permissions (not just Administrator for the bot)
+- [ ] Pathlib for filepaths
+- [ ] Centralized file for all paths
 
 <br>
 
