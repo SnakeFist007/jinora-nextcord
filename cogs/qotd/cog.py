@@ -29,6 +29,13 @@ class QotD(commands.Cog, name="QotD"):
         em = raw_mystery() | embed
 
         await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
+       
+        
+    # TODO: Seed that changes with time, so that you get the same question for every 24h
+    # TODO: Add uplifting quotes
+    @nextcord.slash_command(name="quote", description="Quote of the day!")
+    async def quote(self, interaction: Interaction):
+        pass
 
 
 # Add Cog to bot
