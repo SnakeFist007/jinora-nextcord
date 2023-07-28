@@ -9,6 +9,8 @@ embeds = base_path / "database/embeds"
 # /mystery
 wisdom = base_path / "database/mystery/db_wisdom.json"
 eight_ball = base_path / "database/mystery/db_8ball.json"
+# /qotd
+qotd = base_path / "database/questions/qotd.json"
 # /weather
 conditions = base_path / "database/weather/weather_conditions.json"
 # /astro

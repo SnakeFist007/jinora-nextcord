@@ -20,6 +20,7 @@ class Feeds(commands.Cog, name="Feeds"):
         self.bot = bot
         
     
+    # TODO: Optional event creation, instead of a webhook -> separate command!
     # Command group: /feed ...
     @nextcord.slash_command(name="feed", description="Recurring reminders!")
     async def main(self, interaction: Interaction):
