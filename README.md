@@ -4,6 +4,7 @@
     <img src="https://custom-icon-badges.herokuapp.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord">
     <img src="https://custom-icon-badges.herokuapp.com/badge/MongoDB-7.0-13AA52?logo=mongodb">
     <img src="https://custom-icon-badges.herokuapp.com/badge/Docker-4.21.1-2496ED?logo=docker">
+    <img src="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord/badge"/>
 </div>
 
 <br>
