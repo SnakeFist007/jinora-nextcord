@@ -50,8 +50,8 @@ See the [open issues](https://github.com/SnakeFist007/jinora-nextcord/issues) fo
 
 ## Contributing
 Want to improve this project yourself? Any contributions you make are greatly appreciated!
-- Translations: [guide coming soon!]()
-- Contributions: [guide coming soon!]()
+- [Contributions Guide](/.github/CONTRIBUTIONS.md)
+- [Translations Guide](/.github/TRANSLATIONS.md)
 
 <br>
 
