@@ -20,7 +20,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/badge/Bot%20Version-1.1.0-blue.svg?style=for-the-badge&logo=Python">
-    <a href="https://discord.gg/cnUpwrnpYb">
+    <a href="https://discord.gg/aJwqJtnyS4">
         <img src="https://img.shields.io/discord/1134861717185253478.svg?label=Discord&logo=Discord&colorB=007ec6&style=for-the-badge">
     </a>
 </p>
