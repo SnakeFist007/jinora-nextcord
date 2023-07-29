@@ -19,15 +19,15 @@
 </p>
 
 <p align="center">
-  <a href="#features">Features</a>
+  <a href="#-features">Features</a>
   •
-  <a href="#useful-links">Useful Links</a>
+  <a href="#-useful-links">Useful Links</a>
   •
-  <a href="#running-the-bot">Running the bot</a>
+  <a href="#-running-the-bot">Running the bot</a>
   •
-  <a href="#contributors">Contributors</a>
+  <a href="#-contributors">Contributors</a>
   •
-  <a href="#gdpr-legal-disclaimer">Legal Disclaimers</a>
+  <a href="#-gdpr-legal-disclaimer">Legal Disclaimers</a>
 </p>
 
 
