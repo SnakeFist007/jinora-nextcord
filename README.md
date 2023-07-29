@@ -111,7 +111,7 @@ Be the first to create a pull request!
 Should you have any concerns about this, either contact me directly or do not use the bot. Thank you!
 
 ### License
-This project is licensed under the [GNU General Public License 3.0](/LICENSE).
+This project is licensed under the [GNU Affero General Public License 3.0](/LICENSE).
 
 ---
 
