@@ -52,9 +52,11 @@ Any contributions you make are greatly appreciated!
 <br>
 
 # 🔗 Useful links
-Everything need for bot development:
+Bot related:
 - [Invite-Link](https://discord.com/api/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
 - [Support-Server]()
+
+Everything need for bot development:
 - [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
 - [Embed Generator](https://embed.dan.onl)
 - [Discord Permissions Calculator](https://discordapi.com/permissions.html#0)
@@ -62,7 +64,13 @@ Everything need for bot development:
 <br>
 
 # 🛠 Running the bot
-Get the latest release here:
+Get the [latest release](https://github.com/SnakeFist007/jinora-nextcord/releases/latest) from this repository.
+
+Alternatively, use git (may be unstable!):
+
+```
+git clone https://github.com/SnakeFist007/jinora-nextcord
+```
 
 ## Configuration
 
@@ -80,6 +88,7 @@ Deploy the Docker image using:
 ```
 docker build -t <user>/jinora-bot .
 ```
+
 Then start:
 ```
 docker run <id>
