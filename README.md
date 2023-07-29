@@ -49,7 +49,7 @@ Any contributions you make are greatly appreciated!
 - Translations: [guide coming soon!]()
 - Contributions: [guide coming soon!]()
 
-
+<br>
 
 # 🔗 Useful links
 Everything need for bot development:
@@ -59,7 +59,7 @@ Everything need for bot development:
 - [Embed Generator](https://embed.dan.onl)
 - [Discord Permissions Calculator](https://discordapi.com/permissions.html#0)
 
-
+<br>
 
 # 🛠 Running the bot
 Get the latest release here:
@@ -85,7 +85,7 @@ Then start:
 docker run <id>
 ```
 
-
+<br>
 
 # 🤝 Contributors
 
