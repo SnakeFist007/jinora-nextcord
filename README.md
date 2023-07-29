@@ -9,7 +9,7 @@
 <br>
 
 <div align="center">
-    <img src="./database/bot-avatar-rounded.png" width="250" height="250">
+    <img src="./database/bot-banner.png">
 </div>
 
 <br>
