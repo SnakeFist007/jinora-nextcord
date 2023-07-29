@@ -1,0 +1,34 @@
+{
+    "new moon": {
+        "emoji": "🌑",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    },
+    "waxing crescent": {
+        "emoji": "🌒",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    },
+    "first quarter": {
+        "emoji": "🌓",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    },
+    "waxing gibbous": {
+        "emoji": "🌔",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    },
+    "full moon": {
+        "emoji": "🌕",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    },
+    "waning gibbous": {
+        "emoji": "🌖",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    },
+    "last quarter": {
+        "emoji": "🌗",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    },
+    "waning crescent": {
+        "emoji": "🌘",
+        "thumbnail": "https://i.imgur.com/JOxdksr.png"
+    }
+}

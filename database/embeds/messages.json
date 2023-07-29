@@ -1,0 +1,47 @@
+{
+    "help": {
+        "title": "List of Commands",
+        "fields": [{
+                "name": "/status",
+                "value": "Displays bot status and statistics."
+            },
+            {
+                "name": "/feed",
+                "value": "Creates recurring reminders."
+            },
+            {
+                "name": "/8ball",
+                "value": "An answer for all your questions...",
+                "inline": true
+            },
+            {
+                "name": "/wisdom",
+                "value": "Tells you a random wisdom!",
+                "inline": true
+            },
+            {
+                "name": "/joke",
+                "value": "Tells a joke!"
+            },
+            {
+                "name": "/weather",
+                "value": "Gives a weather report.",
+                "inline": true
+            },
+            {
+                "name": "/astro",
+                "value": "Gives a moon phase report.",
+                "inline": true
+            }]
+    },
+    "status": {
+        "title": "Status Page"
+    },
+    "welcome": {
+        "title": "Thanks for the invite! <3",
+        "description": "Use `/help` to learn more about my commands."
+    },
+    "reminder": {
+        "title": "Reminder!"
+    }
+}

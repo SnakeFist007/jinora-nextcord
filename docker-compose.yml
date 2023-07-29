@@ -1,0 +1,15 @@
+# docker-compose for Portainer
+version: "3.3"
+
+services:
+  # Discord bot
+  jinora-nextcord:
+    # Ports required for nextcord to run properly
+    ports:
+      - "80:80"
+      - "443:443"
+    # Latest build of the bot
+    image: snakefist007/jinora-nextcord:latest
+    # for some reason you need to import this AND add the .env variables to Portainer
+    env_file:
+      - stack.env

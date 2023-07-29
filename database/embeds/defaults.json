@@ -1,0 +1,27 @@
+{
+    "default": {
+        "footer": {
+            "text": "Jinora#2184",
+            "icon_url": "https://i.imgur.com/6vywq4p.png"
+        },
+        "color": 15844367
+    },
+    "default_thumbnail": {
+        "thumbnail": {
+            "url": "https://i.imgur.com/6vywq4p.png"
+        },
+        "color": 15844367
+    },
+    "question_thumbnail": {
+        "thumbnail": {
+            "url": "https://i.imgur.com/70aZRvO.png"
+        },
+        "color": 15844367
+    },
+    "laughing_thumbnail": {
+        "thumbnail": {
+            "url": "https://i.imgur.com/aCjCIgY.png"
+        },
+        "color": 15844367
+    }
+}

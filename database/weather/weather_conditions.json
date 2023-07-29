@@ -1,0 +1,198 @@
+{
+    "sunny": {
+        "emoji": "☀️",
+        "thumbnail": "https://i.imgur.com/nTlEQg9.png"
+    },
+    "clear": {
+        "emoji": "☀️",
+        "thumbnail": "https://i.imgur.com/nTlEQg9.png"
+    },
+    "partly cloudy": {
+        "emoji": "🌤️",
+        "thumbnail": "https://i.imgur.com/nTlEQg9.png"
+    },
+    "cloudy": {
+        "emoji": "☁️",
+        "thumbnail": "https://i.imgur.com/9TcT29W.png"
+    },
+    "overcast": {
+        "emoji": "☁️",
+        "thumbnail": "https://i.imgur.com/9TcT29W.png"
+    },
+    "mist": {
+        "emoji": "🌫️",
+        "thumbnail": "https://i.imgur.com/9TcT29W.png"
+    },
+    "patchy rain possible": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "patchy snow possible": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "patchy sleet possible": {
+        "emoji": "🌨️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "patchy freezing drizzle possible": {
+        "emoji": "🌨️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "thundery outbreaks possible": {
+        "emoji": "⛈️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "blowing snow": {
+        "emoji": "🌨️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "blizzard": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "fog": {
+        "emoji": "🌁",
+        "thumbnail": "https://i.imgur.com/9TcT29W.png"
+    },
+    "freezing fog": {
+        "emoji": "🌁",
+        "thumbnail": "https://i.imgur.com/9TcT29W.png"
+    },
+    "patchy light drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "light drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "freezing drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "heavy freezing drizzle": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "patchy light rain": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "light rain": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate rain at times": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate rain": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "heavy rain at times": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "heavy rain": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "light freezing rain": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate or heavy freezing rain": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "light sleet": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate or heavy sleet": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "patchy light snow": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "light snow": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "patchy moderate snow": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "moderate snow": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "patchy heavy snow": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "heavy snow": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "ice pellets": {
+        "emoji": "🌧️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "light rain shower": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate or heavy rain shower": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "torrential rain shower": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "light sleet showers": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate or heavy sleet showers": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "light snow showers": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "moderate or heavy snow showers": {
+        "emoji": "❄️",
+        "thumbnail": "https://i.imgur.com/OAel6vV.png"
+    },
+    "light showers of ice pellets": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate or heavy showers of ice pellets": {
+        "emoji": "🌦️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "patchy light rain with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate or heavy rain with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "patchy light snow with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    },
+    "moderate or heavy snow with thunder": {
+        "emoji": "⛈️",
+        "thumbnail": "https://i.imgur.com/XjKavlh.png"
+    }
+}

@@ -1,0 +1,10 @@
+nextcord>=2.5.0
+discord-webhook
+discord.py-Console
+typing
+requests
+Pillow
+pymongo
+python-dotenv
+python-dateutil
+jokeapi
