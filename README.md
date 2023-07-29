@@ -27,7 +27,7 @@
   •
   <a href="#-contributors">Contributors</a>
   •
-  <a href="#-gdpr-legal-disclaimer">Legal Disclaimers</a>
+  <a href="#%EF%B8%8F-legal-disclaimer">Legal Disclaimers</a>
 </p>
 
 
@@ -92,7 +92,9 @@ docker run <id>
 
 <br>
 
-# ⚖️ GDPR Legal Disclaimer
+# ⚖️ Legal Disclaimers
+
+## GDPR Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
 
 Should you have any concerns about this, either contact me directly or do not use the bot. Thank you!
