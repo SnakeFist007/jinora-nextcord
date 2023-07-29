@@ -21,8 +21,9 @@ VERSION="1.0.0"
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 URI = os.getenv("MONGODB")
-TIMEZONE = os.getenv("TIMEZONE")
 WEATHER = os.getenv("WEATHER")
+QUOTES = os.getenv("QUOTES")
+TIMEZONE = os.getenv("TIMEZONE")
 
 # Check if .env is filled out correctly
 def check_dotenv(var, error):
@@ -32,8 +33,9 @@ def check_dotenv(var, error):
         
 check_dotenv(TOKEN, "Bot-Token")
 check_dotenv(URI, "MongoDB URI")
-check_dotenv(TIMEZONE, "Timezone")
 check_dotenv(WEATHER, "Weather API")
+check_dotenv(QUOTES, "Quotes API")
+check_dotenv(TIMEZONE, "Timezone")
 
 # * MongoDB
 client = MongoClient(URI, server_api=ServerApi('1'))

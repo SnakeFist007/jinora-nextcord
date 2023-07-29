@@ -4,6 +4,7 @@ from nextcord.ext import commands
 from main import logging
 from main import em_help
 
+
 # Initialize Cog
 class Help(commands.Cog, name="Help"):
     def __init__(self, bot: commands.Bot):
