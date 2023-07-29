@@ -9,13 +9,17 @@
 <br>
 
 <div align="center">
-    <img src="./database/bot-banner.png">
+    <img src="./database/bot-banner.png" width=75% height=75%>
 </div>
 
 <br>
 
 <p align="center">
     If you enjoy this project, please consider leaving a ⭐ for the repo!
+</p>
+
+<p align="center">
+    <img src="https://img.shields.io/badge/Bot%20Version-1.0.0-blue.svg?style=for-the-badge&logo=Python">
 </p>
 
 <p align="center">
@@ -32,14 +36,12 @@
 
 
 # ✨ Features
-- [ ] Create recurring events
-- [x] Reminders over Webhook Implementation
-- [ ] Question of the Day -> Meditation of the Day!
-- [x] Joke, 8-Ball & Wisdom Commands
-- [x] Weather & Astro Commands
+- Reminders over Webhook Implementation
+- Joke, 8-Ball & Wisdom Commands
+- Weather & Astro Commands
 
 ## Roadmap
-See the [open issues]() for a list of planned features and known issues.
+See the [open issues](https://github.com/SnakeFist007/jinora-nextcord/issues) for a list of planned features and known issues.
 
 
 ## Contributing
@@ -88,7 +90,7 @@ docker run <id>
 # 🤝 Contributors
 
 ## Translations
-...
+Be the first to create a pull request!
 
 <br>
 
