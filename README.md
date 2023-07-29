@@ -12,10 +12,10 @@
     <img src="./database/bot-banner.png" width=75% height=75%>
 </div>
 
-<br>
+<hr>
 
 <p align="center">
-    If you enjoy this project, please consider leaving a ⭐ for the repo!
+    If you like this project, please consider leaving a ⭐ for the repo!
 </p>
 
 <p align="center">
@@ -34,18 +34,22 @@
   <a href="#%EF%B8%8F-legal-disclaimers">Legal Disclaimers</a>
 </p>
 
+<hr>
 
 # ✨ Features
-- Reminders over Webhook Implementation
-- Joke, 8-Ball & Wisdom Commands
+- Question of the Day
+- Random Wisdoms & Quotes
 - Weather & Astro Commands
+- Reminders over Webhook Implementation
+- Joke & 8-Ball Commands
+
 
 ## Roadmap
 See the [open issues](https://github.com/SnakeFist007/jinora-nextcord/issues) for a list of planned features and known issues.
 
 
 ## Contributing
-Any contributions you make are greatly appreciated!
+Want to improve this project yourself? Any contributions you make are greatly appreciated!
 - Translations: [guide coming soon!]()
 - Contributions: [guide coming soon!]()
 
@@ -64,7 +68,7 @@ Everything need for bot development:
 <br>
 
 # 🛠 Running the bot
-Get the [latest release](https://github.com/SnakeFist007/jinora-nextcord/releases/latest) from this repository.
+Get the [latest stable release](https://github.com/SnakeFist007/jinora-nextcord/releases/latest) from this repository.
 
 Alternatively, use git (may be unstable!):
 
