@@ -27,7 +27,7 @@
   •
   <a href="#-contributors">Contributors</a>
   •
-  <a href="#%EF%B8%8F-legal-disclaimer">Legal Disclaimers</a>
+  <a href="#%EF%B8%8F-legal-disclaimers">Legal Disclaimers</a>
 </p>
 
 
@@ -94,13 +94,14 @@ docker run <id>
 
 # ⚖️ Legal Disclaimers
 
-## GDPR Disclaimer
+### GDPR Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
 
 Should you have any concerns about this, either contact me directly or do not use the bot. Thank you!
 
----
-
+### License
 This project is licensed under the [GNU General Public License 3.0](/LICENSE).
+
+---
 
 > Made by SnakeFist007 with ❤️
