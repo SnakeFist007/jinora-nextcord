@@ -1,4 +1,5 @@
 FROM python:3.11.4
+LABEL org.opencontainers.image.source = "https://github.com/SnakeFist007/jinora-nextcord"
 
 COPY requirements /bot/requirements
 WORKDIR /bot
