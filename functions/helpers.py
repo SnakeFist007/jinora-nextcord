@@ -69,6 +69,9 @@ def bake_embed(raw):
 def bake_embed_thumbnail(raw):
     return Embed().from_dict(__embed_defaults_thumbnail() | raw)
 
+def bake_embed_questioning(raw):
+    return Embed().from_dict(__embed_question_thumbnail() | raw)
+
 
 # * HYBRID BUILDER
 # Returns nextcord.Embed() object
@@ -93,10 +96,6 @@ def raw_joke():
 
 
 # * Pre-built embeds
-# /help message
-def em_help():
-    return create_embed(embeds / "messages.json", "help")
-
 # ON_JOIN Welcome message
 def em_welcome():
     return create_embed_thumbnail(embeds / "messages.json", "welcome")
