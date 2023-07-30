@@ -119,7 +119,6 @@ docker run <id>
 
 # 🤝 Contributors
 
-## Translations
 Be the first to create a pull request!
 
 <br>
@@ -133,6 +132,9 @@ Should you have any concerns about this, either contact me directly or do not us
 
 ### License
 This project is licensed under the [GNU Affero General Public License 3.0](/LICENSE).
+
+### Semantic Versioning
+I use [SemVer](https://semver.org) for versioning. For all available versions, see the [tags](https://github.com/SnakeFist007/jinora-nextcord/tags) from this repository.
 
 ---
 
