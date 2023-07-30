@@ -15,7 +15,7 @@ from functions.paths import *
 
 
 # Setup
-VERSION="1.1.0"
+VERSION="v1.1.1"
 
 # * Load .env
 load_dotenv()
