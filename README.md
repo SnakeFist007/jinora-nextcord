@@ -1,18 +1,18 @@
 # Jinora - Your Airbending Meditation Guide!
 <div align="center">
-    <a href="https://www.python.org">
+    <a href="https://www.python.org" target="_blank">
         <img src="https://custom-icon-badges.herokuapp.com/badge/Python-3.11.4-0F81C2?logo=python">
     </a>
-    <a href="https://docs.nextcord.dev/en/stable/">
+    <a href="https://docs.nextcord.dev/en/stable/" target="_blank">
         <img src="https://custom-icon-badges.herokuapp.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord">
     </a>
-    <a href="https://www.mongodb.com">
+    <a href="https://www.mongodb.com" target="_blank">
         <img src="https://custom-icon-badges.herokuapp.com/badge/MongoDB-7.0-13AA52?logo=mongodb">
     </a>
-    <a href="https://www.docker.com">
+    <a href="https://www.docker.com" target="_blank">
         <img src="https://custom-icon-badges.herokuapp.com/badge/Docker-4.21.1-2496ED?logo=docker">
     </a>
-    <a href="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord">
+    <a href="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord" target="_blank">
         <img src="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord/badge">
     </a>
 </div>
@@ -20,7 +20,7 @@
 <br>
 
 <div align="center">
-    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
         <img src="./database/bot-banner.png" width=75% height=75%>
     </a>
 </div>
@@ -35,7 +35,7 @@
     <a href="https://github.com/SnakeFist007/jinora-nextcord/releases/latest">
         <img src="https://img.shields.io/badge/Bot%20Version-1.1.1-blue.svg?style=for-the-badge&logo=Python">
     </a>
-    <a href="https://discord.gg/aJwqJtnyS4">
+    <a href="https://discord.gg/aJwqJtnyS4" target="_blank">
         <img src="https://img.shields.io/discord/1134861717185253478.svg?label=Discord&logo=Discord&colorB=007ec6&style=for-the-badge">
     </a>
 </p>
