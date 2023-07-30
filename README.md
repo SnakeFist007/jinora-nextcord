@@ -1,16 +1,28 @@
 # Jinora - Your Airbending Meditation Guide!
 <div align="center">
-    <img src="https://custom-icon-badges.herokuapp.com/badge/Python-3.11.4-0F81C2?logo=python">
-    <img src="https://custom-icon-badges.herokuapp.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord">
-    <img src="https://custom-icon-badges.herokuapp.com/badge/MongoDB-7.0-13AA52?logo=mongodb">
-    <img src="https://custom-icon-badges.herokuapp.com/badge/Docker-4.21.1-2496ED?logo=docker">
-    <img src="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord/badge"/>
+    <a href="https://www.python.org">
+        <img src="https://custom-icon-badges.herokuapp.com/badge/Python-3.11.4-0F81C2?logo=python">
+    </a>
+    <a href="https://docs.nextcord.dev/en/stable/">
+        <img src="https://custom-icon-badges.herokuapp.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord">
+    </a>
+    <a href="https://www.mongodb.com">
+        <img src="https://custom-icon-badges.herokuapp.com/badge/MongoDB-7.0-13AA52?logo=mongodb">
+    </a>
+    <a href="https://www.docker.com">
+        <img src="https://custom-icon-badges.herokuapp.com/badge/Docker-4.21.1-2496ED?logo=docker">
+    </a>
+    <a href="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord">
+        <img src="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord/badge">
+    </a>
 </div>
 
 <br>
 
 <div align="center">
-    <img src="./database/bot-banner.png" width=75% height=75%>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <img src="./database/bot-banner.png" width=75% height=75%>
+    </a>
 </div>
 
 <hr>
@@ -20,7 +32,9 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/Bot%20Version-1.1.0-blue.svg?style=for-the-badge&logo=Python">
+    <a href="#">
+        <img src="https://img.shields.io/badge/Bot%20Version-1.1.0-blue.svg?style=for-the-badge&logo=Python">
+    </a>
     <a href="https://discord.gg/aJwqJtnyS4">
         <img src="https://img.shields.io/discord/1134861717185253478.svg?label=Discord&logo=Discord&colorB=007ec6&style=for-the-badge">
     </a>
@@ -35,7 +49,7 @@
   •
   <a href="#-contributors">Contributors</a>
   •
-  <a href="#%EF%B8%8F-legal-disclaimers">Legal Disclaimers</a>
+  <a href="#%EF%B8%8F-legal-information">Legal Information</a>
 </p>
 
 <hr>
@@ -72,13 +86,7 @@ Everything need for bot development:
 <br>
 
 # 🛠 Running the bot
-Get the [latest stable release](https://github.com/SnakeFist007/jinora-nextcord/releases/latest) from this repository.
-
-Alternatively, use git (may be unstable!):
-
-```
-git clone https://github.com/SnakeFist007/jinora-nextcord
-```
+First download the [.env.example](/.env.example) template from the repository.
 
 ## Configuration
 
@@ -93,15 +101,19 @@ Rename `.env.example` to `.env` and fill in your data! You need:
 
 
 ## Deploy using Docker
-Deploy the Docker image using:
+Deploy & prepare the Docker image using:
 ```
-docker build -t <user>/jinora-bot .
+docker pull ghcr.io/snakefist007/jinora-nextcord:latest
+docker cp .env <container_id>:/.env
 ```
+This will create the .env file with your token and keys inside the container.
 
 Then start the image:
 ```
 docker run <id>
 ```
+
+**The bot should be running now!**
 
 <br>
 
@@ -112,7 +124,7 @@ Be the first to create a pull request!
 
 <br>
 
-# ⚖️ Legal Disclaimers
+# ⚖️ Legal Information
 
 ### GDPR Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
