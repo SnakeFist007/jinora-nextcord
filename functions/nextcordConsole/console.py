@@ -1,3 +1,8 @@
+# Credit where its due: https://github.com/Mihitoko/discord.py-Console
+#
+# I adapted this to work "natively" with nextcord, as before you needed to have
+# discord.py installed to use this tool.
+
 import importlib
 import sys
 from asyncio import Future
