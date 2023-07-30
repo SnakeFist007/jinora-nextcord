@@ -21,20 +21,24 @@ class Help(commands.Cog, name="Help"):
         em = bake_embed_questioning(embed)
         
         em.add_field(
-            name="✨ `/feed` `...`",
-            value="Uses a webhook to generate a recurring reminder!\nIt will repeat at a set time on a given weekday."
+            name="✨ `/feed ...`",
+            value="Uses a webhook to generate a recurring reminder!\nIt will repeat at a set time on a given weekday.",
+            inline=False
         )
         em.add_field(
-            name="✨ `/qotd`, `/quote` & `/wisdom`",
-            value="Inspirational questions, quotes and wisdoms for your spiritual journey!"
+            name="✨ `/qotd` `/quote`",
+            value="Inspirational questions, quotes and wisdoms for your spiritual journey!",
+            inline=False
         )
         em.add_field(
-            name="✨ `/weather` & `/astro`",
-            value="Get the current weather or moon conditions for a given location!"
+            name="✨ `/weather` `/astro`",
+            value="Get the current weather or moon conditions for a given location!",
+            inline=False
         )
         em.add_field(
-            name="✨ `/8ball`, `/joke`",
-            value="Some fun commands to play around with!"
+            name="✨ `/8ball` `/joke` `/wisdom`",
+            value="Some fun commands to play around with!",
+            inline=False
         )
         
         await interaction.response.send_message(embed=em, view=HelpButtons(), ephemeral=True)

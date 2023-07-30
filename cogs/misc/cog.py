@@ -26,7 +26,7 @@ class Basics(commands.Cog, name="Misc"):
 
         embed = {
             "title": "Status Page",
-            "description": f"Version: {VERSION}\nPing: `{ping}ms`\nAmount of Servers joined: `{count}`"
+            "description": f"Version: `{VERSION}`\nPing: `{ping}ms`\nAmount of Servers joined: `{count}`"
         }
 
         await interaction.send(embed=bake_embed(embed), ephemeral=True)
