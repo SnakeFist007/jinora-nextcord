@@ -1,3 +1,4 @@
+import pretty_errors
 import os
 import nextcord
 import asyncio
