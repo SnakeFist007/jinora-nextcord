@@ -32,7 +32,7 @@
 </p>
 
 <p align="center">
-    <a href="#">
+    <a href="https://github.com/SnakeFist007/jinora-nextcord/releases/latest">
         <img src="https://img.shields.io/badge/Bot%20Version-1.1.0-blue.svg?style=for-the-badge&logo=Python">
     </a>
     <a href="https://discord.gg/aJwqJtnyS4">
