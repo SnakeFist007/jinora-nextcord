@@ -20,7 +20,6 @@ class Feeds(commands.Cog, name="Feeds"):
         self.bot = bot
         
     
-    # TODO: Optional event creation, instead of a webhook -> separate command!
     # Command group: /feed ...
     @nextcord.slash_command(name="feed", description="Recurring reminders!")
     async def main(self, interaction: Interaction):
@@ -94,7 +93,6 @@ class Feeds(commands.Cog, name="Feeds"):
             }
         em = bake_embed(embed)
         
-        # TODO: Add check, if feed is actually from the user!
         if db_tasks.open.find_one({"user_id": interaction.user.id, "internal_id": feed_id}):
             try:
                 logging.warning(f"Deleting entry {feed_id} from task database!")
@@ -105,7 +103,6 @@ class Feeds(commands.Cog, name="Feeds"):
                 await interaction.send(embed=em_error(), ephemeral=True)
                 return
         else:
-            # TODO: Replace with actual error message
             await interaction.send(embed=em_error(), ephemeral=True)
     
     
