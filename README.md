@@ -136,6 +136,9 @@ This project is licensed under the [GNU Affero General Public License 3.0](/LICE
 ### Semantic Versioning
 I use [SemVer](https://semver.org) for versioning. For all available versions, see the [tags](https://github.com/SnakeFist007/jinora-nextcord/tags) from this repository.
 
+### Images
+All images of Jinora have been generated with [Stable Diffusion](https://github.com/AUTOMATIC1111/stable-diffusion-webui), [Based65](https://civitai.com/models/31546/based65) & [Jinora LoRA](https://civitai.com/models/51783/jinora-the-legend-of-korra-lora), as well as being upscaled with `R-ESRGAN-4x+-Anime6B`.
+
 ---
 
 > Made by SnakeFist007 with ❤️
