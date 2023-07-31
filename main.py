@@ -9,14 +9,14 @@ from pymongo.server_api import ServerApi
 from discord_webhook import DiscordWebhook as Webhook
 from datetime import datetime, timedelta
 from dateutil import tz
-from functions.helpers import *
-from functions.logging import logging
 from functions.nextcordConsole.console import Console
+from functions.logging import logging
+from functions.helpers import *
 from functions.paths import *
 
 
 # Setup
-VERSION="1.1.2"
+VERSION="1.2.0"
 
 # * Load .env
 load_dotenv()
