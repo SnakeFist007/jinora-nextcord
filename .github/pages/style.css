@@ -15,19 +15,18 @@ hr {
     margin: 2rem 0;
 }
 
-h1 { 
-    font-size: 2rem 
+h1 {
+    font-size: 2rem;
 }
 
 a {
-   color: #e49a56; 
+    color: #e49a56;
 }
 
 h1, p, span {
     font-family: 'Spline Sans Mono', Monaco, Courier, monospace;
     color: #fff;
 }
-
 
 /* IDs */
 #content {
@@ -45,8 +44,8 @@ h1, p, span {
     margin-bottom: 1rem;
 }
 
-#content .header h1 { 
-    line-height: 2rem 
+#content .header h1 {
+    line-height: 2rem;
 }
 
 #content .header img {
@@ -57,7 +56,7 @@ h1, p, span {
 #content .top p {
     font-size: 1rem;
     line-height: 1.5rem;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
 }
 
 #content .top a {
@@ -65,7 +64,7 @@ h1, p, span {
 }
 
 #content .body p {
-    font-size: .9rem;
+    font-size: 0.9rem;
     line-height: 1.25rem;
     margin: 1rem 0;
 }
