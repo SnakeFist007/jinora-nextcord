@@ -38,18 +38,20 @@ def convert_raw(raw):
 
 # Default embed options
 # * Load embed defaults
+defaults = embeds / "defaults.json"
+
 def __embed_defaults():
-    return parse_json_raw(embeds / "defaults.json", "default")
+    return parse_json_raw(defaults, "default")
 
 # * Load embed defaults w/ thumbnail
 def __embed_defaults_thumbnail():
-    return parse_json_raw(embeds / "defaults.json", "default_thumbnail")
+    return parse_json_raw(defaults, "default_thumbnail")
 
 def __embed_question_thumbnail():
-    return parse_json_raw(embeds / "defaults.json", "question_thumbnail")
+    return parse_json_raw(defaults, "question_thumbnail")
 
 def __embed_laughing_thumbnail():
-    return parse_json_raw(embeds / "defaults.json", "laughing_thumbnail")
+    return parse_json_raw(defaults, "laughing_thumbnail")
 
 
 # * RAW BUILDER
@@ -101,14 +103,18 @@ def em_welcome():
     return create_embed_thumbnail(embeds / "messages.json", "welcome")
 
 
+
+# * ERRORS
+error = embeds / "errors.json"
+
 # ERROR: Default message
 def em_error():
-    return create_embed(embeds / "errors.json", "error_default")
+    return create_embed(error, "error_default")
 
 # ERROR: Insufficient perms
 def em_error_perms():
-    return create_embed(embeds / "errors.json", "error_permissions")
+    return create_embed(error, "error_permissions")
 
 # ERROR: Stable Diffusion is offline
 def em_error_offline():
-    return create_embed(embeds / "errors.json", "error_offline")
+    return create_embed(error, "error_offline")

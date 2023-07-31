@@ -14,7 +14,7 @@ class Converter:
         }
 
     def get_id_match(self, id):
-        match = re.search(r"[0-9]{15,21}", id)
+        match = re.search(r"\d{15,21}", id)
         return True if match else False
 
     def bool_converter(self, param: str):
