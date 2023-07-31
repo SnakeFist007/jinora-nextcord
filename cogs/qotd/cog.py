@@ -22,9 +22,8 @@ class QotD(commands.Cog, name="QotD"):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    # QotD
-    # TODO: (Optional) Daily posting into channel, at time X
-    # TODO: (Optional) Auto-Threading
+
+    # Questions
     @nextcord.slash_command(name="qotd", description="Question of the day!")
     async def qotd(self, interaction: Interaction):
         lines = parse_json_utf8(qotd)
@@ -42,8 +41,7 @@ class QotD(commands.Cog, name="QotD"):
         await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
        
     
-    # TODO: Add command cooldown per user
-    # TODO: (Optional) Daily posting into channel, at time X
+    # Quotes
     @nextcord.slash_command(name="quote", description="Quote of the day!")
     async def quote(self, interaction: Interaction):
         url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
