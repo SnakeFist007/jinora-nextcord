@@ -2,7 +2,7 @@ import nextcord
 import random
 import requests
 from nextcord import Interaction
-from nextcord.ext import commands
+from nextcord.ext import commands, application_checks
 from datetime import datetime
 from main import logging
 from main import qotd, QUOTES
@@ -25,6 +25,7 @@ class QotD(commands.Cog, name="QotD"):
 
     # Questions
     @nextcord.slash_command(name="qotd", description="Question of the day!")
+    @application_checks.guild_only()
     async def qotd(self, interaction: Interaction):
         lines = parse_json_utf8(qotd)
         length = len(lines)
@@ -43,6 +44,7 @@ class QotD(commands.Cog, name="QotD"):
     
     # Quotes
     @nextcord.slash_command(name="quote", description="Quote of the day!")
+    @application_checks.guild_only()
     async def quote(self, interaction: Interaction):
         url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
         res = requests.get(url, headers={"X-Api-Key": QUOTES})

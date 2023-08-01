@@ -22,12 +22,14 @@ class Feeds(commands.Cog, name="Feeds"):
     
     # Command group: /feed ...
     @nextcord.slash_command(name="feed", description="Recurring reminders!")
+    @application_checks.guild_only()
     async def main(self, interaction: Interaction):
         pass
     
     
     # Add feeds & start reminder countdown
     @main.subcommand(name="add", description="Creates a recurring reminder.")
+    @application_checks.guild_only()
     async def feed_add(self, interaction: Interaction,  
                        role: nextcord.Role = SlashOption(), 
                        day: int = SlashOption(
@@ -68,6 +70,7 @@ class Feeds(commands.Cog, name="Feeds"):
     
     # Shows all currently active feeds for the user
     @main.subcommand(name="view", description="Lists all active feeds.")
+    @application_checks.guild_only()
     async def feed_view(self, interaction: Interaction):
         embed = { "title": "Active Feeds" }
         em = bake_embed(embed)
@@ -86,6 +89,7 @@ class Feeds(commands.Cog, name="Feeds"):
     
     # Deletes a feed by its uuid from the user
     @main.subcommand(name="delete", description="Deletes a feed by its ID.")
+    @application_checks.guild_only()
     async def feed_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
         embed = {
                 "title": "Feed deletion successful!",
@@ -108,12 +112,14 @@ class Feeds(commands.Cog, name="Feeds"):
     
     # Command subgroup: /feed admin ...
     @main.subcommand(name="admin", description="Feed admin tools!")
+    @application_checks.guild_only()
     async def main_group(self, interaction: nextcord.Interaction):
         pass
     
     
     # Shows all currently active feeds for the server
     @main_group.subcommand(name="view", description="Lists all active feeds from the server.")
+    @application_checks.guild_only()
     @application_checks.has_permissions(administrator=True)
     async def feed_admin_view(self, interaction: Interaction):
         embed = { 
@@ -135,6 +141,7 @@ class Feeds(commands.Cog, name="Feeds"):
     
     # Deletes a feed by its uuid from the server
     @main_group.subcommand(name="delete", description="Deletes a feed from the server.")
+    @application_checks.guild_only()
     @application_checks.has_permissions(administrator=True)
     async def feed_admin_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
         embed = {

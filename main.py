@@ -173,6 +173,8 @@ async def reload():
 
 # * Main run function
 def main():
+    # Print ASCII art
+    print(open("database/ascii_art", "r").read())
     # Connect to MongoDB
     try:
         client.admin.command('ping')

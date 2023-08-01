@@ -1,16 +1,16 @@
 # Jinora - Your Airbending Meditation Guide!
 <div align="center">
     <a href="https://www.python.org">
-        <img src="https://custom-icon-badges.herokuapp.com/badge/Python-3.11.4-0F81C2?logo=python">
+        <img src="https://custom-icon-badges.demolab.com/badge/Python-3.11.4-0F81C2?logo=python">
     </a>
     <a href="https://docs.nextcord.dev/en/stable/">
-        <img src="https://custom-icon-badges.herokuapp.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord">
+        <img src="https://custom-icon-badges.demolab.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord">
     </a>
     <a href="https://www.mongodb.com">
-        <img src="https://custom-icon-badges.herokuapp.com/badge/MongoDB-7.0-13AA52?logo=mongodb">
+        <img src="https://custom-icon-badges.demolab.com/badge/MongoDB-7.0-13AA52?logo=mongodb">
     </a>
     <a href="https://www.docker.com">
-        <img src="https://custom-icon-badges.herokuapp.com/badge/Docker-4.21.1-2496ED?logo=docker">
+        <img src="https://custom-icon-badges.demolab.com/badge/Docker-4.21.1-2496ED?logo=docker">
     </a>
     <a href="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord">
         <img src="https://www.codefactor.io/repository/github/snakefist007/jinora-nextcord/badge">
