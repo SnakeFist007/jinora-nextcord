@@ -86,5 +86,5 @@ class ErrorHandler:
         return EmbedBuilder.bake(JSONLoader.load(errors)["guild"])
 
     @staticmethod
-    def cooldown(self):
+    def cooldown():
         return EmbedBuilder.bake(JSONLoader.load(errors)["cooldown"])
