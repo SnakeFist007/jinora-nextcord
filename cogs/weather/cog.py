@@ -35,7 +35,7 @@ class Weather(commands.Cog, name="Weather"):
             thumbnail = emote_urls[f"{emoji_db[condition.lower()]['thumbnail']}"]
         except KeyError as e:
             logging.exception(e)
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default())
             return
                 
         embed = {
@@ -73,7 +73,7 @@ class Weather(commands.Cog, name="Weather"):
             thumbnail = emote_urls[f"{emoji_db[moon_phase.lower()]['thumbnail']}"]
         except KeyError as e:
             logging.exception(e)
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default())
             return
                 
         embed = {
