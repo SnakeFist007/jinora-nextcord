@@ -48,18 +48,20 @@ snowy = base_path / "database/emotes/snowy.png"
 sunny = base_path / "database/emotes/sunny.png"
 
 # Emotes (imgur)
-im_cloudy = "https://imgur.com/5zfRFq1.png"
-im_greetings = "https://imgur.com/S3M5Kiu.png"
-im_happy = "https://imgur.com/Nb5BMJs.png"
-im_sipping = "https://imgur.com/2T4dqyL.png"
-im_laughing = "https://imgur.com/oxP24J6.png"
-im_meditating = "https://imgur.com/4vuMmhb.png"
-im_neutral = "https://imgur.com/YmXLdWH.png"
-im_night = "https://imgur.com/JF41h6h.png"
-im_phone = "https://imgur.com/MuigdvJ.png"
-im_proud = "https://imgur.com/a21jxMq.png"
-im_questioning = "https://imgur.com/H9K383w.png"
-im_rainy = "https://imgur.com/ZyW41zg.png"
-im_reading = "https://imgur.com/fOZDtaA.png"
-im_snowy = "https://imgur.com/Jq3Ci6T.png"
-im_sunny = "https://imgur.com/HWQv848.png"
+emote_urls = {
+    "cloudy": "https://imgur.com/5zfRFq1.png",
+    "greetings": "https://imgur.com/S3M5Kiu.png",
+    "happy": "https://imgur.com/Nb5BMJs.png",
+    "sipping": "https://imgur.com/2T4dqyL.png",
+    "laughing": "https://imgur.com/oxP24J6.png",
+    "meditating": "https://imgur.com/4vuMmhb.png",
+    "neutral": "https://imgur.com/YmXLdWH.png",
+    "night": "https://imgur.com/JF41h6h.png",
+    "phone": "https://imgur.com/MuigdvJ.png",
+    "proud": "https://imgur.com/a21jxMq.png",
+    "questioning": "https://imgur.com/H9K383w.png",
+    "rainy": "https://imgur.com/ZyW41zg.png",
+    "reading": "https://imgur.com/fOZDtaA.png",
+    "snowy": "https://imgur.com/Jq3Ci6T.png",
+    "sunny": "https://imgur.com/HWQv848.png",
+}
