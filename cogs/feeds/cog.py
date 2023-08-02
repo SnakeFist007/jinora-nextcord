@@ -168,45 +168,18 @@ class Feeds(commands.Cog, name="Feeds"):
     
     # ERROR HANDLING
     @feed_add.error
-    async def feed_add_error(self, interaction: Interaction, error: commands.CommandError):
-        if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
-            await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
-        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
-        else:
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
-            
     @feed_view.error
-    async def feed_view_error(self, interaction: Interaction, error: commands.CommandError):
-        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
-        else:
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
-            
     @feed_admin_view.error
-    async def feed_admin_view_error(self, interaction: Interaction, error: commands.CommandError):
-        if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
-            await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
-        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
-        else:
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
-            
     @feed_delete.error
-    async def feed_delete_error(self, interaction: Interaction, error: commands.CommandError):
-        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
-        else:
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
-    
     @feed_admin_delete.error
-    async def feed_admin_delete_error(self, interaction: Interaction, error: commands.CommandError):
+    async def feed_view_error(self, interaction: Interaction, error: commands.CommandError):
         if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
             await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
             await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
         else:
             await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
+
 
 
 # Add Cog to bot
