@@ -6,18 +6,19 @@ from nextcord.ext import commands
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+# "Own" imports
 from functions.nextcordConsole.console import Console
-from functions.logging import logging
 from functions.helpers import *
+from functions.logging import logging
 from functions.paths import *
 from functions.reminders import set_reminder
 
 
 # Setup
-VERSION="1.2.0"
-
 # * Load .env
 load_dotenv()
+VERSION = "1.2.0"
+OWNER_ID = 83931378097356800
 TOKEN = os.getenv("TOKEN")
 URI = os.getenv("MONGODB")
 WEATHER = os.getenv("WEATHER")
@@ -28,7 +29,7 @@ TIMEZONE = os.getenv("TIMEZONE")
 def check_dotenv(var, error):
     if not var:
         logging.critical(f".env - {error} is empty!")
-        exit(1)
+        exit()
         
 check_dotenv(TOKEN, "Bot-Token")
 check_dotenv(URI, "MongoDB URI")
@@ -43,7 +44,7 @@ db_tasks = client.tasks
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
-bot = commands.Bot(intents=intents, help_command=None, owner_id=83931378097356800)
+bot = commands.Bot(intents=intents, help_command=None, owner_id=OWNER_ID)
 console = Console(bot)
 
 
@@ -111,8 +112,10 @@ async def on_guild_remove(guild):
 # Console help
 @console.command()
 async def help():
-    print("$ Following commands are available: help, reload")
+    print("$ Following commands are available: help, reload, load, unload")
     
+    
+# Cog Mangement
 # Hot-reload all cogs
 @console.command()
 async def reload():
@@ -121,9 +124,32 @@ async def reload():
     for folder in cogs.iterdir():
         if (folder / "cog.py").exists():
             bot.reload_extension(f"cogs.{folder.name}.cog")
-
-
-
+            
+    await bot.sync_application_commands()
+            
+# Load a specific cog
+@console.command()
+async def load(cog):
+    try:
+        logging.warning(f"$ Loading cog {cog}...")
+        bot.load_extension(f"cogs.{cog}.cog")
+        await bot.sync_application_commands()
+    except ModuleNotFoundError:
+        logging.error(f"No module named {cog}!")
+      
+# Unload a specifc cog
+@console.command()
+async def unload(cog):
+    try:
+        logging.warning(f"$ Unloading cog {cog}...")
+        bot.unload_extension(f"cogs.{cog}.cog")
+        logging.info("Unload successful!")
+        await bot.sync_application_commands()
+    except ModuleNotFoundError:
+        logging.error(f"No module named {cog}!")
+            
+            
+            
 # * Main run function
 def main():
     # Print ASCII art
