@@ -155,7 +155,7 @@ def main():
     print(open(ascii_art, "r").read())
     # Connect to MongoDB
     try:
-        client.admin.command('ping')
+        client.admin.command("ping")
         logging.info("Successfully connected to MongoDB!")
     except Exception as e:
         logging.exception(e)

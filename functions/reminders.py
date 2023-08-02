@@ -1,4 +1,3 @@
-# Generate reminder & send reminder when ready
 import asyncio
 from datetime import datetime, timedelta
 from dateutil import tz
@@ -7,7 +6,6 @@ from functions.helpers import bake_raw
 from functions.logging import logging
 
 
-# * Reminders
 # Calculate next occurance of weekday
 def get_weekday(desired_day, zone):
     next_day = (desired_day - datetime.now(zone).weekday()) % 7
@@ -18,6 +16,7 @@ def get_weekday(desired_day, zone):
     return result
 
 
+# Reminder function for Feeds
 async def set_reminder(task, timezone):
     # Prepare message
     webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")

@@ -1,6 +1,6 @@
 import json
 from nextcord import Embed
-from functions.paths import embeds
+from functions.paths import defaults, messages, errors
 
 
 # Basic functions
@@ -38,8 +38,6 @@ def convert_raw(raw):
 
 # Default embed options
 # * Load embed defaults
-defaults = embeds / "defaults.json"
-
 def __embed_defaults():
     return parse_json_raw(defaults, "default")
 
@@ -100,21 +98,19 @@ def raw_joke():
 # * Pre-built embeds
 # ON_JOIN Welcome message
 def em_welcome():
-    return create_embed_thumbnail(embeds / "messages.json", "welcome")
+    return create_embed_thumbnail(messages, "welcome")
 
 
 
 # * ERRORS
-error = embeds / "errors.json"
-
 # ERROR: Default message
 def em_error():
-    return create_embed(error, "error_default")
+    return create_embed(errors, "error_default")
 
 # ERROR: Insufficient perms
 def em_error_perms():
-    return create_embed(error, "error_permissions")
+    return create_embed(errors, "error_permissions")
 
 # ERROR: Stable Diffusion is offline
 def em_error_offline():
-    return create_embed(error, "error_offline")
+    return create_embed(errors, "error_offline")
