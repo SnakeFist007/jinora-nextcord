@@ -27,7 +27,7 @@ QUOTES = os.getenv("QUOTES")
 TIMEZONE = os.getenv("TIMEZONE")
 
 # Check if .env is filled out correctly
-def check_dotenv(var, error):
+def check_dotenv(var, error: str) -> None:
     if not var:
         logging.critical(f".env - {error} is empty!")
         exit()
@@ -154,7 +154,7 @@ async def unload(cog):
             
             
 # * Main run function
-def main():
+def main() -> None:
     # Print ASCII art
     print(open(ascii_art, "r").read())
     # Connect to MongoDB

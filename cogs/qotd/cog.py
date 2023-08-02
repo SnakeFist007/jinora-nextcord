@@ -11,7 +11,7 @@ from main import QUOTES
 
 
 # Random, but same value for each day
-def daily_random(length):
+def daily_random(length: int) -> int:
     seed = datetime.now() - datetime(2000, 4, 23)
     
     random.seed(seed.days)

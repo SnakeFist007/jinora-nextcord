@@ -24,7 +24,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @nextcord.slash_command(name="feed", description="Recurring reminders!")
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
-    async def main(self, interaction: Interaction):
+    async def main(self, interaction: Interaction) -> None:
         pass
     
     
@@ -118,7 +118,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @main.subcommand(name="admin", description="Feed admin tools!")
     @application_checks.guild_only()
     @application_checks.has_permissions(administrator=True)
-    async def main_group(self, interaction: nextcord.Interaction):
+    async def main_group(self, interaction: Interaction) -> None:
         pass
     
     

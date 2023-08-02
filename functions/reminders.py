@@ -7,7 +7,7 @@ from functions.logging import logging
 
 
 # Calculate next occurance of weekday
-def get_weekday(desired_day, zone):
+def get_weekday(desired_day, zone) -> int:
     next_day = (desired_day - datetime.now(zone).weekday()) % 7
     if next_day == 0:
         next_day = 7
@@ -17,7 +17,7 @@ def get_weekday(desired_day, zone):
 
 
 # Reminder function for Feeds
-async def set_reminder(task, timezone):
+async def set_reminder(task, timezone) -> None:
     # Prepare message
     webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
     embed = {

@@ -6,7 +6,7 @@ from functions.paths import messages, errors, emote_urls
 # * Pure Helpers
 class JSONLoader():
     @staticmethod
-    def load(path):
+    def load(path) -> dict[str, str]:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         return data
@@ -15,7 +15,7 @@ class JSONLoader():
 class EmbedBuilder():
     # Default template with footer text & icon
     @staticmethod
-    def bake(raw):
+    def bake(raw: dict[str, str]) -> Embed:
         output = {
             "footer": {
                 "text": "Jinora#2184"
@@ -27,7 +27,7 @@ class EmbedBuilder():
 
     # Default template with thumbnail
     @staticmethod
-    def bake_thumbnail(raw):
+    def bake_thumbnail(raw: dict[str, str]) -> Embed:
         output = { 
             "thumbnail": { 
                 "url": f"{emote_urls['sunny']}" 
@@ -38,7 +38,7 @@ class EmbedBuilder():
     
     # Template with question thumbnail
     @staticmethod
-    def bake_questioning(raw):
+    def bake_questioning(raw: dict[str, str]) -> Embed:
         output = { 
             "thumbnail": { 
                 "url": f"{emote_urls['questioning']}" 
@@ -49,7 +49,7 @@ class EmbedBuilder():
 
     # Template with laughing thumbnail
     @staticmethod
-    def bake_joke(raw):
+    def bake_joke(raw: dict[str, str]) -> Embed:
         output = { 
             "thumbnail": { 
                 "url": f"{emote_urls['laughing']}" 
@@ -63,28 +63,28 @@ class EmbedBuilder():
 # * Prebuilt Embeds
 class EmbedHandler:
     @staticmethod
-    def welcome():
+    def welcome() -> Embed:
         return EmbedBuilder.bake_thumbnail(JSONLoader.load(messages)["welcome"])
     
 
 # * Prebuilt Errors
 class ErrorHandler:
     @staticmethod
-    def default():
+    def default() -> Embed:
         return EmbedBuilder.bake(JSONLoader.load(errors)["default"])
 
     @staticmethod
-    def perms():
+    def perms() -> Embed:
         return EmbedBuilder.bake(JSONLoader.load(errors)["permissions"])
 
     @staticmethod
-    def dm():
+    def dm() -> Embed:
         return EmbedBuilder.bake(JSONLoader.load(errors)["dm"])
 
     @staticmethod
-    def guild():
+    def guild() -> Embed:
         return EmbedBuilder.bake(JSONLoader.load(errors)["guild"])
 
     @staticmethod
-    def cooldown():
+    def cooldown() -> Embed:
         return EmbedBuilder.bake(JSONLoader.load(errors)["cooldown"])
