@@ -65,3 +65,15 @@ emote_urls = {
     "snowy": "https://imgur.com/Jq3Ci6T.png",
     "sunny": "https://imgur.com/HWQv848.png",
 }
+
+# Emojis
+AIR = "<:air:1136372942712881324>"
+AIR_NOMAD = "<:air_nomad:1136373972246732891>"
+LOTUS = "<:white_lotus:1136372955908149290>"
+
+# Animated Emojis
+BOOST = "<a:boost:1088152045166542959>"
+SPARKLES = "<a:sparkles:1088152065034965104>"
+YES = "<a:jape:1088151992800641054>"
+MEH = "<a:meh:1088152028162822194>"
+NOU = "<a:nope:1088151978456129696>"
