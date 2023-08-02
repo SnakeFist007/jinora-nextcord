@@ -32,7 +32,8 @@ class Feeds(commands.Cog, name="Feeds"):
     @main.subcommand(name="add", description="Creates a recurring reminder.")
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
-    async def feed_add(self, interaction: Interaction,  
+    async def feed_add(self, 
+                       interaction: Interaction,  
                        role: nextcord.Role = SlashOption(), 
                        day: int = SlashOption(
                            choices={

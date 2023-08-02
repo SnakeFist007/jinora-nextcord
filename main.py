@@ -16,7 +16,7 @@ from functions.reminders import set_reminder
 # Setup
 # * Load .env
 load_dotenv()
-VERSION = "1.3.0"
+VERSION = "1.3.1"
 OWNER_ID = 83931378097356800
 TOKEN = os.getenv("TOKEN")
 PAPERTRAIL_URL = os.getenv("PAPERTRAIL_URL")
