@@ -1,6 +1,6 @@
 import json
 from nextcord import Embed
-from functions.paths import defaults, messages, errors
+from functions.paths import messages, errors, emote_urls
 
 
 # * Pure Helpers
@@ -10,18 +10,49 @@ class JSONLoader():
             data = json.load(f)
         return data
 
+
 class EmbedBuilder():
+    # Default template with footer text & icon
     def bake(raw):
-        return Embed().from_dict(JSONLoader.load(defaults)["default"] | raw)
+        output = {
+            "footer": {
+                "text": "Jinora#2184"
+            },
+            "icon_url": f"{emote_urls['sunny']}",
+            "color": 15844367
+        }
+        return Embed().from_dict(output | raw)
 
+    # Default template with thumbnail
     def bake_thumbnail(raw):
-        return Embed().from_dict(JSONLoader.load(defaults)["default_thumbnail"] | raw)
-
+        output = { 
+            "thumbnail": { 
+                "url": f"{emote_urls['sunny']}" 
+            },
+            "color": 15844367 
+        }
+        return Embed().from_dict(output | raw)
+    
+    # Template with question thumbnail
     def bake_questioning(raw):
-        return Embed().from_dict(JSONLoader.load(defaults)["question_thumbnail"] | raw)
+        output = { 
+            "thumbnail": { 
+                "url": f"{emote_urls['questioning']}" 
+            },
+            "color": 15844367 
+        }
+        return Embed().from_dict(output | raw)
 
+    # Template with laughing thumbnail
     def bake_joke(raw):
-        return Embed().from_dict(JSONLoader.load(defaults)["laughing_thumbnail"] | raw )
+        output = { 
+            "thumbnail": { 
+                "url": f"{emote_urls['laughing']}" 
+            },
+            "color": 15844367 
+        }
+        return Embed().from_dict(output | raw)
+
 
 
 # * Prebuilt Embeds

@@ -5,7 +5,7 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from functions.helpers import JSONLoader, EmbedBuilder, ErrorHandler
 from functions.logging import logging
-from functions.paths import conditions, moon_phases
+from functions.paths import conditions, moon_phases, emote_urls
 from main import WEATHER
 
 
@@ -32,7 +32,7 @@ class Weather(commands.Cog, name="Weather"):
             condition = data["current"]["condition"]["text"]
             emoji_db = JSONLoader.load(conditions)
             emoji = emoji_db[condition.lower()]["emoji"]
-            thumbnail = emoji_db[condition.lower()]["thumbnail"]
+            thumbnail = emote_urls[f"{emoji_db[condition.lower()]['thumbnail']}"]
         except KeyError as e:
             logging.exception(e)
             await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
@@ -70,7 +70,7 @@ class Weather(commands.Cog, name="Weather"):
             moon_phase = data["astronomy"]["astro"]["moon_phase"]
             emoji_db = JSONLoader.load(moon_phases)
             emoji = emoji_db[moon_phase.lower()]["emoji"]
-            thumbnail = emoji_db[moon_phase.lower()]["thumbnail"]
+            thumbnail = emote_urls[f"{emoji_db[moon_phase.lower()]['thumbnail']}"]
         except KeyError as e:
             logging.exception(e)
             await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
