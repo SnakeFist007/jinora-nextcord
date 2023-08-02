@@ -6,6 +6,7 @@ base_path = Path(".")
 
 cogs = base_path / "cogs"
 embeds = base_path / "database/embeds"
+ascii_art = base_path / "database/ascii_art"
 
 # /mystery
 wisdom = base_path / "database/mystery/db_wisdom.json"
