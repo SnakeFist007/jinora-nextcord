@@ -6,13 +6,11 @@ from nextcord.ext import commands
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from discord_webhook import DiscordWebhook as Webhook
-from datetime import datetime, timedelta
-from dateutil import tz
 from functions.nextcordConsole.console import Console
 from functions.logging import logging
 from functions.helpers import *
 from functions.paths import *
+from functions.reminders import set_reminder
 
 
 # Setup
@@ -47,51 +45,6 @@ db_tasks = client.tasks
 intents = nextcord.Intents.default()
 bot = commands.Bot(intents=intents, help_command=None, owner_id=83931378097356800)
 console = Console(bot)
-
-
-
-# Functions
-# * Reminders
-# Calculate next occurance of weekday
-def get_weekday(desired_day, zone):
-    next_day = (desired_day - datetime.now(zone).weekday()) % 7
-    if next_day == 0:
-        next_day = 7
-    result = datetime.now(zone) + timedelta(days=next_day)
-    
-    return result
-
-
-# Generate reminder & send reminder when ready
-async def set_reminder(task, timezone):
-    # Prepare message
-    webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
-    embed = {
-        "title": "Reminder!",
-        "description": f"{task['message']}"
-    }
-    webhook.add_embed(bake_raw(embed))
-    
-    # Get next occurance
-    zone = tz.gettz(timezone)
-    dt_time = datetime.strptime(task["time"], "%H:%M")
-    next_date = get_weekday(task["day"], zone)
-    
-    # Start scheduled reminder
-    next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
-    wait_time = (next_reminder - datetime.now(zone)).total_seconds()
-    logging.info(f"Setting reminder timer for {wait_time} seconds...")
-    
-    # Wait until date, then send webhook
-    await asyncio.sleep(wait_time)
-    try:
-        webhook.execute()
-        logging.info(f"Reminder triggered: Sending embed through webhook: {task['webhook']}")
-        # Set new reminder
-        set_reminder(task, timezone)
-    except Exception as e:
-        logging.exception(e)
-        return
 
 
 
