@@ -1,21 +1,21 @@
 {
-    "error_default": {
+    "default": {
         "title": "Something went wrong!",
         "description": "I'm sorry, this shouldn't have happened..."
     },
-    "error_dm": {
+    "dm": {
         "title": "You can't use this command in DMs!",
         "description": "This command is server-sided only."
     },
-    "error_guild": {
+    "guild": {
         "title": "You can't use this command in Servers!",
         "description": "This command is DMs only."
     },
-    "error_permissions": {
+    "permissions": {
         "title": "Insufficient permissions!",
         "description": "I'm sorry, but you can't use that command."
     },
-    "error_cooldown": {
+    "cooldown": {
         "title": "Command is on cooldown!",
         "description": "Please try again later."
     }

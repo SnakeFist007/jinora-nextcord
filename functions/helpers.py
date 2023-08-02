@@ -71,20 +71,20 @@ class EmbedHandler:
 class ErrorHandler:
     @staticmethod
     def default():
-        return EmbedBuilder.bake(JSONLoader.load(errors)["error_default"])
+        return EmbedBuilder.bake(JSONLoader.load(errors)["default"])
 
     @staticmethod
     def perms():
-        return EmbedBuilder.bake(JSONLoader.load(errors)["error_permissions"])
+        return EmbedBuilder.bake(JSONLoader.load(errors)["permissions"])
 
     @staticmethod
     def dm():
-        return EmbedBuilder.bake(JSONLoader.load(errors)["error_dm"])
+        return EmbedBuilder.bake(JSONLoader.load(errors)["dm"])
 
     @staticmethod
     def guild():
-        return EmbedBuilder.bake(JSONLoader.load(errors)["error_guild"])
+        return EmbedBuilder.bake(JSONLoader.load(errors)["guild"])
 
     @staticmethod
     def cooldown(self):
-        return EmbedBuilder.bake(JSONLoader.load(errors)["error_cooldown"])
+        return EmbedBuilder.bake(JSONLoader.load(errors)["cooldown"])

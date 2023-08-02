@@ -1,12 +1,6 @@
 {
-    "status": {
-        "title": "Status Page"
-    },
     "welcome": {
         "title": "Thanks for the invite! <3",
         "description": "Use `/help` to learn more about my commands."
-    },
-    "reminder": {
-        "title": "Reminder!"
     }
 }
