@@ -3,7 +3,7 @@ import asyncio
 import uuid
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
-from functions.helpers import bake_embed, em_error, em_error_perms, em_error_dm
+from functions.helpers import ErrorHandler, EmbedBuilder
 from functions.logging import logging
 from functions.reminders import set_reminder
 from main import db_tasks, TIMEZONE
@@ -67,7 +67,7 @@ class Feeds(commands.Cog, name="Feeds"):
         db_tasks.open.insert_one(task)
         asyncio.create_task(set_reminder(task, TIMEZONE))
         
-        await interaction.response.send_message(embed=bake_embed(embed), ephemeral=True)
+        await interaction.response.send_message(embed=EmbedBuilder.bake(embed), ephemeral=True)
         
     
     # Shows all currently active feeds for the user
@@ -76,7 +76,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @application_checks.has_permissions(manage_messages=True)
     async def feed_view(self, interaction: Interaction):
         embed = { "title": "Active Feeds" }
-        em = bake_embed(embed)
+        em = EmbedBuilder.bake(embed)
         
         open_tasks = list(db_tasks.open.find({"user_id": interaction.user.id, "server_id": interaction.guild.id}))
         if open_tasks:
@@ -99,7 +99,7 @@ class Feeds(commands.Cog, name="Feeds"):
                 "title": "Feed deletion successful!",
                 "description": f"Deleted feed: {feed_id}"
             }
-        em = bake_embed(embed)
+        em = EmbedBuilder.bake(embed)
         
         if db_tasks.open.find_one({"user_id": interaction.user.id, "internal_id": feed_id}):
             try:
@@ -108,10 +108,10 @@ class Feeds(commands.Cog, name="Feeds"):
                 await interaction.send(embed=em, ephemeral=True)
             except Exception as e:
                 logging.exception(e)
-                await interaction.send(embed=em_error(), ephemeral=True)
+                await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
                 return
         else:
-            await interaction.send(embed=em_error(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
     
     
     # Command subgroup: /feed admin ...
@@ -130,7 +130,7 @@ class Feeds(commands.Cog, name="Feeds"):
         embed = { 
                  "title": "Active Server-Feeds" 
             }
-        em = bake_embed(embed)
+        em = EmbedBuilder.bake(embed)
         
         open_tasks = list(db_tasks.open.find({"server_id": interaction.guild.id}))
         if open_tasks:
@@ -153,7 +153,7 @@ class Feeds(commands.Cog, name="Feeds"):
                 "title": "Feed deletion successful!",
                 "description": f"Deleted feed {feed_id}."
             }
-        em = bake_embed(embed)
+        em = EmbedBuilder.bake(embed)
         
         try:
             logging.warning(f"Deleting entry {feed_id} from task database!")
@@ -161,7 +161,7 @@ class Feeds(commands.Cog, name="Feeds"):
             await interaction.send(embed=em, ephemeral=True)
         except Exception as e:
             logging.exception(e)
-            await interaction.send(embed=em_error(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
             return
     
     
@@ -169,43 +169,43 @@ class Feeds(commands.Cog, name="Feeds"):
     @feed_add.error
     async def feed_add_error(self, interaction: Interaction, error: commands.CommandError):
         if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
-            await interaction.send(embed=em_error_perms(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=em_error_dm(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
         else:
-            await interaction.send(embed=em_error(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
             
     @feed_view.error
     async def feed_view_error(self, interaction: Interaction, error: commands.CommandError):
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=em_error_dm(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
         else:
-            await interaction.send(embed=em_error(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
             
     @feed_admin_view.error
     async def feed_admin_view_error(self, interaction: Interaction, error: commands.CommandError):
         if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
-            await interaction.send(embed=em_error_perms(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=em_error_dm(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
         else:
-            await interaction.send(embed=em_error(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
             
     @feed_delete.error
     async def feed_delete_error(self, interaction: Interaction, error: commands.CommandError):
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=em_error_dm(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
         else:
-            await interaction.send(embed=em_error(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
     
     @feed_admin_delete.error
     async def feed_admin_delete_error(self, interaction: Interaction, error: commands.CommandError):
         if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
-            await interaction.send(embed=em_error_perms(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=em_error_dm(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
         else:
-            await interaction.send(embed=em_error(), ephemeral=True)
+            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
 
 
 # Add Cog to bot

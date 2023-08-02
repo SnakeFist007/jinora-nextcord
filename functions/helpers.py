@@ -3,122 +3,46 @@ from nextcord import Embed
 from functions.paths import defaults, messages, errors
 
 
-# Basic functions
-# * Load data from JSON
-def parse_json(path):
-    with open(path, "r") as f:
-        data = json.load(f)
+# * Pure Helpers
+class JSONLoader():
+    def load(path):
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+
+class EmbedBuilder():
+    def bake(raw):
+        return Embed().from_dict(JSONLoader.load(defaults)["default"] | raw)
+
+    def bake_thumbnail(raw):
+        return Embed().from_dict(JSONLoader.load(defaults)["default_thumbnail"] | raw)
+
+    def bake_questioning(raw):
+        return Embed().from_dict(JSONLoader.load(defaults)["question_thumbnail"] | raw)
+
+    def bake_joke(raw):
+        return Embed().from_dict(JSONLoader.load(defaults)["laughing_thumbnail"] | raw )
+
+
+# * Prebuilt Embeds
+class EmbedHandler:
+    def welcome():
+        return EmbedBuilder.bake_thumbnail(JSONLoader.load(messages)["welcome"])
     
-    return data
 
-# * Load text data from JSON
-def parse_json_utf8(path):
-    with open(path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    
-    return data
+# * Prebuilt Errors
+class ErrorHandler:
+    def default():
+        return EmbedBuilder.bake(JSONLoader.load(errors)["error_default"])
 
+    def perms():
+        return EmbedBuilder.bake(JSONLoader.load(errors)["error_permissions"])
 
-# * Fuse 2 JSON objects
-def fuse_json(json1, json2):
-    return json1 | json2
+    def dm():
+        return EmbedBuilder.bake(JSONLoader.load(errors)["error_dm"])
 
+    def guild():
+        return EmbedBuilder.bake(JSONLoader.load(errors)["error_guild"])
 
-
-# Specialized for embeds
-# * Load raw data from JSON w/ pointer
-def parse_json_raw(path, pointer):
-    raw = parse_json(path)
-    return raw[pointer]
-    
-# * Convert raw JSON data to nextcord.Embed()
-def convert_raw(raw):
-    return Embed().from_dict(raw)
-
-
-# Default embed options
-# * Load embed defaults
-def __embed_defaults():
-    return parse_json_raw(defaults, "default")
-
-# * Load embed defaults w/ thumbnail
-def __embed_defaults_thumbnail():
-    return parse_json_raw(defaults, "default_thumbnail")
-
-def __embed_question_thumbnail():
-    return parse_json_raw(defaults, "question_thumbnail")
-
-def __embed_laughing_thumbnail():
-    return parse_json_raw(defaults, "laughing_thumbnail")
-
-
-# * RAW BUILDER
-# Returns JSON object
-def bake_raw(raw):
-    return __embed_defaults() | raw
-
-def bake_raw_thumbnail(raw):
-    return __embed_defaults_thumbnail() | raw
-
-
-# * EMBED BUILDER
-# Returns nextcord.Embed() object
-def bake_embed(raw):
-    return Embed().from_dict(__embed_defaults() | raw)
-
-def bake_embed_thumbnail(raw):
-    return Embed().from_dict(__embed_defaults_thumbnail() | raw)
-
-def bake_embed_questioning(raw):
-    return Embed().from_dict(__embed_question_thumbnail() | raw)
-
-
-# * HYBRID BUILDER
-# Returns nextcord.Embed() object
-def create_embed(path, pointer):
-    raw = parse_json_raw(path, pointer)
-    return Embed().from_dict(__embed_defaults() | raw)
-
-def create_embed_thumbnail(path, pointer):
-    raw = parse_json_raw(path, pointer)
-    return Embed().from_dict(__embed_defaults_thumbnail() | raw)
-
-
-
-# * Pre-built raws
-# /8ball and /wisdom
-def raw_mystery():
-    return __embed_question_thumbnail()
-
-# /joke
-def raw_joke():
-    return __embed_laughing_thumbnail()
-
-
-# * Pre-built embeds
-# ON_JOIN Welcome message
-def em_welcome():
-    return create_embed_thumbnail(messages, "welcome")
-
-
-
-# * ERRORS
-# ERROR: Default message
-def em_error():
-    return create_embed(errors, "error_default")
-
-# ERROR: Insufficient perms
-def em_error_perms():
-    return create_embed(errors, "error_permissions")
-
-# ERROR: Command in DMs not available
-def em_error_dm():
-    return create_embed(errors, "error_dm")
-
-# ERROR: Command in Servers not available
-def em_error_guild():
-    return create_embed(errors, "error_guild")
-
-# ERROR: Command is on cooldown
-def em_error_cooldown():
-    return create_embed(errors, "error_cooldown")
+    def cooldown(self):
+        return EmbedBuilder.bake(JSONLoader.load(errors)["error_cooldown"])

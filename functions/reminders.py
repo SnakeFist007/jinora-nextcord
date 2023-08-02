@@ -2,7 +2,7 @@ import asyncio
 from datetime import datetime, timedelta
 from dateutil import tz
 from discord_webhook import DiscordWebhook as Webhook
-from functions.helpers import bake_raw
+from functions.helpers import EmbedBuilder
 from functions.logging import logging
 
 
@@ -24,7 +24,7 @@ async def set_reminder(task, timezone):
         "title": "Reminder!",
         "description": f"{task['message']}"
     }
-    webhook.add_embed(bake_raw(embed))
+    webhook.add_embed(EmbedBuilder.bake(embed))
     
     # Get next occurance
     zone = tz.gettz(timezone)

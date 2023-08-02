@@ -1,7 +1,7 @@
 import nextcord
 from nextcord import Interaction
 from nextcord.ext import commands
-from functions.helpers import bake_embed_questioning
+from functions.helpers import EmbedBuilder
 from functions.logging import logging
 from cogs.help.ButtonView import HelpButtons
 
@@ -18,7 +18,7 @@ class Help(commands.Cog, name="Help"):
             "title": "⚙️ Command Overview",
             "description": "Go through the pages for more detailed information!"
         }
-        em = bake_embed_questioning(embed)
+        em = EmbedBuilder.bake_questioning(embed)
         
         em.add_field(
             name="✨ `/feed ...`",

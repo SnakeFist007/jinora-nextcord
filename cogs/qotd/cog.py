@@ -4,7 +4,7 @@ import requests
 from nextcord import Interaction
 from nextcord.ext import commands, application_checks
 from datetime import datetime
-from functions.helpers import parse_json_utf8, raw_mystery, convert_raw, em_error
+from functions.helpers import EmbedBuilder, ErrorHandler, JSONLoader
 from functions.logging import logging
 from functions.paths import qotd
 from main import QUOTES
@@ -28,7 +28,7 @@ class QotD(commands.Cog, name="QotD"):
     @nextcord.slash_command(name="qotd", description="Question of the day!")
     @application_checks.guild_only()
     async def qotd(self, interaction: Interaction):
-        lines = parse_json_utf8(qotd)
+        lines = JSONLoader.load(qotd)
         length = len(lines)
 
         rand_int = daily_random(length)
@@ -38,9 +38,8 @@ class QotD(commands.Cog, name="QotD"):
             "title": f"{output}",
             "description": "Need something to reflect on? I've got you covered!\nCome back tomorrow for a new quote."
         }
-        em = raw_mystery() | embed
 
-        await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
+        await interaction.response.send_message(embed=EmbedBuilder.bake_questioning(embed), ephemeral=True)
        
     
     # Quotes
@@ -56,12 +55,11 @@ class QotD(commands.Cog, name="QotD"):
                 "title": f"{data[0]['quote']} *~{data[0]['author']}*",
                 "description": "Sometimes quotes can be very insightful... Other times, not so much."
             }
-            em = raw_mystery() | embed
 
-            await interaction.response.send_message(embed=convert_raw(em), ephemeral=True)
+            await interaction.response.send_message(embed=EmbedBuilder.bake(embed), ephemeral=True)
         else:
             logging.exception("ERROR getting response from quotes API")
-            await interaction.response.send_message(embed=em_error(), ephemeral=True)
+            await interaction.response.send_message(embed=ErrorHandler.default(), ephemeral=True)
             return
 
 

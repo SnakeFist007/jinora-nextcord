@@ -2,7 +2,7 @@ import nextcord
 from nextcord.interactions import Interaction
 from nextcord import Interaction
 from nextcord.ext import commands
-from functions.helpers import bake_embed
+from functions.helpers import EmbedBuilder
 from functions.logging import logging
 from main import db_servers, VERSION
 
@@ -28,7 +28,7 @@ class Basics(commands.Cog, name="Misc"):
             "description": f"Version: `{VERSION}`\nPing: `{ping}ms`\nAmount of Servers joined: `{count}`"
         }
 
-        await interaction.send(embed=bake_embed(embed), ephemeral=True)
+        await interaction.send(embed=EmbedBuilder.bake(embed), ephemeral=True)
 
 
 # Add Cog to bot

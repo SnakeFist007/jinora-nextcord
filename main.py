@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from functions.nextcordConsole.console import Console
-from functions.helpers import em_welcome
+from functions.helpers import EmbedHandler
 from functions.logging import logging
 from functions.paths import cogs, ascii_art
 from functions.reminders import set_reminder
@@ -16,7 +16,7 @@ from functions.reminders import set_reminder
 # Setup
 # * Load .env
 load_dotenv()
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 OWNER_ID = 83931378097356800
 TOKEN = os.getenv("TOKEN")
 URI = os.getenv("MONGODB")
@@ -90,7 +90,7 @@ async def on_guild_join(guild):
 
     # Send welcome message to system channel, if available
     if guild.system_channel is not None:
-        await guild.system_channel.send(embed=em_welcome())
+        await guild.system_channel.send(embed=EmbedHandler.welcome())
 
 
 # * ON SERVER LEAVE
