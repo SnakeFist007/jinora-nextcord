@@ -1,4 +1,6 @@
 import logging
+from logging.handlers import SysLogHandler
+from main import PAPERTRAIL_URL, PAPERTRAIL_PORT
 
 
 # * Logging
@@ -7,7 +9,7 @@ logging.basicConfig(
     format="[%(levelname)s] %(asctime)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
     handlers=[
-        logging.FileHandler("jinora-nextcord.log"),
-        logging.StreamHandler(),
+        SysLogHandler(address=(PAPERTRAIL_URL, PAPERTRAIL_PORT)),
+        logging.StreamHandler()
     ]
 )

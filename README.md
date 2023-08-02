@@ -94,10 +94,11 @@ First download the [.env.example](/.env.example) template from the repository.
 
 Rename `.env.example` to `.env` and fill in your data! You need:
 1. [Discord Bot Token](https://discord.com/developers/applications)
-2. [MongoDB URI](https://account.mongodb.com/account/login)
-3. [Weather API](https://www.weatherapi.com)
-4. [Quotes API](https://api-ninjas.com/)
-5. [Timezone TZ identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+2. [Papertrail URL & Port](https://www.papertrail.com)
+3. [MongoDB URI](https://account.mongodb.com/account/login)
+4. [Weather API](https://www.weatherapi.com)
+5. [Quotes API](https://api-ninjas.com/)
+6. [Timezone TZ identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 
 ## Deploy using Docker

@@ -19,6 +19,8 @@ load_dotenv()
 VERSION = "1.3.0"
 OWNER_ID = 83931378097356800
 TOKEN = os.getenv("TOKEN")
+PAPERTRAIL_URL = os.getenv("PAPERTRAIL_URL")
+PAPERTRAIL_PORT = int(os.getenv("PAPERTRAIL_PORT"))
 URI = os.getenv("MONGODB")
 WEATHER = os.getenv("WEATHER")
 QUOTES = os.getenv("QUOTES")
@@ -31,6 +33,8 @@ def check_dotenv(var, error):
         exit()
         
 check_dotenv(TOKEN, "Bot-Token")
+check_dotenv(PAPERTRAIL_URL, "Papertrail URL")
+check_dotenv(PAPERTRAIL_PORT, "Papertrail Port")
 check_dotenv(URI, "MongoDB URI")
 check_dotenv(WEATHER, "Weather API")
 check_dotenv(QUOTES, "Quotes API")
@@ -63,7 +67,7 @@ async def on_ready():
         logging.info("No open tasks!")
     
     # Send ready message, sync commands    
-    logging.info("Jinora#2184 is ready!")
+    logging.info(f"Jinora#2184 (v{VERSION}) is ready!")
     try:
         await bot.sync_application_commands()
         logging.info("Synced global commands!")
