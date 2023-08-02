@@ -1,5 +1,6 @@
 import nextcord
 
+
 class HelpButtons(nextcord.ui.View):
     def __init__(self):
         super().__init__()
