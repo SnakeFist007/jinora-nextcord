@@ -11,9 +11,8 @@ def get_weekday(desired_day, zone) -> int:
     next_day = (desired_day - datetime.now(zone).weekday()) % 7
     if next_day == 0:
         next_day = 7
-    result = datetime.now(zone) + timedelta(days=next_day)
     
-    return result
+    return datetime.now(zone) + timedelta(days=next_day)
 
 
 # Reminder function for Feeds

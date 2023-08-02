@@ -52,7 +52,7 @@ console = Console(bot)
 
 
 
-# Events              
+# Events
 # * ON STARTUP
 @bot.event
 async def on_ready():
