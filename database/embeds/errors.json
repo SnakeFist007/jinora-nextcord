@@ -10,8 +10,12 @@
         "title": "Insufficient permissions!",
         "description": "I'm sorry, but you can't use that command."
     },
-    "error_offline": {
-        "title": "Stable Diffusion is offline!",
-        "description": "I'm very sorry to say this, but the image generation service is currently unavailable."
+    "error_dm": {
+        "title": "You can't use this command in DMs!",
+        "description": "This command is server-sided only."
+    },
+    "error_guild": {
+        "title": "You can't use this command in Servers!",
+        "description": "This command is DMs only."
     }
 }

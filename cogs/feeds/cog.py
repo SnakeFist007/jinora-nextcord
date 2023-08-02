@@ -3,7 +3,7 @@ import asyncio
 import uuid
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
-from functions.helpers import bake_embed, em_error
+from functions.helpers import bake_embed, em_error, em_error_perms, em_error_dm
 from functions.logging import logging
 from functions.reminders import set_reminder
 from main import db_tasks, TIMEZONE
@@ -23,6 +23,7 @@ class Feeds(commands.Cog, name="Feeds"):
     # Command group: /feed ...
     @nextcord.slash_command(name="feed", description="Recurring reminders!")
     @application_checks.guild_only()
+    @application_checks.has_permissions(manage_messages=True)
     async def main(self, interaction: Interaction):
         pass
     
@@ -30,6 +31,7 @@ class Feeds(commands.Cog, name="Feeds"):
     # Add feeds & start reminder countdown
     @main.subcommand(name="add", description="Creates a recurring reminder.")
     @application_checks.guild_only()
+    @application_checks.has_permissions(manage_messages=True)
     async def feed_add(self, interaction: Interaction,  
                        role: nextcord.Role = SlashOption(), 
                        day: int = SlashOption(
@@ -71,6 +73,7 @@ class Feeds(commands.Cog, name="Feeds"):
     # Shows all currently active feeds for the user
     @main.subcommand(name="view", description="Lists all active feeds.")
     @application_checks.guild_only()
+    @application_checks.has_permissions(manage_messages=True)
     async def feed_view(self, interaction: Interaction):
         embed = { "title": "Active Feeds" }
         em = bake_embed(embed)
@@ -90,6 +93,7 @@ class Feeds(commands.Cog, name="Feeds"):
     # Deletes a feed by its uuid from the user
     @main.subcommand(name="delete", description="Deletes a feed by its ID.")
     @application_checks.guild_only()
+    @application_checks.has_permissions(manage_messages=True)
     async def feed_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
         embed = {
                 "title": "Feed deletion successful!",
@@ -113,6 +117,7 @@ class Feeds(commands.Cog, name="Feeds"):
     # Command subgroup: /feed admin ...
     @main.subcommand(name="admin", description="Feed admin tools!")
     @application_checks.guild_only()
+    @application_checks.has_permissions(administrator=True)
     async def main_group(self, interaction: nextcord.Interaction):
         pass
     
@@ -131,7 +136,7 @@ class Feeds(commands.Cog, name="Feeds"):
         if open_tasks:
             for index, task in enumerate(open_tasks):
                 em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
-                             value=f"<&@{task['role_id']}> {task['message']}")
+                             value=f"<@&{task['role_id']}> {task['message']}\n**ID:** {task['internal_id']}")
         else:
             em.add_field(name="No feeds found!",
                          value="Add a feed with the `/feed` command.")
@@ -158,6 +163,49 @@ class Feeds(commands.Cog, name="Feeds"):
             logging.exception(e)
             await interaction.send(embed=em_error(), ephemeral=True)
             return
+    
+    
+    # ERROR HANDLING
+    @feed_add.error
+    async def feed_add_error(self, interaction: Interaction, error: commands.CommandError):
+        if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
+            await interaction.send(embed=em_error_perms(), ephemeral=True)
+        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
+            await interaction.send(embed=em_error_dm(), ephemeral=True)
+        else:
+            await interaction.send(embed=em_error(), ephemeral=True)
+            
+    @feed_view.error
+    async def feed_view_error(self, interaction: Interaction, error: commands.CommandError):
+        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
+            await interaction.send(embed=em_error_dm(), ephemeral=True)
+        else:
+            await interaction.send(embed=em_error(), ephemeral=True)
+            
+    @feed_admin_view.error
+    async def feed_admin_view_error(self, interaction: Interaction, error: commands.CommandError):
+        if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
+            await interaction.send(embed=em_error_perms(), ephemeral=True)
+        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
+            await interaction.send(embed=em_error_dm(), ephemeral=True)
+        else:
+            await interaction.send(embed=em_error(), ephemeral=True)
+            
+    @feed_delete.error
+    async def feed_delete_error(self, interaction: Interaction, error: commands.CommandError):
+        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
+            await interaction.send(embed=em_error_dm(), ephemeral=True)
+        else:
+            await interaction.send(embed=em_error(), ephemeral=True)
+    
+    @feed_admin_delete.error
+    async def feed_admin_delete_error(self, interaction: Interaction, error: commands.CommandError):
+        if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
+            await interaction.send(embed=em_error_perms(), ephemeral=True)
+        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
+            await interaction.send(embed=em_error_dm(), ephemeral=True)
+        else:
+            await interaction.send(embed=em_error(), ephemeral=True)
 
 
 # Add Cog to bot

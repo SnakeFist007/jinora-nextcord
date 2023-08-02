@@ -111,6 +111,6 @@ def em_error():
 def em_error_perms():
     return create_embed(errors, "error_permissions")
 
-# ERROR: Stable Diffusion is offline
-def em_error_offline():
-    return create_embed(errors, "error_offline")
+# ERROR: Command in DMs not available
+def em_error_dm():
+    return create_embed(errors, "error_dm")
