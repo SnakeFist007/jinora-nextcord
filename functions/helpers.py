@@ -114,3 +114,11 @@ def em_error_perms():
 # ERROR: Command in DMs not available
 def em_error_dm():
     return create_embed(errors, "error_dm")
+
+# ERROR: Command in Servers not available
+def em_error_guild():
+    return create_embed(errors, "error_guild")
+
+# ERROR: Command is on cooldown
+def em_error_cooldown():
+    return create_embed(errors, "error_cooldown")
