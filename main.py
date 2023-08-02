@@ -5,7 +5,7 @@ import asyncio
 from nextcord.ext import commands
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+from pymongo.server_api import ServerApi as ServerAPI
 from functions.nextcordConsole.console import Console
 from functions.helpers import EmbedHandler
 from functions.logging import logging
@@ -37,7 +37,7 @@ check_dotenv(QUOTES, "Quotes API")
 check_dotenv(TIMEZONE, "Timezone")
 
 # * MongoDB
-client = MongoClient(URI, server_api=ServerApi('1'))
+client = MongoClient(URI, server_api=ServerAPI("1"))
 db_servers = client.servers
 db_tasks = client.tasks
 
