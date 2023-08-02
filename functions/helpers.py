@@ -1,6 +1,6 @@
 import json
 from nextcord import Embed
-from functions.paths import *
+from functions.paths import embeds
 
 
 # Basic functions

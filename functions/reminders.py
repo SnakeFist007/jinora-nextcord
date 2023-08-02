@@ -3,8 +3,8 @@ import asyncio
 from datetime import datetime, timedelta
 from dateutil import tz
 from discord_webhook import DiscordWebhook as Webhook
-from functions.logging import logging
 from functions.helpers import bake_raw
+from functions.logging import logging
 
 
 # * Reminders
@@ -35,7 +35,7 @@ async def set_reminder(task, timezone):
     # Start scheduled reminder
     next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
     wait_time = (next_reminder - datetime.now(zone)).total_seconds()
-    logging.info(f"Setting reminder timer for {wait_time} seconds...")
+    logging.info(f"Task {task['internal_id']}: Arming reminder timer for {wait_time} seconds...")
     
     # Wait until date, then send webhook
     await asyncio.sleep(wait_time)

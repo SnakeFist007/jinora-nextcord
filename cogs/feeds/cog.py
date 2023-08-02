@@ -3,10 +3,10 @@ import asyncio
 import uuid
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
-from main import logging
-from main import set_reminder, bake_embed, em_error
-from main import db_tasks
-from main import TIMEZONE
+from functions.helpers import bake_embed, em_error
+from functions.logging import logging
+from functions.reminders import set_reminder
+from main import db_tasks, TIMEZONE
 
 
 def convert_day(day):

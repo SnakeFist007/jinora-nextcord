@@ -4,9 +4,10 @@ import requests
 from nextcord import Interaction
 from nextcord.ext import commands, application_checks
 from datetime import datetime
-from main import logging
-from main import qotd, QUOTES
-from main import parse_json_utf8, raw_mystery, convert_raw, em_error
+from functions.helpers import parse_json_utf8, raw_mystery, convert_raw, em_error
+from functions.logging import logging
+from functions.paths import qotd
+from main import QUOTES
 
 
 # Random, but same value for each day

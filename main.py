@@ -6,11 +6,10 @@ from nextcord.ext import commands
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-# "Own" imports
 from functions.nextcordConsole.console import Console
-from functions.helpers import *
+from functions.helpers import em_welcome
 from functions.logging import logging
-from functions.paths import *
+from functions.paths import cogs, ascii_art
 from functions.reminders import set_reminder
 
 
@@ -58,7 +57,7 @@ async def on_ready():
     open_tasks = db_tasks.open.find({})
     if open_tasks:
         for task in open_tasks:
-            logging.info(f"Open task: {task} found!")
+            logging.info(f"Open task: {task['internal_id']} found!")
             asyncio.create_task(set_reminder(task, TIMEZONE))
     else:
         logging.info("No open tasks!")

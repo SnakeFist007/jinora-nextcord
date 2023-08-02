@@ -3,9 +3,9 @@ import aiohttp
 from nextcord.interactions import Interaction
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
-from main import logging
-from main import conditions, moon_phases
-from main import parse_json, bake_embed_thumbnail, em_error
+from functions.helpers import parse_json, bake_embed_thumbnail, em_error
+from functions.logging import logging
+from functions.paths import conditions, moon_phases
 from main import WEATHER
 
 

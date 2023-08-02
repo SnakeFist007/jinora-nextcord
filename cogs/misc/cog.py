@@ -2,10 +2,9 @@ import nextcord
 from nextcord.interactions import Interaction
 from nextcord import Interaction
 from nextcord.ext import commands
-from main import logging
-from main import db_servers
-from main import bake_embed
-from main import VERSION
+from functions.helpers import bake_embed
+from functions.logging import logging
+from main import db_servers, VERSION
 
 
 # Initialize Cog

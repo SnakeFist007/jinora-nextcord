@@ -1,8 +1,8 @@
 import nextcord
 from nextcord import Interaction
 from nextcord.ext import commands
-from main import logging
-from main import bake_embed_questioning
+from functions.helpers import bake_embed_questioning
+from functions.logging import logging
 from cogs.help.ButtonView import HelpButtons
 
 

@@ -3,9 +3,9 @@ import random
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from jokeapi import Jokes
-from main import logging
-from main import wisdom, eight_ball
-from main import parse_json_utf8, raw_mystery, convert_raw, raw_joke
+from functions.helpers import parse_json_utf8, raw_mystery, convert_raw, raw_joke
+from functions.logging import logging
+from functions.paths import wisdom, eight_ball
 
 
 JOKE_BLACKLIST = ["racist", "sexist", "nsfw"]
