@@ -41,18 +41,27 @@
 </p>
 
 <p align="center">
-  <a href="#-features">Features</a>
+    <a href="#-about">About</a>
   •
-  <a href="#-useful-links">Useful Links</a>
+    <a href="#-features">Features</a>
   •
-  <a href="#-running-the-bot">Running the bot</a>
+    <a href="#-running-the-bot">Running the bot</a>
   •
-  <a href="#-contributors">Contributors</a>
+    <a href="#-contributors">Contributors</a>
   •
-  <a href="#%EF%B8%8F-legal-information">Legal Information</a>
+    <a href="#%EF%B8%8F-legal-information">Legal Information</a>
 </p>
 
 <hr>
+
+# 🖊️ About
+This project is all about the journey of learning Python and how to make a neat Discord bot. My primary goal is to improve my coding skills, learning and adhering to best practices throughout the process.
+
+If you have any tips on how to improve this code, please let me know!
+
+I do plan on "truly" releasing this bot in the near future, as soon as I got the main features down and can provide the service 24/7.
+
+<br>
 
 # ✨ Features
 - Question of the Day
@@ -73,7 +82,10 @@ Want to improve this project yourself? Any contributions you make are greatly ap
 
 <br>
 
-# 🔗 Useful links
+# 🛠 Running the bot
+First download the [.env.example](/.env.example) template from the repository.
+
+## Useful links
 Bot related:
 - [Invite-Link](https://discord.com/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
 - [Support-Server](https://discord.gg/aJwqJtnyS4)
@@ -83,10 +95,6 @@ Everything need for bot development:
 - [Embed Generator](https://embed.dan.onl)
 - [Discord Permissions Calculator](https://discordapi.com/permissions.html#0)
 
-<br>
-
-# 🛠 Running the bot
-First download the [.env.example](/.env.example) template from the repository.
 
 ## Configuration
 
@@ -137,8 +145,10 @@ This project is licensed under the [GNU Affero General Public License 3.0](/LICE
 ### Semantic Versioning
 I use [SemVer](https://semver.org) for versioning. For all available versions, see the [tags](https://github.com/SnakeFist007/jinora-nextcord/tags) from this repository.
 
-### Images
+### Resources
 All images of Jinora have been generated with [Stable Diffusion](https://github.com/AUTOMATIC1111/stable-diffusion-webui), [Based65](https://civitai.com/models/31546/based65) & [Jinora LoRA](https://civitai.com/models/51783/jinora-the-legend-of-korra-lora), as well as being upscaled with `R-ESRGAN-4x+-Anime6B`.
+
+This project is not affiliated with the creators of 'The Legend of Korra' or the Avatar franchise!
 
 ---
 
