@@ -1,6 +1,7 @@
 import nextcord
 import asyncio
 import uuid
+import re
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 from functions.helpers import ErrorHandler, EmbedBuilder
@@ -9,10 +10,18 @@ from functions.reminders import set_reminder
 from main import db_tasks, TIMEZONE
 
 
-def convert_day(day):
+def convert_day(day: str) -> int:
     key = { 0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday" }
     
     return key[day]
+
+def is_valid_time_format(input: str) -> bool:
+    pattern = r"^\d{2}:\d{2}$" 
+    return bool(re.match(pattern, input))
+
+def is_valid_webhook(input: str, guild: int) -> bool:
+    base_url = f"https://discord.com/api/webhooks/{guild}/"
+    return input.startswith(base_url)
 
 # Initialize Cog
 class Feeds(commands.Cog, name="Feeds"):
@@ -48,25 +57,46 @@ class Feeds(commands.Cog, name="Feeds"):
                        time: str = SlashOption(),
                        message: str = SlashOption(),
                        webhook: str = SlashOption()):
-        uuid_id = uuid.uuid4()
-        task = {
-            "webhook": webhook,
-            "internal_id": f"{uuid_id}",
-            "server_id": interaction.guild.id,
-            "user_id": interaction.user.id,
-            "role_id": role.id,
-            "day": day,
-            "time": time,
-            "message": message
-        }
-        
-        embed = {
-            "title": "Reminder succesfully created!",
-            "description": f"Your reminder `{message}` for <@&{role.id}> was set! Running every {convert_day(day)} at {time}."
-        }
-              
-        db_tasks.open.insert_one(task)
-        asyncio.create_task(set_reminder(task, TIMEZONE))
+        # Check if time was entered correctly
+        if is_valid_time_format(time):
+            # Check if webhook is valid
+            if is_valid_webhook(webhook, interaction.guild.id):
+                # Check if limit (5 entries per server) is reached
+                if db_tasks.open.count_documents({"server_id": interaction.guild.id}) < 5:
+                    uuid_id = uuid.uuid4()
+                    task = {
+                        "webhook": webhook,
+                        "internal_id": f"{uuid_id}",
+                        "server_id": interaction.guild.id,
+                        "user_id": interaction.user.id,
+                        "role_id": role.id,
+                        "day": day,
+                        "time": time,
+                        "message": message
+                    }
+                    embed = {
+                        "title": "Reminder succesfully created!",
+                        "description": f"Your reminder `{message}` for <@&{role.id}> was set! Running every {convert_day(day)} at {time}.\n**ID: {uuid_id}**"
+                    }
+                    
+                    db_tasks.open.insert_one(task)
+                    asyncio.create_task(set_reminder(task, TIMEZONE))
+                    
+                else:
+                    embed = {
+                        "title": "Server limit reached!",
+                        "description": "You already have 5 tasks registered, you can't add any more!"
+                    }
+            else:
+                embed = {
+                    "title": "Invalid Webhook!",
+                    "description": "Please enter a correct webhook url."
+                }
+        else:
+            embed = {
+                    "title": "Wrong time format!",
+                    "description": "Please input the time as 'HH:MM' and in 24h format!"
+                }
         
         await interaction.response.send_message(embed=EmbedBuilder.bake(embed), ephemeral=True)
         
@@ -82,11 +112,16 @@ class Feeds(commands.Cog, name="Feeds"):
         open_tasks = list(db_tasks.open.find({"user_id": interaction.user.id, "server_id": interaction.guild.id}))
         if open_tasks:
             for index, task in enumerate(open_tasks):
-                em.add_field(name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
-                             value=f"<@&{task['role_id']}> {task['message']}\n**ID:** {task['internal_id']}")
+                em.add_field(
+                    name=f"Task #{index + 1} | {convert_day(task['day'])} - {task['time']}", 
+                    value=f"<@&{task['role_id']}> {task['message']}\n**ID:** {task['internal_id']}",
+                    inline=False
+                )
         else:
-            em.add_field(name="No feeds found!",
-                         value="Add a feed with the `/feed` command.")
+            em.add_field(
+                name="No feeds found!",
+                value="Add a feed with the `/feed` command."
+            )
             
         await interaction.response.send_message(embed=em, ephemeral=True)
     

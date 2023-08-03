@@ -3,7 +3,6 @@ from nextcord import Embed
 from datetime import datetime
 from dateutil import tz
 from functions.paths import messages, errors, emote_urls
-from main import TIMEZONE
 
 
 # * Pure Helpers
@@ -13,18 +12,6 @@ class JSONLoader():
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         return data
-
-class Greetings():
-    def __init__(self) -> None:
-        zone = tz.gettz(TIMEZONE)
-        current = datetime.now(zone)
-        
-        if current.hour < 12:
-            self.greeting_intro = "Good morning!"
-        elif 12 <= current.hour < 18:
-            self.greeting_intro = "Good afternoon!"
-        else:
-            self.greeting_intro = "Good evening!"
 
 class EmbedBuilder():
     # Default template with footer text & icon
