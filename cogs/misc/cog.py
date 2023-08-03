@@ -4,6 +4,7 @@ from nextcord import Interaction
 from nextcord.ext import commands
 from functions.helpers import EmbedBuilder
 from functions.logging import logging
+from functions.paths import SPARKLES, AIR_NOMAD
 from main import db_servers, VERSION
 
 
@@ -24,11 +25,24 @@ class Basics(commands.Cog, name="Misc"):
         logging.info(f"Ping is {ping}ms.")
 
         embed = {
-            "title": "Status Page",
-            "description": f"Version: `{VERSION}`\nPing: `{ping}ms`\nAmount of Servers joined: `{count}`"
+            "title": f"{AIR_NOMAD}  Status Page",
         }
+        em = EmbedBuilder.bake(embed)
+        
+        em.add_field(
+            name=f"{SPARKLES} Version:",
+            value=f"`v{VERSION}`"
+        )
+        em.add_field(
+            name=f"{SPARKLES} # of Servers joined:",
+            value=f"`{count} Servers`"
+        )
+        em.add_field(
+            name=f"{SPARKLES} Ping:",
+            value=f"`{ping}ms`"
+        )
 
-        await interaction.send(embed=EmbedBuilder.bake(embed), ephemeral=True)
+        await interaction.send(embed=em, ephemeral=True)
 
 
 # Add Cog to bot

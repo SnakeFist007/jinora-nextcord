@@ -18,9 +18,9 @@ class EmbedBuilder():
     def bake(raw: dict[str, str]) -> Embed:
         output = {
             "footer": {
-                "text": "Jinora#2184"
+                "text": "Jinora#2184",
+                "icon_url": f"{emote_urls['sunny']}"
             },
-            "icon_url": f"{emote_urls['sunny']}",
             "color": 15844367
         }
         return Embed().from_dict(output | raw)
