@@ -54,7 +54,7 @@
 
 <hr>
 
-# 🖊️ About
+# <img src="database/bot-logo.png" width=24px height=24px> About
 This project is all about the journey of learning Python and how to make a neat Discord bot. My primary goal is to improve my coding skills, learning and adhering to best practices throughout the process.
 
 If you have any tips on how to improve this code, please let me know!
@@ -63,7 +63,7 @@ I do plan on "truly" releasing this bot in the near future, as soon as I got the
 
 <br>
 
-# ✨ Features
+# <img src="database/bot-logo.png" width=24px height=24px> Features
 - Question of the Day
 - Random Wisdoms & Quotes
 - Weather & Astro Commands
@@ -82,7 +82,7 @@ Want to improve this project yourself? Any contributions you make are greatly ap
 
 <br>
 
-# 🛠 Installation
+# <img src="database/bot-logo.png" width=24px height=24px> Installation
 First download the [.env.example](/.env.example) template from the repository.
 
 ## Useful links
@@ -126,13 +126,13 @@ docker run <id>
 
 <br>
 
-# 🤝 Contributors
+# <img src="database/bot-logo.png" width=24px height=24px> Contributors
 
 Be the first to create a pull request!
 
 <br>
 
-# ⚖️ Legal Information
+# <img src="database/bot-logo.png" width=24px height=24px> Legal Information
 
 ### GDPR Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
