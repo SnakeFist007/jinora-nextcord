@@ -45,7 +45,7 @@
   •
     <a href="#-features">Features</a>
   •
-    <a href="#-running-the-bot">Running the bot</a>
+    <a href="#-installation">Installation</a>
   •
     <a href="#-contributors">Contributors</a>
   •
@@ -82,7 +82,7 @@ Want to improve this project yourself? Any contributions you make are greatly ap
 
 <br>
 
-# 🛠 Running the bot
+# 🛠 Installation
 First download the [.env.example](/.env.example) template from the repository.
 
 ## Useful links
