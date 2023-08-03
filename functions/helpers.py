@@ -1,7 +1,5 @@
 import json
 from nextcord import Embed
-from datetime import datetime
-from dateutil import tz
 from functions.paths import messages, errors, emote_urls
 
 

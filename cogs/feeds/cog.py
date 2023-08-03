@@ -12,7 +12,6 @@ from main import db_tasks, TIMEZONE
 
 def convert_day(day: str) -> int:
     key = { 0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday" }
-    
     return key[day]
 
 def is_valid_time_format(input: str) -> bool:
@@ -22,6 +21,7 @@ def is_valid_time_format(input: str) -> bool:
 def is_valid_webhook(input: str, guild: int) -> bool:
     base_url = f"https://discord.com/api/webhooks/{guild}/"
     return input.startswith(base_url)
+
 
 # Initialize Cog
 class Feeds(commands.Cog, name="Feeds"):
@@ -43,8 +43,8 @@ class Feeds(commands.Cog, name="Feeds"):
     @application_checks.has_permissions(manage_messages=True)
     async def feed_add(self, 
                        interaction: Interaction,  
-                       role: nextcord.Role = SlashOption(), 
-                       day: int = SlashOption(
+                       role: nextcord.Role = SlashOption(description="Select a role to ping"), 
+                       day: int = SlashOption(description="The day of the reminder",
                            choices={
                                "Monday": 0,
                                "Tuesday": 1,
@@ -54,9 +54,9 @@ class Feeds(commands.Cog, name="Feeds"):
                                "Saturday": 5,
                                "Sunday": 6 
                                }),
-                       time: str = SlashOption(),
-                       message: str = SlashOption(),
-                       webhook: str = SlashOption()):
+                       time: str = SlashOption(description="Time in 24h 'HH:MM' format"),
+                       message: str = SlashOption(description="Message of the reminder"),
+                       webhook: str = SlashOption(description="Discord webhook URL")):
         # Check if time was entered correctly
         if is_valid_time_format(time):
             # Check if webhook is valid
@@ -94,9 +94,9 @@ class Feeds(commands.Cog, name="Feeds"):
                 }
         else:
             embed = {
-                    "title": "Wrong time format!",
-                    "description": "Please input the time as 'HH:MM' and in 24h format!"
-                }
+                "title": "Wrong time format!",
+                "description": "Please input the time as 'HH:MM' and in 24h format!"
+            }
         
         await interaction.response.send_message(embed=EmbedBuilder.bake(embed), ephemeral=True)
         
