@@ -49,7 +49,7 @@
   •
     <a href="#-contributors">Contributors</a>
   •
-    <a href="#%EF%B8%8F-legal-information">Legal Information</a>
+    <a href="#-legal-information">Legal Information</a>
 </p>
 
 <hr>
