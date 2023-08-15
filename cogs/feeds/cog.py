@@ -25,7 +25,7 @@ def is_valid_webhook(input: str, guild: int) -> bool:
 
 # Initialize Cog
 class Feeds(commands.Cog, name="Feeds"):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         
     
@@ -56,7 +56,7 @@ class Feeds(commands.Cog, name="Feeds"):
                                }),
                        time: str = SlashOption(description="Time in 24h 'HH:MM' format"),
                        message: str = SlashOption(description="Message of the reminder"),
-                       webhook: str = SlashOption(description="Discord webhook URL")):
+                       webhook: str = SlashOption(description="Discord webhook URL")) -> None:
         # Check if time was entered correctly
         if is_valid_time_format(time):
             # Check if webhook is valid
@@ -105,7 +105,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @main.subcommand(name="view", description="Lists all active feeds.")
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
-    async def feed_view(self, interaction: Interaction):
+    async def feed_view(self, interaction: Interaction) -> None:
         embed = { "title": "Active Feeds" }
         em = EmbedBuilder.bake(embed)
         
@@ -130,7 +130,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @main.subcommand(name="delete", description="Deletes a feed by its ID.")
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
-    async def feed_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
+    async def feed_delete(self, interaction: Interaction, feed_id: str = SlashOption()) -> None:
         embed = {
                 "title": "Feed deletion successful!",
                 "description": f"Deleted feed: {feed_id}"
@@ -162,7 +162,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @main_group.subcommand(name="view", description="Lists all active feeds from the server.")
     @application_checks.guild_only()
     @application_checks.has_permissions(administrator=True)
-    async def feed_admin_view(self, interaction: Interaction):
+    async def feed_admin_view(self, interaction: Interaction) -> None:
         embed = { 
                  "title": "Active Server-Feeds" 
             }
@@ -184,7 +184,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @main_group.subcommand(name="delete", description="Deletes a feed from the server.")
     @application_checks.guild_only()
     @application_checks.has_permissions(administrator=True)
-    async def feed_admin_delete(self, interaction: Interaction, feed_id: str = SlashOption()):
+    async def feed_admin_delete(self, interaction: Interaction, feed_id: str = SlashOption()) -> None:
         embed = {
                 "title": "Feed deletion successful!",
                 "description": f"Deleted feed {feed_id}."
@@ -207,7 +207,7 @@ class Feeds(commands.Cog, name="Feeds"):
     @feed_admin_view.error
     @feed_delete.error
     @feed_admin_delete.error
-    async def feed_view_error(self, interaction: Interaction, error: commands.CommandError):
+    async def feed_view_error(self, interaction: Interaction, error: commands.CommandError) -> None:
         if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
             await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
@@ -218,6 +218,6 @@ class Feeds(commands.Cog, name="Feeds"):
 
 
 # Add Cog to bot
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Feeds(bot))
     logging.info("Feeds module loaded!")

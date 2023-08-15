@@ -11,13 +11,13 @@ from main import WEATHER
 
 # Initialize Cog
 class Weather(commands.Cog, name="Weather"):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         
         
     # Weather command
     @nextcord.slash_command(name="weather", description="Generates a weather report!")
-    async def weather(self, interaction: Interaction, location: str = SlashOption()):
+    async def weather(self, interaction: Interaction, location: str = SlashOption()) -> None:
         try:
             url = "https://api.weatherapi.com/v1/current.json"
             params = {
@@ -55,7 +55,7 @@ class Weather(commands.Cog, name="Weather"):
         
     # Astro command
     @nextcord.slash_command(name="astro", description="Generates an astro report!")
-    async def astro(self, interaction: Interaction, location: str = SlashOption()):
+    async def astro(self, interaction: Interaction, location: str = SlashOption()) -> None:
         try:
             url = "https://api.weatherapi.com/v1/astronomy.json"
             params = {
@@ -92,6 +92,6 @@ class Weather(commands.Cog, name="Weather"):
 
 
 # Add Cog to bot
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Weather(bot))
     logging.info("Weather functions loaded!")

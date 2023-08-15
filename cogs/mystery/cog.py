@@ -12,12 +12,12 @@ JOKE_BLACKLIST = ["racist", "sexist", "nsfw"]
 
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
     # Get a random wisdom
     @nextcord.slash_command(name="wisdom", description="Tells a random wisdom!")
-    async def wisdom(self, interaction: Interaction):
+    async def wisdom(self, interaction: Interaction) -> None:
         lines = JSONLoader.load(wisdom)
         length = len(lines)
 
@@ -33,7 +33,7 @@ class Mystery(commands.Cog, name="Mystery"):
 
     # Get an 8-Ball answer for a serious question
     @nextcord.slash_command(name="8ball", description="Answers important questions!")
-    async def fortune_8ball(self, interaction: Interaction, question: str = SlashOption(description="Ask your question...")):
+    async def fortune_8ball(self, interaction: Interaction, question: str = SlashOption(description="Ask your question...")) -> None:
         lines = JSONLoader.load(eight_ball)
         length = len(lines)
 
@@ -50,7 +50,7 @@ class Mystery(commands.Cog, name="Mystery"):
     
     # Joke command
     @nextcord.slash_command(name="joke", description="Tells a joke!")
-    async def joke(self, interaction: Interaction):
+    async def joke(self, interaction: Interaction) -> None:
         j = await Jokes()
         joke = await j.get_joke(blacklist=JOKE_BLACKLIST)
         
@@ -68,6 +68,6 @@ class Mystery(commands.Cog, name="Mystery"):
 
 
 # Add Cog to bot
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Mystery(bot))
     logging.info("Mystery module loaded!")

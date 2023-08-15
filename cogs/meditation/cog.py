@@ -6,27 +6,27 @@ from functions.logging import logging
 
 # Initialize Cog
 class Meditation(commands.Cog, name="Meditation"):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
     # Meditation
     @nextcord.slash_command(name="meditation", description="Not yet implemented!")
-    async def main(self, interaction: Interaction):
+    async def main(self, interaction: Interaction) -> None:
         pass
     
     
     @main.subcommand(name="tips", description="Not yet implemented!")
-    async def meditation_tips(self, interaction: Interaction):
+    async def meditation_tips(self, interaction: Interaction) -> None:
         pass
 
 
     @main.subcommand(name="weekly", description="Not yet implemented!")
-    async def meditation_weekly(self, interaction: Interaction):
+    async def meditation_weekly(self, interaction: Interaction) -> None:
         pass
 
 
 
 # Add Cog to bot
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Meditation(bot))
     logging.info("Meditation module loaded!")

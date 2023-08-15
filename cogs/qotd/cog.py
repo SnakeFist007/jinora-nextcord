@@ -20,14 +20,14 @@ def daily_random(length: int) -> int:
 
 # Initialize Cog
 class QotD(commands.Cog, name="QotD"):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
 
     # Questions
     @nextcord.slash_command(name="qotd", description="Question of the day!")
     @application_checks.guild_only()
-    async def qotd(self, interaction: Interaction):
+    async def qotd(self, interaction: Interaction) -> None:
         lines = JSONLoader.load(qotd)
         length = len(lines)
 
@@ -45,7 +45,7 @@ class QotD(commands.Cog, name="QotD"):
     # Quotes
     @nextcord.slash_command(name="quote", description="Quote of the day!")
     @application_checks.guild_only()
-    async def quote(self, interaction: Interaction):
+    async def quote(self, interaction: Interaction) -> None:
         url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
         res = requests.get(url, headers={"X-Api-Key": QUOTES})
         data = res.json()
@@ -64,6 +64,6 @@ class QotD(commands.Cog, name="QotD"):
 
 
 # Add Cog to bot
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(QotD(bot))
     logging.info("QotD module loaded!")

@@ -9,12 +9,12 @@ from cogs.help.ButtonView import HelpButtons
 
 # Initialize Cog
 class Help(commands.Cog, name="Help"):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
     # Help
     @nextcord.slash_command(name="help", description="Here to help!")
-    async def help(self, interaction: Interaction):
+    async def help(self, interaction: Interaction) -> None:
         embed = {
             "title": f"{AIR_NOMAD}  Command Overview",
             "description": "Go through the pages for more detailed information!"
@@ -46,6 +46,6 @@ class Help(commands.Cog, name="Help"):
 
 
 # Add Cog to bot
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Help(bot))
     logging.info("Help module loaded!")
