@@ -18,6 +18,7 @@ from functions.reminders import set_reminder
 load_dotenv()
 VERSION = "1.4.0"
 OWNER_ID = 83931378097356800
+FEEDBACK_ID = 1140961474718744636
 TOKEN = os.getenv("TOKEN")
 PAPERTRAIL_URL = os.getenv("PAPERTRAIL_URL")
 PAPERTRAIL_PORT = int(os.getenv("PAPERTRAIL_PORT"))
