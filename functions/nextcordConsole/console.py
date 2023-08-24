@@ -1,7 +1,12 @@
-# Credit where its due: https://github.com/Mihitoko/discord.py-Console
+#
+# Original code by: https://github.com/Mihitoko/discord.py-Console
+#
+# Modified by: https://github.com/SnakeFist007
 #
 # I adapted this to work "natively" with nextcord, as before you needed to have
-# discord.py installed to use this tool.
+# discord.py installed to use this tool. This way I can use the Console with
+# nextcord, without getting an error message from either side.
+#
 
 import importlib
 import sys
@@ -15,8 +20,7 @@ import shlex
 import threading
 from functions.nextcordConsole.converter import Converter
 from functions.nextcordConsole.errors import CommandNotFound, ExtensionError
-
-logger = logging.getLogger("nextcordConsole")
+from functions.logging import logging
 
 
 class Console:
@@ -85,7 +89,7 @@ class Console:
     def listen(self):
         # Console starts listening for inputs.
         # This is a blocking call. To avoid the bot being stopped this has to run in an executor (New Thread)
-        logger.info("Console is ready and is listening for commands\n")
+        logging.info("Console is ready and is listening for commands\n")
         while True:
             try:
                 console_in = shlex.split(self.input.readline())
@@ -116,7 +120,7 @@ class Console:
 
     def prepare(self, command, args):
         args_ = args.copy()
-        logger.info(f"Invoking command {command.name} with args {args}")
+        logging.info(f"Invoking command {command.name} with args {args}")
         if getattr(command, "cog", None):
             args_.insert(0, command.cog)
 
