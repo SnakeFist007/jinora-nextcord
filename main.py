@@ -8,8 +8,7 @@
 # ──▓▓▓▓▓▓▓▓▓▓▓───
 # ─────▓▓▓▓▓──────
 #
-# Made by: https://github.com/SnakeFist007
-# 2023
+# Made by: https://github.com/SnakeFist007 - 2023
 #
 
 import pretty_errors
