@@ -20,7 +20,8 @@ import shlex
 import threading
 from functions.nextcordConsole.converter import Converter
 from functions.nextcordConsole.errors import CommandNotFound, ExtensionError
-from functions.logging import logging
+
+logger = logging.getLogger("nextcordConsole")
 
 
 class Console:
@@ -89,7 +90,7 @@ class Console:
     def listen(self):
         # Console starts listening for inputs.
         # This is a blocking call. To avoid the bot being stopped this has to run in an executor (New Thread)
-        logging.info("Console is ready and is listening for commands\n")
+        logger.info("Console is ready and is listening for commands\n")
         while True:
             try:
                 console_in = shlex.split(self.input.readline())
@@ -120,7 +121,7 @@ class Console:
 
     def prepare(self, command, args):
         args_ = args.copy()
-        logging.info(f"Invoking command {command.name} with args {args}")
+        logger.info(f"Invoking command {command.name} with args {args}")
         if getattr(command, "cog", None):
             args_.insert(0, command.cog)
 

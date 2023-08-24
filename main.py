@@ -148,7 +148,8 @@ async def reload():
 @console.command()
 async def load(cog):
     try:
-        logging.warning(f"$ Loading cog {cog}...")
+        print(f"$ Loading cog {cog}...")
+        logging.warning(f"Loading cog {cog}...")
         bot.load_extension(f"cogs.{cog}.cog")
         await bot.sync_application_commands()
     except ModuleNotFoundError:
@@ -158,12 +159,23 @@ async def load(cog):
 @console.command()
 async def unload(cog):
     try:
-        logging.warning(f"$ Unloading cog {cog}...")
+        print(f"$ Unloading cog {cog}...")
+        logging.warning(f"Unloading cog {cog}...")
         bot.unload_extension(f"cogs.{cog}.cog")
         logging.info("Unload successful!")
         await bot.sync_application_commands()
     except ModuleNotFoundError:
         logging.error(f"No module named {cog}!")
+        
+@console.command()
+async def leave(id: int):
+    try:
+        print(f"$ Leaving server {id}...")
+        logging.warning(f"Leaving server {id}...")
+        await bot.get_guild(id).leave()
+        logging.info("Left server!")
+    except AttributeError:
+        logging.error(f"No server with ID {id} found!")
             
             
             
