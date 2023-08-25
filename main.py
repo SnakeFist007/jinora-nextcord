@@ -69,7 +69,7 @@ console = Console(bot)
 # Events
 # * ON STARTUP
 @bot.event
-async def on_ready():
+async def on_ready() -> None:
     # Grab open tasks from MongoDB
     logging.info("Grabbing open tasks from database...")
     open_tasks = db_tasks.open.find({})
@@ -96,7 +96,7 @@ async def on_ready():
 
 # * ON SERVER JOIN
 @bot.event
-async def on_guild_join(guild):
+async def on_guild_join(guild) -> None:
     logging.info(f"Joined server {guild.id}!")
     
     # Check if server ID has already been added to the list
@@ -113,7 +113,7 @@ async def on_guild_join(guild):
 
 # * ON SERVER LEAVE
 @bot.event
-async def on_guild_remove(guild):
+async def on_guild_remove(guild) -> None:
     logging.info(f"Left server {guild.id}!")
     
     # Check if server ID was already deleted from the list
@@ -128,14 +128,14 @@ async def on_guild_remove(guild):
 # * CONSOLE COMMANDS
 # Console help
 @console.command()
-async def help():
+async def help() -> None:
     print("$ Following commands are available: help, reload, load, unload")
     
     
 # Cog Mangement
 # Hot-reload all cogs
 @console.command()
-async def reload():
+async def reload() -> None:
     print("$ Hot-reloading all cogs!")
     logging.warning("Reloading all cogs!")
     for folder in cogs.iterdir():
@@ -146,7 +146,7 @@ async def reload():
             
 # Load a specific cog
 @console.command()
-async def load(cog):
+async def load(cog: str) -> None:
     try:
         print(f"$ Loading cog {cog}...")
         logging.warning(f"Loading cog {cog}...")
@@ -157,7 +157,7 @@ async def load(cog):
       
 # Unload a specifc cog
 @console.command()
-async def unload(cog):
+async def unload(cog: str) -> None:
     try:
         print(f"$ Unloading cog {cog}...")
         logging.warning(f"Unloading cog {cog}...")
@@ -168,7 +168,7 @@ async def unload(cog):
         logging.error(f"No module named {cog}!")
         
 @console.command()
-async def leave(id: int):
+async def leave(id: int) -> None:
     try:
         print(f"$ Leaving server {id}...")
         logging.warning(f"Leaving server {id}...")
