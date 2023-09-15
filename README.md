@@ -1,4 +1,4 @@
-# Jinora - Your Airbending Meditation Guide!
+# Jinora - Your Airbending Mood Tracker!
 <div align="center">
     <a href="https://www.python.org">
         <img src="https://custom-icon-badges.demolab.com/badge/Python-3.11.4-0F81C2?logo=python">
@@ -33,7 +33,7 @@
 
 <p align="center">
     <a href="https://github.com/SnakeFist007/jinora-nextcord/releases/latest">
-        <img src="https://img.shields.io/badge/Bot%20Version-1.4.0-blue.svg?style=for-the-badge&logo=Python">
+        <img src="https://img.shields.io/badge/Bot%20Version-2.0.0-blue.svg?style=for-the-badge&logo=Python">
     </a>
     <a href="https://discord.gg/aJwqJtnyS4">
         <img src="https://img.shields.io/discord/1134861717185253478.svg?label=Discord&logo=Discord&colorB=007ec6&style=for-the-badge">
