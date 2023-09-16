@@ -29,7 +29,7 @@ from functions.reminders import set_reminder
 # Setup
 # * Load .env
 load_dotenv()
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 OWNER_ID = 83931378097356800
 FEEDBACK_ID = 1140961474718744636
 TOKEN = os.getenv("TOKEN")

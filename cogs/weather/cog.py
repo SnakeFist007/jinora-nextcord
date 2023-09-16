@@ -50,7 +50,7 @@ class Weather(commands.Cog, name="Weather"):
         
         em.set_thumbnail(url=thumbnail)
                 
-        await interaction.send(embed=em, ephemeral=True)
+        await interaction.send(embed=em)
         
         
     # Astro command
@@ -88,7 +88,7 @@ class Weather(commands.Cog, name="Weather"):
         
         em.set_thumbnail(url=thumbnail)
                 
-        await interaction.send(embed=em, ephemeral=True)
+        await interaction.send(embed=em)
 
 
 # Add Cog to bot
