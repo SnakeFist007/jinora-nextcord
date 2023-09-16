@@ -1,14 +1,12 @@
 import nextcord
 import re
 import random
-import requests
-import aiohttp
 from nextcord import Interaction, SlashOption, ChannelType
 from nextcord.ext import commands, application_checks
+from functions.apis import get_quote, get_astro
 from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
 from functions.paths import moon_phases
-from main import QUOTES, WEATHER
 
 def is_valid_time_format(input: str) -> bool:
     pattern = r"^\d{2}:\d{2}$"
@@ -27,6 +25,7 @@ class Mood(commands.Cog, name="Mood"):
     async def main(self, interaction: Interaction) -> None:
         pass
     
+    
     @main.subcommand(name="poll", description="Ask the community!")
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
@@ -35,33 +34,24 @@ class Mood(commands.Cog, name="Mood"):
                                role: nextcord.Role = SlashOption(description="Select a role to ping")) -> None:
         
         # Get a nice quote
-        url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
-        res = requests.get(url, headers={"X-Api-Key": QUOTES})
-        data = res.json()
-
-        if res.status_code == requests.codes.ok:
-            quote = f"''{data[0]['quote']}'' *~{data[0]['author']}*"
-        
+        try:
+            data = await get_quote()
+            quote = f"''{data[0]['quote']}'' *~{data[0]['author']}*"        
         # Fallback to generic text, if API call fails
-        else:
+        except ValueError:
             logging.exception("ERROR getting response from quotes API")
             quote = "Let us know in the thread!"
         
         # Grab the current moon phase
         try:
-            url = "https://api.weatherapi.com/v1/astronomy.json"
-            params = { "key": WEATHER, "q": "Berlin" }
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, params=params) as res:
-                    data = await res.json()
+            data = await get_astro("Berlin")
 
             moon_phase = data["astronomy"]["astro"]["moon_phase"]
             emoji_db = JSONLoader.load(moon_phases)
             moon = emoji_db[moon_phase.lower()]["emoji"]
-        
         # Fallback to random (creepy) emote, if API call fails
-        except KeyError as e:
-            logging.exception(e)
+        except ValueError:
+            logging.exception("ERROR getting response from quotes API")
             moon_phase = ["🌝", "🌚"]
             moon = random.choice(moon_phase)
         

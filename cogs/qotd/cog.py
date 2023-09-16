@@ -1,13 +1,12 @@
 import nextcord
 import random
-import requests
 from nextcord import Interaction
 from nextcord.ext import commands, application_checks
 from datetime import datetime
+from functions.apis import get_quote
 from functions.helpers import EmbedBuilder, ErrorHandler, JSONLoader
 from functions.logging import logging
 from functions.paths import qotd
-from main import QUOTES
 
 
 # Random, but same value for each day
@@ -46,18 +45,16 @@ class QotD(commands.Cog, name="QotD"):
     @nextcord.slash_command(name="quote", description="Quote of the day!")
     @application_checks.guild_only()
     async def quote(self, interaction: Interaction) -> None:
-        url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
-        res = requests.get(url, headers={"X-Api-Key": QUOTES})
-        data = res.json()
-        
-        if res.status_code == requests.codes.ok:
+        try: 
+            data = await get_quote()
             embed = {
                 "title": f"{data[0]['quote']} *~{data[0]['author']}*",
                 "description": "Sometimes quotes can be very insightful... Other times, not so much."
             }
-
+        
             await interaction.response.send_message(embed=EmbedBuilder.bake(embed), ephemeral=True)
-        else:
+            
+        except ValueError:
             logging.exception("ERROR getting response from quotes API")
             await interaction.response.send_message(embed=ErrorHandler.default(), ephemeral=True)
             return
