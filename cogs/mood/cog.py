@@ -4,7 +4,7 @@ import random
 import requests
 import aiohttp
 from nextcord import Interaction, SlashOption, ChannelType
-from nextcord.ext import commands
+from nextcord.ext import commands, application_checks
 from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
 from functions.paths import moon_phases
@@ -22,11 +22,15 @@ class Mood(commands.Cog, name="Mood"):
 
     # Mood
     @nextcord.slash_command(name="mood", description="How's your mood?")
+    @application_checks.guild_only()
+    @application_checks.has_permissions(manage_messages=True)
     async def main(self, interaction: Interaction) -> None:
         pass
     
-    @commands.has_permissions(create_public_threads=True)
     @main.subcommand(name="poll", description="Ask the community!")
+    @application_checks.guild_only()
+    @application_checks.has_permissions(manage_messages=True)
+    @commands.has_permissions(create_public_threads=True)
     async def mood_poll_manual(self, interaction: Interaction, 
                                role: nextcord.Role = SlashOption(description="Select a role to ping")) -> None:
         
@@ -76,8 +80,10 @@ class Mood(commands.Cog, name="Mood"):
         await thread.send(f"{role.mention}")
         
         
-    # @commands.has_permissions(create_public_threads=True)
     # @main.subcommand(name="setup", description="Set up an automatic poll!")
+    # @application_checks.guild_only()
+    # @application_checks.has_permissions(manage_messages=True)
+    # @commands.has_permissions(create_public_threads=True)
     # async def mood_poll_auto(self, interaction: Interaction,
     #                          role: nextcord.Role = SlashOption(description="Select a role to ping"),
     #                          interval: int = SlashOption(description="Select an interval",
