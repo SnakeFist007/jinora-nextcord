@@ -47,23 +47,23 @@ reading = base_path / "database/emotes/reading.png"
 snowy = base_path / "database/emotes/snowy.png"
 sunny = base_path / "database/emotes/sunny.png"
 
-# Emotes (imgur)
-emote_urls = {
-    "cloudy": "https://imgur.com/5zfRFq1.png",
-    "greetings": "https://imgur.com/S3M5Kiu.png",
-    "happy": "https://imgur.com/Nb5BMJs.png",
-    "sipping": "https://imgur.com/2T4dqyL.png",
-    "laughing": "https://imgur.com/oxP24J6.png",
-    "meditating": "https://imgur.com/4vuMmhb.png",
-    "neutral": "https://imgur.com/YmXLdWH.png",
-    "night": "https://imgur.com/JF41h6h.png",
-    "phone": "https://imgur.com/MuigdvJ.png",
-    "proud": "https://imgur.com/a21jxMq.png",
-    "questioning": "https://imgur.com/H9K383w.png",
-    "rainy": "https://imgur.com/ZyW41zg.png",
-    "reading": "https://imgur.com/fOZDtaA.png",
-    "snowy": "https://imgur.com/Jq3Ci6T.png",
-    "sunny": "https://imgur.com/HWQv848.png",
+# Emotes
+emotes = {
+    "cloudy": cloudy,
+    "greetings": greetings,
+    "happy": happy,
+    "sipping": sipping,
+    "laughing": laughing,
+    "meditating": meditating,
+    "neutral": neutral,
+    "night": night,
+    "phone": phone,
+    "proud": proud,
+    "questioning": questioning,
+    "rainy": rainy,
+    "reading": reading,
+    "snowy": snowy,
+    "sunny": sunny
 }
 
 # Emojis

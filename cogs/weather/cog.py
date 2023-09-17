@@ -6,7 +6,7 @@ from functions.apis import get_weather, get_astro
 from functions.errors import default_error
 from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
-from functions.paths import conditions, moon_phases, emote_urls
+from functions.paths import conditions, moon_phases, emotes
 
 
 # Initialize Cog
@@ -25,7 +25,7 @@ class Weather(commands.Cog, name="Weather"):
             condition = data["current"]["condition"]["text"]
             emoji_db = JSONLoader.load(conditions)
             emoji = emoji_db[condition.lower()]["emoji"]
-            thumbnail = emote_urls[f"{emoji_db[condition.lower()]['thumbnail']}"]
+            thumbnail = emotes[f"{emoji_db[condition.lower()]['thumbnail']}"]
             
         except KeyError as e:
             logging.exception(e)
@@ -40,10 +40,8 @@ class Weather(commands.Cog, name="Weather"):
         em.add_field(name="Temperature", value=f"{data['current']['temp_c']}°C")
         em.add_field(name="Humidity", value=f"{data['current']['humidity']}%")
         em.add_field(name="Wind Speeds", value=f"{int(data['current']['wind_kph'])} km/h")
-        
-        em.set_thumbnail(url=thumbnail)
                 
-        await interaction.send(embed=em)
+        await interaction.send(file=EmbedBuilder.get_emoji(thumbnail), embed=em)
         
         
     # Astro command
@@ -56,7 +54,7 @@ class Weather(commands.Cog, name="Weather"):
             moon_phase = data["astronomy"]["astro"]["moon_phase"]
             emoji_db = JSONLoader.load(moon_phases)
             emoji = emoji_db[moon_phase.lower()]["emoji"]
-            thumbnail = emote_urls[f"{emoji_db[moon_phase.lower()]['thumbnail']}"]
+            thumbnail = emotes[f"{emoji_db[moon_phase.lower()]['thumbnail']}"]
             
         except KeyError as e:
             logging.exception(e)
@@ -71,10 +69,8 @@ class Weather(commands.Cog, name="Weather"):
         em.add_field(name="Moonrise", value=f"{data['astronomy']['astro']['moonrise']}")
         em.add_field(name="Moonset", value=f"{data['astronomy']['astro']['moonset']}")
         em.add_field(name="Moon Illumination", value=f"{data['astronomy']['astro']['moon_illumination']}%")
-        
-        em.set_thumbnail(url=thumbnail)
                 
-        await interaction.send(embed=em)
+        await interaction.send(file=EmbedBuilder.get_emoji(thumbnail), embed=em)
 
     @weather.error
     @astro.error
