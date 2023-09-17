@@ -5,7 +5,7 @@ from functions.apis import get_quote
 from functions.errors import default_error, dm_error
 from functions.helpers import EmbedBuilder, JSONLoader, daily_random
 from functions.logging import logging
-from functions.paths import qotd, reading
+from functions.paths import qotd, reading, sunny
 
 
 # Initialize Cog
@@ -43,7 +43,7 @@ class QotD(commands.Cog, name="QotD"):
                 "description": "Sometimes quotes can be very insightful... Other times, not so much."
             }
         
-            await interaction.response.send_message(embed=EmbedBuilder.bake(embed))
+            await interaction.response.send_message(file=EmbedBuilder.get_emoji(sunny), embed=EmbedBuilder.bake(embed))
             
         except ValueError:
             logging.exception("ERROR getting response from quotes API")

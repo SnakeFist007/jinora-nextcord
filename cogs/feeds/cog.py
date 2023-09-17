@@ -8,6 +8,7 @@ from functions.errors import default_error, dm_error, perm_error
 from functions.helpers import EmbedBuilder, convert_day, is_valid_time_format, is_valid_webhook
 from functions.logging import logging
 from functions.reminders import set_reminder
+from functions.paths import sunny
 from main import db_tasks, TIMEZONE
 
 
@@ -86,7 +87,7 @@ class Feeds(commands.Cog, name="Feeds"):
                 "description": "Please input the time as 'HH:MM' and in 24h format!"
             }
         
-        await interaction.response.send_message(embed=EmbedBuilder.bake(embed), ephemeral=True)
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(sunny), embed=EmbedBuilder.bake(embed), ephemeral=True)
         
     
     # Shows all currently active feeds for the user
@@ -111,7 +112,7 @@ class Feeds(commands.Cog, name="Feeds"):
                 value="Add a feed with the `/feed` command."
             )
             
-        await interaction.response.send_message(embed=em, ephemeral=True)
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
     
     
     # Deletes a feed by its uuid from the user
@@ -129,7 +130,7 @@ class Feeds(commands.Cog, name="Feeds"):
             try:
                 logging.warning(f"Deleting entry {feed_id} from task database!")
                 db_tasks.open.delete_one({"internal_id": feed_id})
-                await interaction.send(embed=em, ephemeral=True)
+                await interaction.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
             except Exception as e:
                 logging.exception(e)
                 raise commands.errors.BadArgument
@@ -164,7 +165,7 @@ class Feeds(commands.Cog, name="Feeds"):
             em.add_field(name="No feeds found!",
                          value="Add a feed with the `/feed` command.")
             
-        await interaction.response.send_message(embed=em, ephemeral=True)
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
     
     
     # Deletes a feed by its uuid from the server
@@ -181,7 +182,7 @@ class Feeds(commands.Cog, name="Feeds"):
         try:
             logging.warning(f"Deleting entry {feed_id} from task database!")
             db_tasks.open.delete_one({"internal_id": feed_id})
-            await interaction.send(embed=em, ephemeral=True)
+            await interaction.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
         except Exception as e:
             logging.exception(e)
             return

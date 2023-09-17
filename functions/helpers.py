@@ -3,7 +3,7 @@ import re
 import random
 from datetime import datetime, timedelta
 from nextcord import Embed, File
-from functions.paths import messages, errors, emote_urls
+from functions.paths import messages, errors
 
 
 # * Misc Functions
@@ -50,11 +50,12 @@ class EmbedBuilder():
         output = {
             "footer": {
                 "text": "Jinora#2184",
-                "icon_url": f"{emote_urls['sunny']}"
+                "icon_url": "attachment://image.png"
             },
             "color": 15844367
         }
         return Embed().from_dict(output | raw)
+    # f"{emote_urls['sunny']}"
 
     # Default template with thumbnail
     @staticmethod
