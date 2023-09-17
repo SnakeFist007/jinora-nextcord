@@ -3,7 +3,7 @@ from nextcord import Interaction
 from nextcord.ext import commands
 from functions.helpers import EmbedBuilder
 from functions.logging import logging
-from functions.paths import SPARKLES, AIR_NOMAD
+from functions.paths import SPARKLES, AIR_NOMAD, questioning
 from cogs.help.ButtonView import HelpButtons
 
 
@@ -42,7 +42,7 @@ class Help(commands.Cog, name="Help"):
             inline=False
         )
         
-        await interaction.response.send_message(embed=em, view=HelpButtons())
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(questioning), embed=em, view=HelpButtons())
 
 
 # Add Cog to bot

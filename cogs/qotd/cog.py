@@ -5,7 +5,7 @@ from functions.apis import get_quote
 from functions.errors import default_error, dm_error
 from functions.helpers import EmbedBuilder, JSONLoader, daily_random
 from functions.logging import logging
-from functions.paths import qotd
+from functions.paths import qotd, reading
 
 
 # Initialize Cog
@@ -29,7 +29,7 @@ class QotD(commands.Cog, name="QotD"):
             "description": "Need something to reflect on? I've got you covered!\nCome back tomorrow for a new quote."
         }
 
-        await interaction.response.send_message(embed=EmbedBuilder.bake_questioning(embed))
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(reading), embed=EmbedBuilder.bake_questioning(embed))
     
     
     # Quotes

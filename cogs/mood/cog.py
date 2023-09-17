@@ -5,7 +5,7 @@ from nextcord.ext import commands, application_checks
 from functions.apis import get_quote, get_astro
 from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
-from functions.paths import moon_phases
+from functions.paths import moon_phases, laughing
 from functions.errors import default_error, dm_error, perm_error
 
 
@@ -61,7 +61,7 @@ class Mood(commands.Cog, name="Mood"):
 
         # Send message & create thread
         await interaction.response.defer()
-        message = await interaction.followup.send(embed=em)
+        message = await interaction.followup.send(file=EmbedBuilder.get_emoji(laughing), embed=em)
         thread = await interaction.channel.create_thread(name=moon, message=message, type=ChannelType.public_thread)
         await thread.send(f"{role.mention}")
         

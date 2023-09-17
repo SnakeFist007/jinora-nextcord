@@ -2,7 +2,7 @@ import json
 import re
 import random
 from datetime import datetime, timedelta
-from nextcord import Embed
+from nextcord import Embed, File
 from functions.paths import messages, errors, emote_urls
 
 
@@ -61,33 +61,40 @@ class EmbedBuilder():
     def bake_thumbnail(raw: dict[str, str]) -> Embed:
         output = { 
             "thumbnail": { 
-                "url": f"{emote_urls['sunny']}" 
+                "url": "attachment://image.png"
             },
             "color": 15844367 
         }
         return Embed().from_dict(output | raw)
+    # f"{emote_urls['sunny']}"
     
     # Template with question thumbnail
     @staticmethod
     def bake_questioning(raw: dict[str, str]) -> Embed:
         output = { 
             "thumbnail": { 
-                "url": f"{emote_urls['questioning']}" 
+                "url": "attachment://image.png"
             },
             "color": 15844367 
         }
         return Embed().from_dict(output | raw)
+    # f"{emote_urls['questioning']}"
 
     # Template with laughing thumbnail
     @staticmethod
     def bake_joke(raw: dict[str, str]) -> Embed:
         output = { 
             "thumbnail": { 
-                "url": f"{emote_urls['laughing']}" 
+                "url": "attachment://image.png"
             },
             "color": 15844367 
         }
         return Embed().from_dict(output | raw)
+    # f"{emote_urls['laughing']}"
+    
+    @staticmethod
+    def get_emoji(path) -> File:
+        return File(path, filename="image.png")
 
 
 

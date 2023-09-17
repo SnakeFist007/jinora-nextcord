@@ -70,7 +70,6 @@ emote_urls = {
 AIR = "<:air:1136372942712881324>"
 AIR_NOMAD = "<:air_nomad:1136373972246732891>"
 LOTUS = "<:white_lotus:1136372955908149290>"
-
 # Animated Emojis
 BOOST = "<a:boost:1088152045166542959>"
 SPARKLES = "<a:sparkles:1088152065034965104>"
