@@ -5,23 +5,10 @@ import re
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 from functions.errors import default_error, dm_error, perm_error
-from functions.helpers import EmbedBuilder
+from functions.helpers import EmbedBuilder, convert_day, is_valid_time_format, is_valid_webhook
 from functions.logging import logging
 from functions.reminders import set_reminder
 from main import db_tasks, TIMEZONE
-
-
-def convert_day(day: str) -> int:
-    key = { 0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday" }
-    return key[day]
-
-def is_valid_time_format(input: str) -> bool:
-    pattern = r"^\d{2}:\d{2}$" 
-    return bool(re.match(pattern, input))
-
-def is_valid_webhook(input: str, guild: int) -> bool:
-    base_url = f"https://discord.com/api/webhooks/{guild}/"
-    return input.startswith(base_url)
 
 
 # Initialize Cog

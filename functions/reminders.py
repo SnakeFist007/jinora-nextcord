@@ -1,18 +1,9 @@
 import asyncio
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil import tz
 from discord_webhook import DiscordWebhook as Webhook
-from functions.helpers import EmbedBuilder
+from functions.helpers import EmbedBuilder, get_weekday
 from functions.logging import logging
-
-
-# Calculate next occurance of weekday
-def get_weekday(desired_day, zone) -> int:
-    next_day = (desired_day - datetime.now(zone).weekday()) % 7
-    if next_day == 0:
-        next_day = 7
-    
-    return datetime.now(zone) + timedelta(days=next_day)
 
 
 # Reminder function for Feeds

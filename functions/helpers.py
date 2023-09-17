@@ -1,6 +1,38 @@
 import json
+import re
+import random
+from datetime import datetime, timedelta
 from nextcord import Embed
 from functions.paths import messages, errors, emote_urls
+
+
+# * Misc Functions
+def convert_day(day: str) -> int:
+    key = {0: "Monday", 1: "Tuesday", 2: "Wednesday",
+           3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}
+    return key[day]
+
+def is_valid_time_format(input: str) -> bool:
+    pattern = r"^\d{2}:\d{2}$"
+    return bool(re.match(pattern, input))
+
+def is_valid_webhook(input: str, guild: int) -> bool:
+    base_url = f"https://discord.com/api/webhooks/{guild}/"
+    return input.startswith(base_url)
+
+def daily_random(length: int) -> int:
+    seed = datetime.now() - datetime(2000, 4, 23)
+
+    random.seed(seed.days)
+    return random.randint(1, length)
+
+def get_weekday(desired_day, zone) -> int:
+    next_day = (desired_day - datetime.now(zone).weekday()) % 7
+    if next_day == 0:
+        next_day = 7
+
+    return datetime.now(zone) + timedelta(days=next_day)
+
 
 
 # * Pure Helpers

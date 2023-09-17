@@ -6,6 +6,7 @@ from functions.helpers import ErrorHandler
 async def default_error(interaction: Interaction):
     await interaction.send(embed=ErrorHandler.default())
 
+
 async def dm_error(interaction: Interaction):
     try:
         await interaction.send(embed=ErrorHandler.dm())

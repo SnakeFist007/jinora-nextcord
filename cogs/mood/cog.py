@@ -10,11 +10,6 @@ from functions.paths import moon_phases
 from functions.errors import default_error, dm_error
 
 
-def is_valid_time_format(input: str) -> bool:
-    pattern = r"^\d{2}:\d{2}$"
-    return bool(re.match(pattern, input))
-
-
 # Initialize Cog
 class Mood(commands.Cog, name="Mood"):
     def __init__(self, bot: commands.Bot) -> None:

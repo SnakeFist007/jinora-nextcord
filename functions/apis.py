@@ -3,6 +3,8 @@ import requests
 from functions.logging import logging
 from main import WEATHER, QUOTES
 
+
+# * API scheme from https://api-ninjas.com
 async def apininjas(url):
     res = requests.get(url, headers={"X-Api-Key": QUOTES})
     data = res.json()
@@ -13,13 +15,14 @@ async def apininjas(url):
         logging.exception("ERROR getting response from quotes API")
         raise ValueError
 
-
+# Functions used with api-ninjas
 async def get_quote():
     url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
     return await apininjas(url)
 
 
 
+# * API scheme from https://weatherapi.com
 async def weatherapi(url, location):
     params = {
         "key": WEATHER,
@@ -31,7 +34,7 @@ async def weatherapi(url, location):
 
     return data
     
-
+# Functions used with weatherapi
 async def get_weather(location):
     try:
         url = "https://api.weatherapi.com/v1/current.json"   

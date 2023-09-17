@@ -1,21 +1,11 @@
 import nextcord
-import random
 from nextcord import Interaction
 from nextcord.ext import commands, application_checks
-from datetime import datetime
 from functions.apis import get_quote
 from functions.errors import default_error, dm_error
-from functions.helpers import EmbedBuilder, JSONLoader
+from functions.helpers import EmbedBuilder, JSONLoader, daily_random
 from functions.logging import logging
 from functions.paths import qotd
-
-
-# Random, but same value for each day
-def daily_random(length: int) -> int:
-    seed = datetime.now() - datetime(2000, 4, 23)
-    
-    random.seed(seed.days)
-    return random.randint(1, length)
 
 
 # Initialize Cog

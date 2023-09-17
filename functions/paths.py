@@ -77,3 +77,6 @@ SPARKLES = "<a:sparkles:1088152065034965104>"
 YES = "<a:jape:1088151992800641054>"
 MEH = "<a:meh:1088152028162822194>"
 NOU = "<a:nope:1088151978456129696>"
+
+# Blacklist for Jokes
+JOKE_BLACKLIST = ["racist", "sexist", "nsfw"]

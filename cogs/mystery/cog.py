@@ -5,10 +5,8 @@ from nextcord.ext import commands
 from jokeapi import Jokes
 from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
-from functions.paths import wisdom, eight_ball
+from functions.paths import JOKE_BLACKLIST, wisdom, eight_ball
 
-
-JOKE_BLACKLIST = ["racist", "sexist", "nsfw"]
 
 # Initialize Cog
 class Mystery(commands.Cog, name="Mystery"):
