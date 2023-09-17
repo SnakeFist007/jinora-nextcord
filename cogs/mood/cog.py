@@ -1,5 +1,4 @@
 import nextcord
-import re
 import random
 from nextcord import Interaction, SlashOption, ChannelType
 from nextcord.ext import commands, application_checks
@@ -7,7 +6,7 @@ from functions.apis import get_quote, get_astro
 from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
 from functions.paths import moon_phases
-from functions.errors import default_error, dm_error
+from functions.errors import default_error, dm_error, perm_error
 
 
 # Initialize Cog
@@ -27,7 +26,7 @@ class Mood(commands.Cog, name="Mood"):
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
     @commands.has_permissions(create_public_threads=True)
-    async def mood_poll_manual(self, interaction: Interaction, 
+    async def mood_poll(self, interaction: Interaction, 
                                role: nextcord.Role = SlashOption(description="Select a role to ping")) -> None:
         
         # Get a nice quote
@@ -66,10 +65,12 @@ class Mood(commands.Cog, name="Mood"):
         thread = await interaction.channel.create_thread(name=moon, message=message, type=ChannelType.public_thread)
         await thread.send(f"{role.mention}")
         
-    @mood_poll_manual.error
+    @mood_poll.error
     async def on_command_error(self, interaction: Interaction, error) -> None:
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
             await dm_error(interaction)
+        if isinstance(error, application_checks.errors.ApplicationMissingPermissions):
+            await perm_error(interaction)
         else:
             await default_error(interaction)
             
