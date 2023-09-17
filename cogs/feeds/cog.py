@@ -4,7 +4,8 @@ import uuid
 import re
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
-from functions.helpers import ErrorHandler, EmbedBuilder
+from functions.errors import default_error, dm_error, perm_error
+from functions.helpers import EmbedBuilder
 from functions.logging import logging
 from functions.reminders import set_reminder
 from main import db_tasks, TIMEZONE
@@ -144,10 +145,9 @@ class Feeds(commands.Cog, name="Feeds"):
                 await interaction.send(embed=em, ephemeral=True)
             except Exception as e:
                 logging.exception(e)
-                await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
-                return
+                raise commands.errors.BadArgument
         else:
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
+            raise commands.errors.BadArgument
     
     
     # Command subgroup: /feed admin ...
@@ -197,7 +197,6 @@ class Feeds(commands.Cog, name="Feeds"):
             await interaction.send(embed=em, ephemeral=True)
         except Exception as e:
             logging.exception(e)
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
             return
     
     
@@ -207,13 +206,15 @@ class Feeds(commands.Cog, name="Feeds"):
     @feed_admin_view.error
     @feed_delete.error
     @feed_admin_delete.error
-    async def feed_view_error(self, interaction: Interaction, error: commands.CommandError) -> None:
+    async def feed_view_error(self, interaction: Interaction, error) -> None:
+        if isinstance(error, commands.errors.BadArgument):
+            await default_error(interaction)
         if isinstance(error, application_checks.errors.ApplicationBotMissingPermissions):
-            await interaction.send(embed=ErrorHandler.perms(), ephemeral=True)
+            await perm_error(interaction)
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
-            await interaction.send(embed=ErrorHandler.dm(), ephemeral=True)
+            await dm_error(interaction)
         else:
-            await interaction.send(embed=ErrorHandler.default(), ephemeral=True)
+            await default_error(interaction)
 
 
 

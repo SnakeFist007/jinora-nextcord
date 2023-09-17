@@ -3,7 +3,8 @@ from nextcord.interactions import Interaction
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from functions.apis import get_weather, get_astro
-from functions.helpers import JSONLoader, EmbedBuilder, ErrorHandler
+from functions.errors import default_error
+from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
 from functions.paths import conditions, moon_phases, emote_urls
 
@@ -28,8 +29,7 @@ class Weather(commands.Cog, name="Weather"):
             
         except KeyError as e:
             logging.exception(e)
-            await interaction.send(embed=ErrorHandler.default())
-            return
+            raise commands.errors.BadArgument
                 
         embed = {
             "title": f"{emoji} Jinora's Weather Report Service", 
@@ -60,8 +60,7 @@ class Weather(commands.Cog, name="Weather"):
             
         except KeyError as e:
             logging.exception(e)
-            await interaction.send(embed=ErrorHandler.default())
-            return
+            raise commands.errors.BadArgument
                 
         embed = {
             "title": f"{emoji} Jinora's Astro Report Service", 
@@ -76,6 +75,14 @@ class Weather(commands.Cog, name="Weather"):
         em.set_thumbnail(url=thumbnail)
                 
         await interaction.send(embed=em)
+
+    @weather.error
+    @astro.error
+    async def on_command_error(self, interaction: Interaction, error) -> None:
+        if isinstance(error, commands.errors.BadArgument):
+            await default_error(interaction)
+        else:
+            await default_error(interaction)
 
 
 # Add Cog to bot

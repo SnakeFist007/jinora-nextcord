@@ -7,6 +7,8 @@ from functions.apis import get_quote, get_astro
 from functions.helpers import JSONLoader, EmbedBuilder
 from functions.logging import logging
 from functions.paths import moon_phases
+from functions.errors import default_error, dm_error
+
 
 def is_valid_time_format(input: str) -> bool:
     pattern = r"^\d{2}:\d{2}$"
@@ -69,30 +71,13 @@ class Mood(commands.Cog, name="Mood"):
         thread = await interaction.channel.create_thread(name=moon, message=message, type=ChannelType.public_thread)
         await thread.send(f"{role.mention}")
         
-        
-    # @main.subcommand(name="setup", description="Set up an automatic poll!")
-    # @application_checks.guild_only()
-    # @application_checks.has_permissions(manage_messages=True)
-    # @commands.has_permissions(create_public_threads=True)
-    # async def mood_poll_auto(self, interaction: Interaction,
-    #                          role: nextcord.Role = SlashOption(description="Select a role to ping"),
-    #                          interval: int = SlashOption(description="Select an interval",
-    #                                                      choices={
-    #                                                          "Daily": 1,
-    #                                                          "Weekly": 7
-    #                                                      }),
-    #                          time: str = SlashOption(description="Time in 24h 'HH:MM' format")) -> None:
-    #     if is_valid_time_format(time):
-    #         channel = interaction.channel
-    #         msg = f"{role.mention} How are you doing today?"
+    @mood_poll_manual.error
+    async def on_command_error(self, interaction: Interaction, error) -> None:
+        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
+            await dm_error(interaction)
+        else:
+            await default_error(interaction)
             
-            
-    #         # Send message
-    #         message = await interaction.send(msg)
-    #         msg = await message.fetch()
-    #         await interaction.channel.create_thread(name=f"☀️", message=msg, type=ChannelType.public_thread)
-        
-
 # Add Cog to bot
 def setup(bot) -> None:
     bot.add_cog(Mood(bot))

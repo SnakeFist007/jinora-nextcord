@@ -4,7 +4,8 @@ from nextcord import Interaction
 from nextcord.ext import commands, application_checks
 from datetime import datetime
 from functions.apis import get_quote
-from functions.helpers import EmbedBuilder, ErrorHandler, JSONLoader
+from functions.errors import default_error, dm_error
+from functions.helpers import EmbedBuilder, JSONLoader
 from functions.logging import logging
 from functions.paths import qotd
 
@@ -24,9 +25,9 @@ class QotD(commands.Cog, name="QotD"):
 
 
     # Questions
-    @nextcord.slash_command(name="qotd", description="Question of the day!")
+    @nextcord.slash_command(name="question", description="Question of the day!")
     @application_checks.guild_only()
-    async def qotd(self, interaction: Interaction) -> None:
+    async def question(self, interaction: Interaction) -> None:
         lines = JSONLoader.load(qotd)
         length = len(lines)
 
@@ -38,8 +39,8 @@ class QotD(commands.Cog, name="QotD"):
             "description": "Need something to reflect on? I've got you covered!\nCome back tomorrow for a new quote."
         }
 
-        await interaction.response.send_message(embed=EmbedBuilder.bake_questioning(embed), ephemeral=True)
-       
+        await interaction.response.send_message(embed=EmbedBuilder.bake_questioning(embed))
+    
     
     # Quotes
     @nextcord.slash_command(name="quote", description="Quote of the day!")
@@ -52,13 +53,22 @@ class QotD(commands.Cog, name="QotD"):
                 "description": "Sometimes quotes can be very insightful... Other times, not so much."
             }
         
-            await interaction.response.send_message(embed=EmbedBuilder.bake(embed), ephemeral=True)
+            await interaction.response.send_message(embed=EmbedBuilder.bake(embed))
             
         except ValueError:
             logging.exception("ERROR getting response from quotes API")
-            await interaction.response.send_message(embed=ErrorHandler.default(), ephemeral=True)
-            return
+            raise commands.errors.BadArgument
 
+    @quote.error
+    @question.error
+    async def on_command_error(self, interaction: Interaction, error) -> None:
+        if isinstance(error, commands.errors.BadArgument):
+            await default_error(interaction)
+        if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
+            await dm_error(interaction)
+        else:
+            await default_error(interaction)
+        
 
 # Add Cog to bot
 def setup(bot) -> None:
