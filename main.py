@@ -27,11 +27,12 @@ from functions.reminders import set_reminder
 
 
 # Setup
-# * Load .env
+# * Load .env vars
 load_dotenv()
 VERSION = "2.1.1"
 OWNER_ID = 83931378097356800
 FEEDBACK_ID = 1140961474718744636
+
 TOKEN = os.getenv("TOKEN")
 PAPERTRAIL_URL = os.getenv("PAPERTRAIL_URL")
 PAPERTRAIL_PORT = int(os.getenv("PAPERTRAIL_PORT"))
@@ -40,19 +41,6 @@ WEATHER = os.getenv("WEATHER")
 QUOTES = os.getenv("QUOTES")
 TIMEZONE = os.getenv("TIMEZONE")
 
-# Check if .env is filled out correctly
-def check_dotenv(var, error: str) -> None:
-    if not var:
-        logging.critical(f".env - {error} is empty!")
-        exit()
-        
-check_dotenv(TOKEN, "Bot-Token")
-check_dotenv(PAPERTRAIL_URL, "Papertrail URL")
-check_dotenv(PAPERTRAIL_PORT, "Papertrail Port")
-check_dotenv(URI, "MongoDB URI")
-check_dotenv(WEATHER, "Weather API")
-check_dotenv(QUOTES, "Quotes API")
-check_dotenv(TIMEZONE, "Timezone")
 
 # * MongoDB
 client = MongoClient(URI, server_api=ServerAPI("1"))
