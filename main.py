@@ -84,7 +84,7 @@ async def on_ready() -> None:
 
 # * ON SERVER JOIN
 @bot.event
-async def on_guild_join(guild) -> None:
+async def on_guild_join(guild: nextcord.Guild) -> None:
     logging.info(f"Joined server {guild.id}!")
     
     # Check if server ID has already been added to the list
@@ -101,7 +101,7 @@ async def on_guild_join(guild) -> None:
 
 # * ON SERVER LEAVE
 @bot.event
-async def on_guild_remove(guild) -> None:
+async def on_guild_remove(guild: nextcord.Guild) -> None:
     logging.info(f"Left server {guild.id}!")
     
     # Check if server ID was already deleted from the list

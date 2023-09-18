@@ -27,7 +27,7 @@ class Mystery(commands.Cog, name="Mystery"):
             "description": f"{output}"
         }
 
-        await interaction.response.send_message(file=EmbedBuilder.get_emoji(laughing), embed=EmbedBuilder.bake_questioning(embed), ephemeral=True)
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(laughing), embed=EmbedBuilder.bake_thumbnail(embed), ephemeral=True)
 
     # Get an 8-Ball answer for a serious question
     @nextcord.slash_command(name="8ball", description="Answers important questions!")
@@ -43,7 +43,7 @@ class Mystery(commands.Cog, name="Mystery"):
             "description": "Asking the real questions here!"
         }
 
-        await interaction.response.send_message(file=EmbedBuilder.get_emoji(laughing), embed=EmbedBuilder.bake_questioning(embed), ephemeral=True)
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(laughing), embed=EmbedBuilder.bake_thumbnail(embed), ephemeral=True)
         
     
     # Joke command
@@ -62,10 +62,10 @@ class Mystery(commands.Cog, name="Mystery"):
                 "description": f"||{joke['delivery']}||"
             }
         
-        await interaction.send(file=EmbedBuilder.get_emoji(laughing), embed=EmbedBuilder.bake_joke(embed), ephemeral=True)
+        await interaction.send(file=EmbedBuilder.get_emoji(laughing), embed=EmbedBuilder.bake_thumbnail(embed), ephemeral=True)
 
 
 # Add Cog to bot
-def setup(bot) -> None:
+def setup(bot: commands.Bot) -> None:
     bot.add_cog(Mystery(bot))
     logging.info("Mystery module loaded!")

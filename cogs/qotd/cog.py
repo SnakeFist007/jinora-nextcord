@@ -1,11 +1,11 @@
 import nextcord
 from nextcord import Interaction
 from nextcord.ext import commands, application_checks
-from functions.apis import get_quote
+from functions.apis import get_quote, get_question
 from functions.errors import default_error, dm_error
-from functions.helpers import EmbedBuilder, JSONLoader, daily_random
+from functions.helpers import EmbedBuilder
 from functions.logging import logging
-from functions.paths import qotd, reading, sunny
+from functions.paths import reading
 
 
 # Initialize Cog
@@ -18,18 +18,13 @@ class QotD(commands.Cog, name="QotD"):
     @nextcord.slash_command(name="question", description="Question of the day!")
     @application_checks.guild_only()
     async def question(self, interaction: Interaction) -> None:
-        lines = JSONLoader.load(qotd)
-        length = len(lines)
-
-        rand_int = daily_random(length)
-        output = lines[str(rand_int)]
-        
+        output = get_question()
         embed = {
             "title": f"{output}",
             "description": "Need something to reflect on? I've got you covered!\nCome back tomorrow for a new quote."
         }
 
-        await interaction.response.send_message(file=EmbedBuilder.get_emoji(reading), embed=EmbedBuilder.bake_questioning(embed))
+        await interaction.response.send_message(file=EmbedBuilder.get_emoji(reading), embed=EmbedBuilder.bake_thumbnail(embed))
     
     
     # Quotes
@@ -43,11 +38,12 @@ class QotD(commands.Cog, name="QotD"):
                 "description": "Sometimes quotes can be very insightful... Other times, not so much."
             }
         
-            await interaction.response.send_message(file=EmbedBuilder.get_emoji(sunny), embed=EmbedBuilder.bake(embed))
+            await interaction.response.send_message(file=EmbedBuilder.get_emoji(reading), embed=EmbedBuilder.bake_thumbnail(embed))
             
         except ValueError:
             logging.exception("ERROR getting response from quotes API")
             raise commands.errors.BadArgument
+        
 
     @quote.error
     @question.error
@@ -61,6 +57,6 @@ class QotD(commands.Cog, name="QotD"):
         
 
 # Add Cog to bot
-def setup(bot) -> None:
+def setup(bot: commands.Bot) -> None:
     bot.add_cog(QotD(bot))
     logging.info("QotD module loaded!")

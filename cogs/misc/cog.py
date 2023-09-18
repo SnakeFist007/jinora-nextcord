@@ -5,7 +5,7 @@ from nextcord.ext import commands
 from cogs.misc.FeedbackForm import FeedbackForm
 from functions.helpers import EmbedBuilder
 from functions.logging import logging
-from functions.paths import SPARKLES, AIR_NOMAD
+from functions.paths import SPARKLES, AIR_NOMAD, sunny
 from main import db_servers, VERSION
 
 
@@ -43,7 +43,7 @@ class Basics(commands.Cog, name="Misc"):
             value=f"`{ping}ms`"
         )
 
-        await interaction.send(embed=em, ephemeral=True)
+        await interaction.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
 
 
     # Feedback command for users
@@ -53,6 +53,6 @@ class Basics(commands.Cog, name="Misc"):
 
 
 # Add Cog to bot
-def setup(bot):
+def setup(bot: commands.Bot):
     bot.add_cog(Basics(bot))
     logging.info("Basic functions loaded!")

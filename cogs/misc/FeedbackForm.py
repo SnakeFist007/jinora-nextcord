@@ -1,6 +1,7 @@
 import nextcord
 from nextcord import Interaction
 from functions.helpers import EmbedBuilder
+from functions.paths import questioning, laughing
 from main import FEEDBACK_ID
 
 
@@ -35,5 +36,5 @@ class FeedbackForm(nextcord.ui.Modal):
         res_em = EmbedBuilder.bake_thumbnail(res_raw)
 
         # Send feedback to support server channel & give confirmation to user
-        await channel.send(embed=fb_em)
-        return await interaction.response.send_message(embed=res_em, ephemeral=True)
+        await channel.send(file=EmbedBuilder.get_emoji(questioning), embed=fb_em)
+        return await interaction.response.send_message(file=EmbedBuilder.get_emoji(laughing), embed=res_em, ephemeral=True)

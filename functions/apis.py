@@ -1,11 +1,13 @@
 import aiohttp
 import requests
 from functions.logging import logging
+from functions.helpers import JSONLoader, daily_random
+from functions.paths import qotd
 from main import WEATHER, QUOTES
 
 
 # * API scheme from https://api-ninjas.com
-async def apininjas(url):
+async def apininjas(url: str) -> dict:
     res = requests.get(url, headers={"X-Api-Key": QUOTES})
     data = res.json()
 
@@ -16,14 +18,14 @@ async def apininjas(url):
         raise ValueError
 
 # Functions used with api-ninjas
-async def get_quote():
+async def get_quote() -> dict:
     url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
     return await apininjas(url)
 
 
 
 # * API scheme from https://weatherapi.com
-async def weatherapi(url, location):
+async def weatherapi(url: str, location: str) -> dict:
     params = {
         "key": WEATHER,
         "q": location
@@ -35,7 +37,9 @@ async def weatherapi(url, location):
     return data
     
 # Functions used with weatherapi
-async def get_weather(location):
+
+
+async def get_weather(location: str) -> dict:
     try:
         url = "https://api.weatherapi.com/v1/current.json"   
         return await weatherapi(url, location)
@@ -44,7 +48,8 @@ async def get_weather(location):
         logging.exception(e)
         raise e
     
-async def get_astro(location):
+
+async def get_astro(location: str) -> dict:
     try:
         url = "https://api.weatherapi.com/v1/astronomy.json"
         return await weatherapi(url, location)
@@ -53,3 +58,11 @@ async def get_astro(location):
         logging.exception(e)
         raise e
     
+    
+# * Random question grabber
+def get_question() -> str:
+    lines = JSONLoader.load(qotd)
+    length = len(lines)
+    rand_int = daily_random(length)
+    
+    return lines[str(rand_int)]

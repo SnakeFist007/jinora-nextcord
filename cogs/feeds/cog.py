@@ -1,7 +1,6 @@
 import nextcord
 import asyncio
 import uuid
-import re
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 from functions.errors import default_error, dm_error, perm_error
@@ -207,6 +206,6 @@ class Feeds(commands.Cog, name="Feeds"):
 
 
 # Add Cog to bot
-def setup(bot) -> None:
+def setup(bot: commands.Bot) -> None:
     bot.add_cog(Feeds(bot))
     logging.info("Feeds module loaded!")

@@ -7,7 +7,7 @@ from functions.logging import logging
 
 
 # Reminder function for Feeds
-async def set_reminder(task, timezone) -> None:
+async def set_reminder(task: dict, timezone) -> None:
     # Prepare message
     webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
     embed = {

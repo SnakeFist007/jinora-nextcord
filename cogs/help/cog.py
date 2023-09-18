@@ -19,7 +19,7 @@ class Help(commands.Cog, name="Help"):
             "title": f"{AIR_NOMAD}  Command Overview",
             "description": "Go through the pages for more detailed information!"
         }
-        em = EmbedBuilder.bake_questioning(embed)
+        em = EmbedBuilder.bake_thumbnail(embed)
         
         em.add_field(
             name=f"{SPARKLES} `/feed ...`",
@@ -46,6 +46,6 @@ class Help(commands.Cog, name="Help"):
 
 
 # Add Cog to bot
-def setup(bot) -> None:
+def setup(bot: commands.Bot) -> None:
     bot.add_cog(Help(bot))
     logging.info("Help module loaded!")

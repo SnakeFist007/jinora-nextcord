@@ -75,6 +75,8 @@ class Mood(commands.Cog, name="Mood"):
             await default_error(interaction)
             
 # Add Cog to bot
-def setup(bot) -> None:
+
+
+def setup(bot: commands.Bot) -> None:
     bot.add_cog(Mood(bot))
     logging.info("Mood module loaded!")

@@ -82,6 +82,6 @@ class Weather(commands.Cog, name="Weather"):
 
 
 # Add Cog to bot
-def setup(bot) -> None:
+def setup(bot: commands.Bot) -> None:
     bot.add_cog(Weather(bot))
     logging.info("Weather functions loaded!")
