@@ -1,9 +1,14 @@
+import os
 import aiohttp
 import requests
+from dotenv import load_dotenv
 from functions.logging import logging
 from functions.helpers import JSONLoader, daily_random
 from functions.paths import qotd
-from main import WEATHER, QUOTES
+
+load_dotenv()
+WEATHER = os.getenv("WEATHER")
+QUOTES = os.getenv("QUOTES")
 
 
 # * API scheme from https://api-ninjas.com

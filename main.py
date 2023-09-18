@@ -24,6 +24,7 @@ from functions.helpers import EmbedHandler
 from functions.logging import logging
 from functions.paths import cogs, ascii_art
 from functions.reminders import set_reminder
+from functions.dailies import set_daily
 
 
 # Setup
@@ -34,11 +35,7 @@ OWNER_ID = 83931378097356800
 FEEDBACK_ID = 1140961474718744636
 
 TOKEN = os.getenv("TOKEN")
-PAPERTRAIL_URL = os.getenv("PAPERTRAIL_URL")
-PAPERTRAIL_PORT = int(os.getenv("PAPERTRAIL_PORT"))
 URI = os.getenv("MONGODB")
-WEATHER = os.getenv("WEATHER")
-QUOTES = os.getenv("QUOTES")
 TIMEZONE = os.getenv("TIMEZONE")
 
 
@@ -46,6 +43,7 @@ TIMEZONE = os.getenv("TIMEZONE")
 client = MongoClient(URI, server_api=ServerAPI("1"))
 db_servers = client.servers
 db_tasks = client.tasks
+db_daily = client.daily
 
 # * Intents & Bot initialization
 intents = nextcord.Intents.default()
@@ -67,6 +65,14 @@ async def on_ready() -> None:
             asyncio.create_task(set_reminder(task, TIMEZONE))
     else:
         logging.info("No open tasks!")
+        
+    open_dailies = db_daily.open.find({})
+    if open_dailies:
+        for daily in open_dailies:
+            logging.info(f"Open daily: {daily['internal_id']} found!")
+            asyncio.create_task(set_daily(daily, TIMEZONE))
+    else:
+        logging.info("No open dailies!")
     
     # Send ready message, sync commands    
     logging.info(f"Jinora#2184 (v{VERSION}) is ready!")

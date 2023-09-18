@@ -18,12 +18,14 @@ async def set_reminder(task: dict, timezone) -> None:
     
     # Get next occurance
     zone = tz.gettz(timezone)
+    now = datetime.now(zone)
+    
     dt_time = datetime.strptime(task["time"], "%H:%M")
     next_date = get_weekday(task["day"], zone)
     
     # Start scheduled reminder
     next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
-    wait_time = (next_reminder - datetime.now(zone)).total_seconds()
+    wait_time = (next_reminder - now).total_seconds()
     logging.info(f"Task {task['internal_id']}: Arming reminder timer for {wait_time} seconds...")
     
     # Wait until date, then send webhook

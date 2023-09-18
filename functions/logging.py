@@ -1,6 +1,10 @@
+import os
 import logging
+from dotenv import load_dotenv
 from logging.handlers import SysLogHandler
-from main import PAPERTRAIL_URL, PAPERTRAIL_PORT
+
+PAPERTRAIL_URL = os.getenv("PAPERTRAIL_URL")
+PAPERTRAIL_PORT = int(os.getenv("PAPERTRAIL_PORT"))
 
 
 # * Logging

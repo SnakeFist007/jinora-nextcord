@@ -53,9 +53,9 @@ class Feeds(commands.Cog, name="Feeds"):
                 if db_tasks.open.count_documents({"server_id": interaction.guild.id}) < 5:
                     uuid_id = uuid.uuid4()
                     task = {
-                        "webhook": webhook,
                         "internal_id": f"{uuid_id}",
                         "server_id": interaction.guild.id,
+                        "webhook": webhook,
                         "user_id": interaction.user.id,
                         "role_id": role.id,
                         "day": day,
