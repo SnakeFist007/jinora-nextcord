@@ -50,10 +50,17 @@ async def set_daily(daily: dict) -> None:
             logging.exception(e)
 
     # Get next occurance
-    dt_time = datetime.strptime(daily["time"], "%H:%M")
+    user_time = datetime.strptime(daily["time"], "%H:%M")
+    
 
-    date = now + timedelta(days=1)
-    next_day = date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
+    if now > (now.replace(hour=user_time.hour, minute=user_time.minute)):
+        date = now + timedelta(days=1)
+    else:
+        date = now
+    
+    next_day = date.replace(hour=user_time.hour,
+                            minute=user_time.minute, 
+                            second=0)
 
     # Start scheduled reminder
     wait_time = (next_day - now).total_seconds()
@@ -87,11 +94,12 @@ async def set_reminder(task: dict) -> None:
     webhook.add_embed(EmbedBuilder.bake(embed))
 
     # Get next occurance
-    dt_time = datetime.strptime(task["time"], "%H:%M")
+    user_time = datetime.strptime(task["time"], "%H:%M")
     next_date = get_weekday(task["day"], timezone)
 
     # Start scheduled reminder
-    next_reminder = next_date.replace(hour=dt_time.hour, minute=dt_time.minute, second=0)
+    next_reminder = next_date.replace(
+        hour=user_time.hour, minute=user_time.minute, second=0)
     wait_time = (next_reminder - now).total_seconds()
     logging.info(
         f"Task {task['internal_id']}: Arming reminder timer for {wait_time} seconds...")
