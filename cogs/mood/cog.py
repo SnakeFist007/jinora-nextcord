@@ -54,7 +54,7 @@ class Mood(commands.Cog, name="Mood"):
         
         # Create embed
         embed = {
-            "title": f"How happy were you today?",
+            "title": "How happy were you today?",
             "description": quote
         }
         em = EmbedBuilder.bake_thumbnail(embed)

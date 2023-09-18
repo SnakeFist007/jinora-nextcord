@@ -6,9 +6,9 @@ from nextcord.ext import commands, application_checks
 from functions.errors import default_error, dm_error, perm_error
 from functions.helpers import EmbedBuilder, convert_day, is_valid_time_format, is_valid_webhook
 from functions.logging import logging
-from functions.reminders import set_reminder
+from functions.tasks import set_reminder
 from functions.paths import sunny
-from main import db_tasks, TIMEZONE
+from main import db_tasks
 
 
 # Initialize Cog
@@ -68,7 +68,7 @@ class Feeds(commands.Cog, name="Feeds"):
                     }
                     
                     db_tasks.open.insert_one(task)
-                    asyncio.create_task(set_reminder(task, TIMEZONE))
+                    asyncio.create_task(set_reminder(task))
                     
                 else:
                     embed = {

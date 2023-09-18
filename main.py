@@ -23,20 +23,18 @@ from functions.nextcordConsole.console import Console
 from functions.helpers import EmbedHandler
 from functions.logging import logging
 from functions.paths import cogs, ascii_art
-from functions.reminders import set_reminder
-from functions.dailies import set_daily
+from functions.tasks import set_reminder, set_daily
 
 
 # Setup
 # * Load .env vars
 load_dotenv()
-VERSION = "2.1.1"
+VERSION = "2.1.2"
 OWNER_ID = 83931378097356800
 FEEDBACK_ID = 1140961474718744636
 
 TOKEN = os.getenv("TOKEN")
 URI = os.getenv("MONGODB")
-TIMEZONE = os.getenv("TIMEZONE")
 
 
 # * MongoDB
@@ -62,7 +60,7 @@ async def on_ready() -> None:
     if open_tasks:
         for task in open_tasks:
             logging.info(f"Open task: {task['internal_id']} found!")
-            asyncio.create_task(set_reminder(task, TIMEZONE))
+            asyncio.create_task(set_reminder(task))
     else:
         logging.info("No open tasks!")
         
@@ -70,7 +68,7 @@ async def on_ready() -> None:
     if open_dailies:
         for daily in open_dailies:
             logging.info(f"Open daily: {daily['internal_id']} found!")
-            asyncio.create_task(set_daily(daily, TIMEZONE))
+            asyncio.create_task(set_daily(daily))
     else:
         logging.info("No open dailies!")
     

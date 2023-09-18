@@ -7,9 +7,9 @@ from functions.apis import get_quote, get_question
 from functions.errors import default_error, dm_error
 from functions.helpers import EmbedBuilder, is_valid_time_format
 from functions.logging import logging
-from functions.dailies import set_daily
+from functions.tasks import set_daily
 from functions.paths import reading, sunny
-from main import db_daily, TIMEZONE
+from main import db_daily
 
 
 # Initialize Cog
@@ -78,7 +78,7 @@ class QotD(commands.Cog, name="QotD"):
             }
 
             db_daily.open.insert_one(daily)
-            asyncio.create_task(set_daily(daily, TIMEZONE))
+            asyncio.create_task(set_daily(daily))
 
             em = EmbedBuilder.bake_thumbnail(embed)
             await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em)
