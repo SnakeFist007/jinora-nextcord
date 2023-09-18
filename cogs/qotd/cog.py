@@ -81,7 +81,7 @@ class QotD(commands.Cog, name="QotD"):
             asyncio.create_task(set_daily(daily))
 
             em = EmbedBuilder.bake_thumbnail(embed)
-            await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em)
+            await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
 
         else:
             raise commands.errors.BadArgument
