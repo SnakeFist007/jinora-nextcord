@@ -4,11 +4,9 @@ from pathlib import Path
 # * Base Path object
 base_path = Path(".")
 
-
 # * Subfolders
 cogs = base_path / "cogs"
 embeds = base_path / "database/embeds"
-
 
 # * Files
 # Main

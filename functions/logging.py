@@ -3,6 +3,7 @@ import logging
 from dotenv import load_dotenv
 from logging.handlers import SysLogHandler
 
+load_dotenv()
 PAPERTRAIL_URL = os.getenv("PAPERTRAIL_URL")
 PAPERTRAIL_PORT = int(os.getenv("PAPERTRAIL_PORT"))
 

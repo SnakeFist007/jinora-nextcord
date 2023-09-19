@@ -33,7 +33,7 @@
 
 <p align="center">
     <a href="https://github.com/SnakeFist007/jinora-nextcord/releases/latest">
-        <img src="https://img.shields.io/badge/Bot%20Version-2.1.0-blue.svg?style=for-the-badge&logo=Python">
+        <img src="https://img.shields.io/badge/Bot%20Version-2.1.3-blue.svg?style=for-the-badge&logo=Python">
     </a>
 </p>
 
