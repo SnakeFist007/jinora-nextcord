@@ -24,13 +24,13 @@ from functions.helpers import EmbedHandler, EmbedBuilder
 from functions.logging import logging
 from functions.paths import cogs, ascii_art, sunny
 from functions.tasks import set_reminder, set_daily
+from functions.bot import bot
 
 
 # Setup
 # * Load .env vars
 load_dotenv()
 VERSION = "2.1.3"
-OWNER_ID = 83931378097356800
 FEEDBACK_ID = 1140961474718744636
 
 TOKEN = os.getenv("TOKEN")
@@ -44,8 +44,6 @@ db_tasks = client.tasks
 db_daily = client.daily
 
 # * Intents & Bot initialization
-intents = nextcord.Intents.default()
-bot = commands.Bot(intents=intents, help_command=None, owner_id=OWNER_ID)
 console = Console(bot)
 
 
@@ -60,7 +58,7 @@ async def on_ready() -> None:
     if open_tasks:
         for task in open_tasks:
             logging.info(f"Open task: {task['internal_id']} found!")
-            asyncio.create_task(set_reminder(task))
+            await asyncio.create_task(set_reminder(task))
     else:
         logging.info("No open tasks!")
         
@@ -68,7 +66,7 @@ async def on_ready() -> None:
     if open_dailies:
         for daily in open_dailies:
             logging.info(f"Open daily: {daily['internal_id']} found!")
-            asyncio.create_task(set_daily(daily))
+            await asyncio.create_task(set_daily(daily))
     else:
         logging.info("No open dailies!")
     
