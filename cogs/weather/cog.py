@@ -75,10 +75,7 @@ class Weather(commands.Cog, name="Weather"):
     @weather.error
     @astro.error
     async def on_command_error(self, interaction: Interaction, error) -> None:
-        if isinstance(error, commands.errors.BadArgument):
-            await default_error(interaction)
-        else:
-            await default_error(interaction)
+        await default_error(interaction)
 
 
 # Add Cog to bot

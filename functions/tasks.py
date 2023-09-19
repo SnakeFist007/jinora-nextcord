@@ -109,7 +109,7 @@ async def set_reminder(task: dict) -> None:
         webhook.execute()
         logging.info(f"Reminder triggered: Sending embed through webhook: {task['webhook']}")
         # Set new reminder
-        set_reminder(task, timezone)
+        set_reminder(task)
     except Exception as e:
         logging.exception(e)
         return
