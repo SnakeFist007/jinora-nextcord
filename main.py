@@ -15,7 +15,6 @@ import pretty_errors
 import os
 import nextcord
 import asyncio
-from nextcord.ext import commands
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi as ServerAPI

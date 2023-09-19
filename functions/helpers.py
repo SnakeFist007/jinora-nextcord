@@ -16,10 +16,6 @@ def is_valid_time_format(input: str) -> bool:
     pattern = r"^\d{2}:\d{2}$"
     return bool(re.match(pattern, input))
 
-def is_valid_webhook(input: str, guild: int) -> bool:
-    base_url = f"https://discord.com/api/webhooks/{guild}/"
-    return input.startswith(base_url)
-
 def daily_random(length: int) -> int:
     seed = datetime.now() - datetime(2000, 4, 23)
 

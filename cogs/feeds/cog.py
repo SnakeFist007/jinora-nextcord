@@ -4,7 +4,7 @@ import uuid
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
 from functions.errors import default_error, dm_error, perm_error
-from functions.helpers import EmbedBuilder, convert_day, is_valid_time_format, is_valid_webhook
+from functions.helpers import EmbedBuilder, convert_day, is_valid_time_format
 from functions.logging import logging
 from functions.tasks import set_reminder
 from functions.paths import sunny
@@ -43,42 +43,34 @@ class Feeds(commands.Cog, name="Feeds"):
                                "Sunday": 6 
                                }),
                        time: str = SlashOption(description="Time in 24h 'HH:MM' format"),
-                       message: str = SlashOption(description="Message of the reminder"),
-                       webhook: str = SlashOption(description="Discord webhook URL")) -> None:
+                       message: str = SlashOption(description="Message of the reminder")) -> None:
         # Check if time was entered correctly
         if is_valid_time_format(time):
-            # Check if webhook is valid
-            if is_valid_webhook(webhook, interaction.guild.id):
-                # Check if limit (5 entries per server) is reached
-                if db_tasks.open.count_documents({"server_id": interaction.guild.id}) < 5:
-                    uuid_id = uuid.uuid4()
-                    task = {
-                        "internal_id": f"{uuid_id}",
-                        "server_id": interaction.guild.id,
-                        "webhook": webhook,
-                        "user_id": interaction.user.id,
-                        "role_id": role.id,
-                        "day": day,
-                        "time": time,
-                        "message": message
-                    }
-                    embed = {
-                        "title": "Reminder succesfully created!",
-                        "description": f"Your reminder `{message}` for <@&{role.id}> was set! Running every {convert_day(day)} at {time}.\n**ID: {uuid_id}**"
-                    }
+            # Check if limit (5 entries per server) is reached
+            if db_tasks.open.count_documents({"server_id": interaction.guild.id}) < 5:
+                uuid_id = uuid.uuid4()
+                task = {
+                    "internal_id": f"{uuid_id}",
+                    "server_id": interaction.guild.id,
+                    "channel_id": interaction.channel.id,
+                    "user_id": interaction.user.id,
+                    "role_id": role.id,
+                    "day": day,
+                    "time": time,
+                    "message": message
+                }
+                embed = {
+                    "title": "Reminder succesfully created!",
+                    "description": f"Your reminder `{message}` for <@&{role.id}> was set! Running every {convert_day(day)} at {time}.\n**ID: {uuid_id}**"
+                }
                     
-                    db_tasks.open.insert_one(task)
-                    asyncio.create_task(set_reminder(task))
+                db_tasks.open.insert_one(task)
+                asyncio.create_task(set_reminder(task))
                     
-                else:
-                    embed = {
-                        "title": "Server limit reached!",
-                        "description": "You already have 5 tasks registered, you can't add any more!"
-                    }
             else:
                 embed = {
-                    "title": "Invalid Webhook!",
-                    "description": "Please enter a correct webhook url."
+                    "title": "Server limit reached!",
+                    "description": "You already have 5 tasks registered, you can't add any more!"
                 }
         else:
             embed = {
@@ -115,10 +107,10 @@ class Feeds(commands.Cog, name="Feeds"):
     
     
     # Deletes a feed by its uuid from the user
-    @main.subcommand(name="delete", description="Deletes a feed by its ID.")
+    @main.subcommand(name="remove", description="Removes a feed by its ID.")
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
-    async def feed_delete(self, interaction: Interaction, feed_id: str = SlashOption()) -> None:
+    async def feed_remove(self, interaction: Interaction, feed_id: str = SlashOption()) -> None:
         embed = {
                 "title": "Feed deletion successful!",
                 "description": f"Deleted feed: {feed_id}"
@@ -168,10 +160,10 @@ class Feeds(commands.Cog, name="Feeds"):
     
     
     # Deletes a feed by its uuid from the server
-    @main_group.subcommand(name="delete", description="Deletes a feed from the server.")
+    @main_group.subcommand(name="remove", description="Deletes a feed from the server.")
     @application_checks.guild_only()
     @application_checks.has_permissions(administrator=True)
-    async def feed_admin_delete(self, interaction: Interaction, feed_id: str = SlashOption()) -> None:
+    async def feed_admin_remove(self, interaction: Interaction, feed_id: str = SlashOption()) -> None:
         embed = {
                 "title": "Feed deletion successful!",
                 "description": f"Deleted feed {feed_id}."
@@ -191,8 +183,8 @@ class Feeds(commands.Cog, name="Feeds"):
     @feed_add.error
     @feed_view.error
     @feed_admin_view.error
-    @feed_delete.error
-    @feed_admin_delete.error
+    @feed_remove.error
+    @feed_admin_remove.error
     async def feed_view_error(self, interaction: Interaction, error) -> None:
         if isinstance(error, commands.errors.BadArgument):
             await default_error(interaction)

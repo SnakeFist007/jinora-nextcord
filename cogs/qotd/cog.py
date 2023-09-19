@@ -8,7 +8,7 @@ from functions.errors import default_error, dm_error, perm_error
 from functions.helpers import EmbedBuilder, is_valid_time_format
 from functions.logging import logging
 from functions.tasks import set_daily
-from functions.paths import reading, sunny
+from functions.paths import reading, sunny, questioning
 from main import db_daily
 
 
@@ -73,32 +73,41 @@ class QotD(commands.Cog, name="QotD"):
         await interaction.response.defer()
         
         if is_valid_time_format(time):
-            uuid_id = uuid.uuid4()
+            if db_daily.open.count_documents({"server_id": interaction.guild.id, "mode": mode}) < 1:
+                uuid_id = uuid.uuid4()
+                
+                if role == "None":
+                    role_id = "None"
+                else:
+                    role_id = role.id
+                
+                daily = {
+                    "internal_id": f"{uuid_id}",
+                    "server_id": interaction.guild.id,
+                    "channel_id": interaction.channel.id,
+                    "role_id": role_id,
+                    "time": time,
+                    "mode": mode,
+                    "threading": thread
+                }
+                embed = {
+                    "title": "Daily succesfully created!",
+                    "description": f"Sending a daily {mode} every day from now on.\n**ID: {uuid_id}**"
+                }
+
+                db_daily.open.insert_one(daily)
+                asyncio.create_task(set_daily(daily))
+
+                em = EmbedBuilder.bake_thumbnail(embed)
+                await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
             
-            if role == "None":
-                role_id = "None"
             else:
-                role_id = role.id
-            
-            daily = {
-                "internal_id": f"{uuid_id}",
-                "server_id": interaction.guild.id,
-                "channel_id": interaction.channel.id,
-                "role_id": role_id,
-                "time": time,
-                "mode": mode,
-                "threading": thread
-            }
-            embed = {
-                "title": "Daily succesfully created!",
-                "description": f"Sending a daily {mode} every day from now on.\n**ID: {uuid_id}**"
-            }
-
-            db_daily.open.insert_one(daily)
-            asyncio.create_task(set_daily(daily))
-
-            em = EmbedBuilder.bake_thumbnail(embed)
-            await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
+                embed = {
+                    "title": f"Daily {mode} already set!",
+                    "description": f"Please delete the existing one first, using `/qotd remove`, if you want to create a new one!"
+                }
+                em = EmbedBuilder.bake_thumbnail(embed)
+                await interaction.followup.send(file=EmbedBuilder.get_emoji(questioning), embed=em, ephemeral=True)
 
         else:
             raise commands.errors.BadArgument

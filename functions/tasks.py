@@ -2,9 +2,7 @@ import os
 import asyncio
 import nextcord.utils
 from dotenv import load_dotenv
-from nextcord import ChannelType
-from discord_webhook import DiscordWebhook as Webhook
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil import tz
 from functions.apis import get_quote, get_question
 from functions.helpers import EmbedBuilder, get_weekday
@@ -93,32 +91,33 @@ async def set_daily(daily: dict) -> None:
 # Reminder function for Feeds
 async def set_reminder(task: dict) -> None:
     # Prepare message
-    webhook = Webhook(url=task["webhook"], content=f"<@&{task['role_id']}>")
     embed = {
         "title": "Reminder!",
         "description": f"{task['message']}"
     }
-    webhook.add_embed(EmbedBuilder.bake(embed))
+    
+    embed = {
+        "title": f"Reminder!",
+        "description": "{task['message']}"
+    }
+    file = EmbedBuilder.get_emoji(questioning)
+    em = EmbedBuilder.bake_thumbnail(embed)
 
     # Get next occurance
-    input_time = datetime.strptime(task["time"], "%H:%M")
     now = datetime.now(timezone)
+    input_time = datetime.strptime(task["time"], "%H:%M")
     next_date = get_weekday(task["day"], timezone)
+    
+    next_reminder = next_date.replace(hour=input_time.hour, minute=input_time.minute, second=0)
 
-    # Start scheduled reminder
-    next_reminder = next_date.replace(
-        hour=input_time.hour, minute=input_time.minute, second=0)
+
+    # Start scheduled reminder 
     wait_time = (next_reminder - now).total_seconds()
-    logging.info(
-        f"Task {task['internal_id']}: Arming reminder timer for {wait_time} seconds...")
+    logging.info(f"Task {task['internal_id']}: Arming reminder timer for {wait_time} seconds...")
 
-    # Wait until date, then send webhook
+    # Wait until date, then send message into channel
     await asyncio.sleep(wait_time)
-    try:
-        webhook.execute()
-        logging.info(f"Reminder triggered: Sending embed through webhook: {task['webhook']}")
-        # Set new reminder
-        await set_reminder(task)
-    except Exception as e:
-        logging.exception(e)
-        return
+
+    channel = bot.get_channel(task["channel_id"])
+    await channel.send(content=f"<@&{task['role_id']}>", file=file, embed=em)
+    await set_reminder(task)
