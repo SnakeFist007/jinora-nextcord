@@ -74,6 +74,20 @@ SPARKLES = "<a:sparkles:1088152065034965104>"
 YES = "<a:jape:1088151992800641054>"
 MEH = "<a:meh:1088152028162822194>"
 NOU = "<a:nope:1088151978456129696>"
+# Emote scale
+SCALE5 = "<:awesome:1154332610407977021>"
+SCALE4 = "<:good:1154332612622565386>"
+SCALE3 = "<:meh:1154332614010863646>"
+SCALE2 = "<:bad:1154332615525007400>"
+SCALE1 = "<:angy:1154332619606081647>"
+
+scale = {
+    "awesome": SCALE5,
+    "good": SCALE4,
+    "meh": SCALE3,
+    "bad": SCALE2,
+    "angy": SCALE1
+}
 
 # Blacklist for Jokes
 JOKE_BLACKLIST = ["racist", "sexist", "nsfw"]
