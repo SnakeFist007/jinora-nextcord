@@ -7,7 +7,7 @@ from dateutil import tz
 from functions.apis import get_quote, get_question
 from functions.helpers import EmbedBuilder, get_weekday
 from functions.logging import logging
-from functions.paths import reading, questioning
+from functions.paths import reading, questioning, scale
 from functions.bot import bot
 
 
@@ -96,10 +96,6 @@ async def set_reminder(task: dict) -> None:
         "description": f"{task['message']}"
     }
     
-    embed = {
-        "title": f"Reminder!",
-        "description": "{task['message']}"
-    }
     file = EmbedBuilder.get_emoji(questioning)
     em = EmbedBuilder.bake_thumbnail(embed)
 
@@ -121,3 +117,47 @@ async def set_reminder(task: dict) -> None:
     channel = bot.get_channel(task["channel_id"])
     await channel.send(content=f"<@&{task['role_id']}>", file=file, embed=em)
     await set_reminder(task)
+
+
+async def set_mood(mood: dict) -> None:
+    # Prepare message
+    embed = {
+        "title": "How happy were you today?",
+        "description": f"{mood['message']}"
+    }
+    
+    file = EmbedBuilder.get_emoji(questioning)
+    em = EmbedBuilder.bake_thumbnail(embed)
+    
+    
+    try:
+        channel = bot.get_channel(mood["channel_id"])
+        
+        if mood["role_id"] != "None":
+            
+            if mood['threading'] != "False":
+                message = await channel.send(file=file, embed=em)
+                thread = await message.create_thread(name="Hi")
+                await thread.send(f"<@&{mood['role_id']}>")
+                for item in scale:
+                    message.add_reaction(item)
+            
+            else:
+                message = await channel.send(content=f"<@&{mood['role_id']}>", file=file, embed=em)
+                for item in scale:
+                    message.add_reaction(item)
+        
+        else:
+            message = await channel.send(file=file, embed=em)
+            for item in scale:
+                    message.add_reaction(item)
+            
+            if mood["threading"] != False:
+                await message.create_thread(name=f"{mood['mode'].capitalize()} of the day!")
+
+        # Set new daily
+        await set_mood(mood)
+
+    except Exception as e:
+        logging.exception(e)
+        return
