@@ -64,33 +64,19 @@ I do plan on "truly" releasing this bot in the near future, as soon as I got the
 - Question of the Day
 - Random Wisdoms & Quotes
 - Weather & Astro Commands
-- Reminders over Webhook Implementation
+- Recurring Reminders
 - Joke & 8-Ball Commands
+- ...and more!
 
 
 ## Roadmap
 See the [open issues](https://github.com/SnakeFist007/jinora-nextcord/issues) for a list of planned features and known issues.
 
 
-## Contributing
-Want to improve this project yourself? Any contributions you make are greatly appreciated!
-- [Contributions Guide](/.github/CONTRIBUTIONS.md)
-- [Translations Guide](/.github/TRANSLATIONS.md)
-
 <br>
 
 # <img src="database/bot-logo.png" width=24px height=24px> Installation
 First download the [.env.example](/.env.example) template from the repository.
-
-## Useful links
-Bot related:
-- [Invite-Link](https://discord.com/oauth2/authorize?client_id=723619199523487883&permissions=274877958144&scope=bot%20applications.commands)
-- [Support-Server](https://discord.gg/aJwqJtnyS4)
-
-Everything need for bot development:
-- [Nextcord Documentation](https://docs.nextcord.dev/en/stable/index.html)
-- [Embed Generator](https://embed.dan.onl)
-- [Discord Permissions Calculator](https://discordapi.com/permissions.html#0)
 
 
 ## Configuration
