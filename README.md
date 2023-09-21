@@ -52,11 +52,11 @@
 <hr>
 
 # <img src="database/bot-logo.png" width=24px height=24px> About
-This project is all about the journey of learning Python and how to make a neat Discord bot. My primary goal is to improve my coding skills, learning and adhering to best practices throughout the process.
+This project is a personal journey of improving my Python skills and how to make a somewhat neat Discord bot!
 
-If you have any tips on how to improve this code, please let me know!
 
-I do plan on "truly" releasing this bot in the near future, as soon as I got the main features down and can provide the service 24/7.
+There is a plan on hosting this bot myself in the near future, as soon as I got the main features down and can provide the service 24/7.
+Until then you are free to host the bot yourself, using the instructions below!
 
 <br>
 
@@ -75,11 +75,11 @@ See the [open issues](https://github.com/SnakeFist007/jinora-nextcord/issues) fo
 
 <br>
 
-# <img src="database/bot-logo.png" width=24px height=24px> Installation
+# <img src="database/bot-logo.png" width=24px height=24px> Run the Bot Yourself
 First download the [.env.example](/.env.example) template from the repository.
 
 
-## Configuration
+## What you'll need
 
 ⚠️ **Note: Never commit or share any API keys or tokens publicly!** ⚠️
 
@@ -96,26 +96,19 @@ Rename `.env.example` to `.env` and fill in your data! You need:
 Deploy & prepare the Docker image using:
 ```
 docker pull ghcr.io/snakefist007/jinora-nextcord:latest
-docker cp .env <container_id>:/.env
 ```
-This will create the .env file with your token and keys inside the container.
 
-Then start the image:
+Then start the image with the variables from the .env file:
 ```
-docker run <id>
+docker run --env-file .env -d <id>
 ```
 
 **The bot should be running now!**
 
-<br>
-
-# <img src="database/bot-logo.png" width=24px height=24px> Contributors
-
-Be the first to create a pull request!
 
 <br>
 
-# <img src="database/bot-logo.png" width=24px height=24px> Legal Information
+# <img src="database/bot-logo.png" width=24px height=24px> Misc. Information
 
 ### GDPR Disclaimer
 > While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
