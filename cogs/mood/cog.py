@@ -1,12 +1,14 @@
 import nextcord
-import random
-from nextcord import Interaction, SlashOption, ChannelType
+import uuid
+import asyncio
+from nextcord import Interaction, SlashOption
 from nextcord.ext import commands, application_checks
-from functions.apis import get_quote, get_astro
-from functions.helpers import JSONLoader, EmbedBuilder
+from functions.helpers import EmbedBuilder, is_valid_time_format
 from functions.logging import logging
-from functions.paths import moon_phases, laughing
+from functions.tasks import set_task, stop_task
+from functions.paths import sunny, questioning
 from functions.errors import default_error, dm_error, perm_error
+from main import db_tasks
 
 
 # Initialize Cog
@@ -26,44 +28,76 @@ class Mood(commands.Cog, name="Mood"):
     @application_checks.guild_only()
     @application_checks.has_permissions(manage_messages=True)
     @commands.has_permissions(create_public_threads=True)
-    async def mood_poll(self, interaction: Interaction, 
-                               role: nextcord.Role = SlashOption(description="Select a role to ping")) -> None:
-        
-        # Get a nice quote
-        try:
-            data = await get_quote()
-            quote = f"''{data[0]['quote']}'' *~{data[0]['author']}*"        
-        # Fallback to generic text, if API call fails
-        except ValueError:
-            logging.exception("ERROR getting response from quotes API")
-            quote = "Let us know in the thread!"
-        
-        # Grab the current moon phase
-        try:
-            data = await get_astro("Berlin")
-
-            moon_phase = data["astronomy"]["astro"]["moon_phase"]
-            emoji_db = JSONLoader.load(moon_phases)
-            moon = emoji_db[moon_phase.lower()]["emoji"]
-        # Fallback to random (creepy) emote, if API call fails
-        except ValueError:
-            logging.exception("ERROR getting response from quotes API")
-            moon_phase = ["🌝", "🌚"]
-            moon = random.choice(moon_phase)
-        
-        
-        # Create embed
-        embed = {
-            "title": "How happy were you today?",
-            "description": quote
-        }
-        em = EmbedBuilder.bake_thumbnail(embed)
-
-        # Send message & create thread
+    async def mood_poll(self, interaction: Interaction,
+                        time: str = SlashOption(
+                            description="Time in HH:MM format"),
+                        role: nextcord.Role = SlashOption(
+                            description="Select a role to ping!", required=False, default="None"),
+                        thread: bool = SlashOption(
+                            description="Automatically create a thread?", required=False, default=False),
+                        lang: str = SlashOption(description="Choose your langauge!", required=False, default="en", choices={
+                            "English": "en",
+                            "Deutsch": "de"
+                        })) -> None:
         await interaction.response.defer()
-        message = await interaction.followup.send(file=EmbedBuilder.get_emoji(laughing), embed=em)
-        thread = await interaction.channel.create_thread(name=moon, message=message, type=ChannelType.public_thread)
-        await thread.send(f"{role.mention}")
+
+        if is_valid_time_format(time):
+            if db_tasks.open.count_documents({"server_id": interaction.guild.id, "type": "mood"}) < 1:
+                uuid_id = uuid.uuid4()
+
+                if role == "None":
+                    role_id = "None"
+                else:
+                    role_id = role.id
+
+                task = {
+                    "internal_id": f"{uuid_id}",
+                    "type": "mood",
+                    "server_id": interaction.guild.id,
+                    "channel_id": interaction.channel.id,
+                    "role_id": role_id,
+                    "time": time,
+                    "mode": "None",
+                    "threading": thread,
+                    "lang": lang
+                }
+                if lang == "en":
+                    embed = {
+                        "title": "Task succesfully created!"
+                    }
+                elif lang == "de":
+                    embed = {
+                        "title": "Aufgabe erfolgreich erstellt!",
+                    }
+
+                db_tasks.open.insert_one(task)
+                try:
+                    asyncio.create_task(set_task(task), name=uuid_id)
+
+                except Exception as e:
+                    logging.exception(e)
+                    raise commands.errors.BadArgument
+
+                em = EmbedBuilder.bake_thumbnail(embed)
+                await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
+
+            else:
+                if lang == "en":
+                    embed = {
+                        "title": "There already is a task set!",
+                        "description": "Please delete the existing one first, using `/mood remove`, if you want to create a new one!"
+                    }
+                elif lang == "de":
+                    embed = {
+                        "title": "Es gibt bereits eine offene Aufgabe!",
+                        "description": "Um sie zu bearbeiten, nutze bitte `/mood remove` um den bestehenden Eintrag zu löschen!"
+                    }
+
+                em = EmbedBuilder.bake_thumbnail(embed)
+                await interaction.followup.send(file=EmbedBuilder.get_emoji(questioning), embed=em, ephemeral=True)
+
+        else:
+            raise commands.errors.BadArgument
         
     @mood_poll.error
     async def on_command_error(self, interaction: Interaction, error) -> None:

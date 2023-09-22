@@ -22,7 +22,7 @@ from functions.nextcordConsole.console import Console
 from functions.helpers import EmbedHandler, EmbedBuilder
 from functions.logging import logging
 from functions.paths import cogs, ascii_art, sunny
-from functions.tasks import set_reminder, set_daily
+from functions.tasks import set_task
 from functions.bot import bot
 
 
@@ -40,7 +40,6 @@ URI = os.getenv("MONGODB")
 client = MongoClient(URI, server_api=ServerAPI("1"))
 db_servers = client.servers
 db_tasks = client.tasks
-db_daily = client.daily
 
 # * Intents & Bot initialization
 console = Console(bot)
@@ -57,19 +56,11 @@ async def on_ready() -> None:
     if open_tasks:
         for task in open_tasks:
             logging.info(f"Open task: {task['internal_id']} found!")
-            await asyncio.create_task(set_reminder(task))
+            await asyncio.create_task(set_task(task))
     else:
         logging.info("No open tasks!")
-        
-    open_dailies = db_daily.open.find({})
-    if open_dailies:
-        for daily in open_dailies:
-            logging.info(f"Open daily: {daily['internal_id']} found!")
-            await asyncio.create_task(set_daily(daily))
-    else:
-        logging.info("No open dailies!")
     
-    # Send ready message, sync commands    
+    # Send ready message, sync commands  
     logging.info(f"Jinora#2184 (v{VERSION}) is ready!")
     try:
         await bot.sync_application_commands()

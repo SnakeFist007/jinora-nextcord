@@ -4,7 +4,7 @@ import requests
 from dotenv import load_dotenv
 from functions.logging import logging
 from functions.helpers import JSONLoader, daily_random
-from functions.paths import qotd
+from functions.paths import questions, en_mood_comments, de_mood_comments
 
 load_dotenv()
 WEATHER = os.getenv("WEATHER")
@@ -23,9 +23,13 @@ async def apininjas(url: str) -> dict:
         raise ValueError
 
 # Functions used with api-ninjas
-async def get_quote() -> dict:
-    url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
-    return await apininjas(url)
+async def get_quote(lang) -> dict:
+    if lang == "en":
+        url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
+        return await apininjas(url)
+    elif lang == "de":
+        url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
+        return await apininjas(url)
 
 
 
@@ -65,9 +69,27 @@ async def get_astro(location: str) -> dict:
     
     
 # * Random question grabber
-def get_question() -> str:
-    lines = JSONLoader.load(qotd)
+def get_question(lang: str) -> str:
+    if lang == "en":
+        lines = JSONLoader.load(questions)
+    elif lang == "de":
+        lines = JSONLoader.load(questions)
+    
     length = len(lines)
     rand_int = daily_random(length)
     
+    return lines[str(rand_int)]
+
+
+# * Random comment grabber
+def get_mood(lang: str) -> str:
+    if lang == "en":
+        input = en_mood_comments
+    elif lang == "de":
+        input = de_mood_comments
+    
+    lines = JSONLoader.load(input)
+    length = len(lines)
+    rand_int = daily_random(length)
+
     return lines[str(rand_int)]

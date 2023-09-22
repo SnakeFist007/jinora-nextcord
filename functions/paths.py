@@ -22,11 +22,16 @@ wisdom = base_path / "database/mystery/db_wisdom.json"
 eight_ball = base_path / "database/mystery/db_8ball.json"
 
 # Cog: QotD
-qotd = base_path / "database/questions/qotd.json"
+questions = base_path / "database/questions/questions.json"
+quotes = base_path / "database/quotes/quotes.json"
 
 # Cog: Weather
 conditions = base_path / "database/weather/weather_conditions.json"
 moon_phases = base_path / "database/weather/moon_phases.json"
+
+# Cog: Mood
+en_mood_comments = base_path / "database/mood/en_comments.json"
+de_mood_comments = base_path / "database/mood/de_comments.json"
 
 # Emotes
 cloudy = base_path / "database/emotes/cloudy.png"
@@ -81,13 +86,7 @@ SCALE3 = "<:meh:1154332614010863646>"
 SCALE2 = "<:bad:1154332615525007400>"
 SCALE1 = "<:angy:1154332619606081647>"
 
-scale = {
-    "awesome": SCALE5,
-    "good": SCALE4,
-    "meh": SCALE3,
-    "bad": SCALE2,
-    "angy": SCALE1
-}
+scale = [SCALE5, SCALE4, SCALE3, SCALE2, SCALE1]
 
 # Blacklist for Jokes
 JOKE_BLACKLIST = ["racist", "sexist", "nsfw"]

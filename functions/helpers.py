@@ -44,10 +44,6 @@ class EmbedBuilder():
     @staticmethod
     def bake(raw: dict[str, str]) -> Embed:
         output = {
-            "footer": {
-                "text": "Jinora#2184",
-                "icon_url": "attachment://image.png"
-            },
             "color": 15844367
         }
         return Embed().from_dict(output | raw)

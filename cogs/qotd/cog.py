@@ -7,9 +7,9 @@ from functions.apis import get_quote, get_question
 from functions.errors import default_error, dm_error, perm_error
 from functions.helpers import EmbedBuilder, is_valid_time_format
 from functions.logging import logging
-from functions.tasks import set_daily
+from functions.tasks import set_task, stop_task
 from functions.paths import reading, sunny, questioning
-from main import db_daily
+from main import db_tasks
 
 
 # Initialize Cog
@@ -21,28 +21,36 @@ class QotD(commands.Cog, name="QotD"):
     # Questions
     @nextcord.slash_command(name="question", description="Question of the day!")
     @application_checks.guild_only()
-    async def question(self, interaction: Interaction) -> None:
-        output = get_question()
+    async def question(self, interaction: Interaction,
+                       lang: str = SlashOption(description="Choose your langauge!", required=False, default="en", choices={
+                           "English": "en",
+                           "Deutsch": "de"
+                       })) -> None:
+        output = get_question(lang)
         embed = {
             "title": f"{output}",
             "description": "Need something to reflect on? I've got you covered!\nCome back tomorrow for a new quote."
         }
 
-        await interaction.response.send_message(file=EmbedBuilder.get_emoji(reading), embed=EmbedBuilder.bake_thumbnail(embed))
+        await interaction.response.send_message(embed=EmbedBuilder.bake(embed))
     
     
     # Quotes
     @nextcord.slash_command(name="quote", description="Quote of the day!")
     @application_checks.guild_only()
-    async def quote(self, interaction: Interaction) -> None:
+    async def quote(self, interaction: Interaction,
+                    lang: str = SlashOption(description="Choose your langauge!", required=False, default="en", choices={
+                        "English": "en",
+                        "Deutsch": "de"
+                    })) -> None:
         try: 
-            data = await get_quote()
+            data = await get_quote(lang)
             embed = {
                 "title": f"{data[0]['quote']} *~{data[0]['author']}*",
                 "description": "Sometimes quotes can be very insightful... Other times, not so much."
             }
         
-            await interaction.response.send_message(file=EmbedBuilder.get_emoji(reading), embed=EmbedBuilder.bake_thumbnail(embed))
+            await interaction.response.send_message(embed=EmbedBuilder.bake(embed))
             
         except ValueError:
             logging.exception("ERROR getting response from quotes API")
@@ -67,13 +75,17 @@ class QotD(commands.Cog, name="QotD"):
                                            }),
                    time: str = SlashOption(description="Time in HH:MM format"),
                    role: nextcord.Role = SlashOption(description="Select a role to ping!", required=False, default="None"),
-                   thread: bool = SlashOption(description="Automatically create a thread?", required=False, default=False)
+                   thread: bool = SlashOption(description="Automatically create a thread?", required=False, default=False),
+                       lang: str = SlashOption(description="Choose your langauge!", required=False, default="en", choices={
+                       "English": "en",
+                       "Deutsch": "de"
+                   })
                    ) -> None:
         
         await interaction.response.defer()
         
         if is_valid_time_format(time):
-            if db_daily.open.count_documents({"server_id": interaction.guild.id, "mode": mode}) < 1:
+            if db_tasks.open.count_documents({"server_id": interaction.guild.id, "mode": mode}) < 1:
                 uuid_id = uuid.uuid4()
                 
                 if role == "None":
@@ -81,33 +93,51 @@ class QotD(commands.Cog, name="QotD"):
                 else:
                     role_id = role.id
                 
-                daily = {
+                task = {
                     "internal_id": f"{uuid_id}",
+                    "type": "qotd",
                     "server_id": interaction.guild.id,
                     "channel_id": interaction.channel.id,
                     "role_id": role_id,
                     "time": time,
                     "mode": mode,
-                    "threading": thread
+                    "threading": thread,
+                    "lang": lang
                 }
-                embed = {
-                    "title": "Daily succesfully created!",
-                    "description": f"Sending a daily {mode} every day from now on.\n**ID: {uuid_id}**"
-                }
+                if lang == "en":
+                    embed = {
+                        "title": "Task succesfully created!"
+                    }
+                elif lang == "de":
+                    embed = {
+                        "title": "Aufgabe erfolgreich erstellt!",
+                    }
 
-                db_daily.open.insert_one(daily)
-                asyncio.create_task(set_daily(daily))
+                db_tasks.open.insert_one(task)
+                try:
+                    asyncio.create_task(set_task(task), name=uuid_id)
+                
+                except Exception as e:
+                    logging.exception(e)
+                    raise commands.errors.BadArgument
 
-                em = EmbedBuilder.bake_thumbnail(embed)
-                await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
+                em = EmbedBuilder.bake(embed)
+                await interaction.followup.send(embed=em, ephemeral=True)
             
             else:
-                embed = {
-                    "title": f"Daily {mode} already set!",
-                    "description": f"Please delete the existing one first, using `/qotd remove`, if you want to create a new one!"
-                }
-                em = EmbedBuilder.bake_thumbnail(embed)
-                await interaction.followup.send(file=EmbedBuilder.get_emoji(questioning), embed=em, ephemeral=True)
+                if lang == "en":
+                    embed = {
+                        "title": "There already is a task set!",
+                        "description": "Please delete the existing one first, using `/qotd remove`, if you want to create a new one!"
+                    }
+                elif lang == "de":
+                    embed = {
+                        "title": "Es gibt bereits eine offene Aufgabe!",
+                        "description": "Um sie zu bearbeiten, nutze bitte `/qotd remove` um den bestehenden Eintrag zu löschen!"
+                    }
+
+                em = EmbedBuilder.bake(embed)
+                await interaction.followup.send(embed=em, ephemeral=True)
 
         else:
             raise commands.errors.BadArgument
@@ -122,14 +152,15 @@ class QotD(commands.Cog, name="QotD"):
                                                                                       "quote": "quote",
                                                                                       "question": "question"
                                                                                   })) -> None:
-        embed = { "title": "Q of the day - Status" }
     
         try:
-            daily = db_daily.open.find_one({"server_id": interaction.guild.id, "mode": mode})
+            task = db_tasks.open.find_one(
+                {"server_id": interaction.guild.id, "mode": mode})
             
-            if daily:
-                logging.warning(f"Deleting entry {daily['internal_id']} from task database!")
-                db_daily.open.delete_one({"internal_id": daily['internal_id']})
+            if task:
+                logging.warning(f"Deleting entry {task['internal_id']} from task database!")
+                db_tasks.open.delete_one({"internal_id": task['internal_id']})
+                await stop_task(task['internal_id'])
                 
                 embed = { "title": "Q of the Day",
                          "description": f"Removed daily {mode}!" }
@@ -139,7 +170,7 @@ class QotD(commands.Cog, name="QotD"):
                          "description": f"No active daily {mode} found!" }
                 
             em = EmbedBuilder.bake(embed)
-            await interaction.response.send_message(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
+            await interaction.response.send_message(embed=em, ephemeral=True)
         
         except Exception:
             raise commands.errors.BadArgument
