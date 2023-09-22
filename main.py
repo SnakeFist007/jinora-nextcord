@@ -29,7 +29,7 @@ from functions.bot import bot
 # Setup
 # * Load .env vars
 load_dotenv()
-VERSION = "2.2.0"
+VERSION = "2.3.0"
 FEEDBACK_ID = 1140961474718744636
 
 TOKEN = os.getenv("TOKEN")

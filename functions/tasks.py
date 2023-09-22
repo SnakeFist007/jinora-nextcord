@@ -7,7 +7,7 @@ from dateutil import tz
 from functions.apis import get_quote, get_question, get_mood
 from functions.helpers import EmbedBuilder
 from functions.logging import logging
-from functions.paths import reading, questioning, laughing, scale, AIR_NOMAD
+from functions.paths import scale, AIR_NOMAD
 from functions.bot import bot
 
 

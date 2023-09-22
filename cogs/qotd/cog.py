@@ -8,7 +8,6 @@ from functions.errors import default_error, dm_error, perm_error
 from functions.helpers import EmbedBuilder, is_valid_time_format
 from functions.logging import logging
 from functions.tasks import set_task, stop_task
-from functions.paths import reading, sunny, questioning
 from main import db_tasks
 
 
@@ -104,14 +103,13 @@ class QotD(commands.Cog, name="QotD"):
                     "threading": thread,
                     "lang": lang
                 }
+                
                 if lang == "en":
-                    embed = {
-                        "title": "Task succesfully created!"
-                    }
+                    embed = { "title": "Task succesfully created!" }
+                
                 elif lang == "de":
-                    embed = {
-                        "title": "Aufgabe erfolgreich erstellt!",
-                    }
+                    embed = { "title": "Task erfolgreich erstellt!" }
+
 
                 db_tasks.open.insert_one(task)
                 try:
@@ -132,8 +130,8 @@ class QotD(commands.Cog, name="QotD"):
                     }
                 elif lang == "de":
                     embed = {
-                        "title": "Es gibt bereits eine offene Aufgabe!",
-                        "description": "Um sie zu bearbeiten, nutze bitte `/qotd remove` um den bestehenden Eintrag zu löschen!"
+                        "title": "Es gibt bereits einen offenen Task!",
+                        "description": "Um ihn zu bearbeiten, nutze bitte `/qotd remove` um den bestehenden Eintrag zu löschen!"
                     }
 
                 em = EmbedBuilder.bake(embed)
@@ -152,7 +150,6 @@ class QotD(commands.Cog, name="QotD"):
                                                                                       "quote": "quote",
                                                                                       "question": "question"
                                                                                   })) -> None:
-    
         try:
             task = db_tasks.open.find_one(
                 {"server_id": interaction.guild.id, "mode": mode})
@@ -162,12 +159,10 @@ class QotD(commands.Cog, name="QotD"):
                 db_tasks.open.delete_one({"internal_id": task['internal_id']})
                 await stop_task(task['internal_id'])
                 
-                embed = { "title": "Q of the Day",
-                         "description": f"Removed daily {mode}!" }
+                embed = {"title": f"Removed daily {mode}!" }
 
             else:
-                embed = { "title": "Q of the Day",
-                         "description": f"No active daily {mode} found!" }
+                embed = {"title": f"No active daily {mode} found!" }
                 
             em = EmbedBuilder.bake(embed)
             await interaction.response.send_message(embed=em, ephemeral=True)

@@ -6,7 +6,6 @@ from nextcord.ext import commands, application_checks
 from functions.helpers import EmbedBuilder, is_valid_time_format
 from functions.logging import logging
 from functions.tasks import set_task, stop_task
-from functions.paths import sunny, questioning
 from functions.errors import default_error, dm_error, perm_error
 from main import db_tasks
 
@@ -39,6 +38,7 @@ class Mood(commands.Cog, name="Mood"):
                             "English": "en",
                             "Deutsch": "de"
                         })) -> None:
+
         await interaction.response.defer()
 
         if is_valid_time_format(time):
@@ -61,14 +61,11 @@ class Mood(commands.Cog, name="Mood"):
                     "threading": thread,
                     "lang": lang
                 }
+                
                 if lang == "en":
-                    embed = {
-                        "title": "Task succesfully created!"
-                    }
+                    embed = { "title": "Task succesfully created!" }
                 elif lang == "de":
-                    embed = {
-                        "title": "Aufgabe erfolgreich erstellt!",
-                    }
+                    embed = { "title": "Task erfolgreich erstellt!" }
 
                 db_tasks.open.insert_one(task)
                 try:
@@ -78,8 +75,8 @@ class Mood(commands.Cog, name="Mood"):
                     logging.exception(e)
                     raise commands.errors.BadArgument
 
-                em = EmbedBuilder.bake_thumbnail(embed)
-                await interaction.followup.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
+                em = EmbedBuilder.bake(embed)
+                await interaction.followup.send(embed=em, ephemeral=True)
 
             else:
                 if lang == "en":
@@ -89,17 +86,43 @@ class Mood(commands.Cog, name="Mood"):
                     }
                 elif lang == "de":
                     embed = {
-                        "title": "Es gibt bereits eine offene Aufgabe!",
-                        "description": "Um sie zu bearbeiten, nutze bitte `/mood remove` um den bestehenden Eintrag zu löschen!"
+                        "title": "Es gibt bereits eine offen Task!",
+                        "description": "Um ihn zu bearbeiten, nutze bitte `/mood remove` um den bestehenden Eintrag zu löschen!"
                     }
 
-                em = EmbedBuilder.bake_thumbnail(embed)
-                await interaction.followup.send(file=EmbedBuilder.get_emoji(questioning), embed=em, ephemeral=True)
+                em = EmbedBuilder.bake(embed)
+                await interaction.followup.send(embed=em, ephemeral=True)
 
         else:
             raise commands.errors.BadArgument
         
+    # Dailies
+
+    @main.subcommand(name="remove", description="Disables daily mood poll!")
+    @application_checks.guild_only()
+    @application_checks.has_permissions(manage_messages=True)
+    async def mood_remove(self, interaction: Interaction) -> None:
+        try:
+            task = db_tasks.open.find_one({"server_id": interaction.guild.id, "type": "mood"})
+
+            if task:
+                logging.warning(f"Deleting entry {task['internal_id']} from task database!")
+                db_tasks.open.delete_one({"internal_id": task['internal_id']})
+                await stop_task(task['internal_id'])
+
+                embed = { "title": "Removed daily mood poll!" }
+
+            else:
+                embed = { "title": "No active daily mood poll found!" }
+
+            em = EmbedBuilder.bake(embed)
+            await interaction.response.send_message(embed=em, ephemeral=True)
+
+        except Exception:
+            raise commands.errors.BadArgument
+
     @mood_poll.error
+    @mood_remove.error
     async def on_command_error(self, interaction: Interaction, error) -> None:
         if isinstance(error, application_checks.errors.ApplicationNoPrivateMessage):
             await dm_error(interaction)
