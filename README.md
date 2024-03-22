@@ -25,10 +25,10 @@
     </a>
 </div>
 
-<hr>
+<hr><br>
 
 <p align="center">
-    If you like this project, please consider leaving a ⭐ for the repo!
+This project is a personal journey to improve my Python skills and how to make a neat Discord-Bot!
 </p>
 
 <p align="center">
@@ -38,43 +38,31 @@
 </p>
 
 <p align="center">
-    <a href="#-about">About</a>
-  •
+    If you like this project, please consider leaving a ⭐
+</p>
+
+<p align="center">
     <a href="#-features">Features</a>
   •
     <a href="#-installation">Installation</a>
   •
-    <a href="#-contributors">Contributors</a>
-  •
     <a href="#-legal-information">Legal Information</a>
 </p>
 
-<hr>
-
-# <img src="database/bot-logo.png" width=24px height=24px> About
-This project is a personal journey of improving my Python skills and how to make a somewhat neat Discord bot!
-
-
-There is a plan on hosting this bot myself in the near future, as soon as I got the main features down and can provide the service 24/7.
-Until then you are free to host the bot yourself, using the instructions below!
-
-<br>
+---
 
 # <img src="database/bot-logo.png" width=24px height=24px> Features
-- Question of the Day
-- Weather & Astro Commands
-
-
-## Roadmap
-See the [open issues](https://github.com/SnakeFist007/jinora-nextcord/issues) for a list of planned features and known issues.
+1. Weather & Astro Commands
+2. Daily Weather & Astro Report
+3. Daily Inspirational Quotes
 
 <br>
 
-# <img src="database/bot-logo.png" width=24px height=24px> Run the Bot Yourself
+# <img src="database/bot-logo.png" width=24px height=24px> Running the Bot
 First download the [.env.example](/.env.example) template from the repository.
 
 
-## What you'll need
+## Requirements
 
 ⚠️ **Note: Never commit or share any API keys or tokens publicly!** ⚠️
 
@@ -98,29 +86,33 @@ Then start the image with the variables from the .env file:
 docker run --env-file .env -d <id>
 ```
 
-**The bot should be running now!**
-
-
 <br>
 
 # <img src="database/bot-logo.png" width=24px height=24px> Misc. Information
 
-### GDPR Disclaimer
-> While fictional characters do not fall under the GDPR, I would like to mention that I do not distribute or sell any information that is collected. Any information that is collected will be used soley for debugging purposes or reporting abuse to Discord.
-
-Should you have any concerns about this, either contact me directly or do not use the bot. Thank you!
-
-### License
+## License
 This project is licensed under the [GNU Affero General Public License 3.0](/LICENSE).
 
-### Semantic Versioning
+## Semantic Versioning
 I use [SemVer](https://semver.org) for versioning. For all available versions, see the [tags](https://github.com/SnakeFist007/jinora-nextcord/tags) from this repository.
 
-### Resources
+## Resources
 All images of Jinora have been generated with [Stable Diffusion](https://github.com/AUTOMATIC1111/stable-diffusion-webui), [Based65](https://civitai.com/models/31546/based65) and the amazing [Jinora LoRA](https://civitai.com/models/51783/jinora-the-legend-of-korra-lora), as well as being upscaled with `R-ESRGAN-4x+-Anime6B`.
 
-This project is not affiliated with the creators of 'The Legend of Korra' or the Avatar franchise!
+This project is not affiliated with the creators of "The Legend of Korra" or the Avatar franchise!
 
 ---
 
-> © 2023-2024, made by SnakeFist007 with ❤️
+```
+© 2023-2024, made by SnakeFist007 with ❤️
+>
+> ────▓▓▓▓▓▓──────
+> ───▓▄▓▓▓▓▓▓─────
+> ──────▓▓▓▓▓─▓───
+> ─▓▓▓▓▓▓▓▓▓──▓▓──
+> ▓▓▓▓▓──────▓▓▓▓─
+> ─▓▓▓▓▓───▓▓▓▓▓──
+> ──▓▓▓▓▓▓▓▓▓▓▓───
+> ─────▓▓▓▓▓──────
+>
+```

@@ -3,10 +3,9 @@ import aiohttp
 import requests
 from dotenv import load_dotenv
 from functions.logging import logging
-from functions.helpers import JSONLoader, daily_random
-from functions.paths import questions, en_mood_comments, de_mood_comments
 
 load_dotenv()
+QUOTES = os.getenv("QUOTES")
 WEATHER = os.getenv("WEATHER")
 
 
@@ -54,30 +53,3 @@ async def get_astro(location: str) -> dict:
     except KeyError as e:
         logging.exception(e)
         raise e
-    
-    
-# * Random question grabber
-def get_question(lang: str) -> str:
-    if lang == "en":
-        lines = JSONLoader.load(questions)
-    elif lang == "de":
-        lines = JSONLoader.load(questions)
-    
-    length = len(lines)
-    rand_int = daily_random(length)
-    
-    return lines[str(rand_int)]
-
-
-# * Random comment grabber
-def get_mood(lang: str) -> str:
-    if lang == "en":
-        input = en_mood_comments
-    elif lang == "de":
-        input = de_mood_comments
-    
-    lines = JSONLoader.load(input)
-    length = len(lines)
-    rand_int = daily_random(length)
-
-    return lines[str(rand_int)]
