@@ -8,7 +8,6 @@ from functions.paths import questions, en_mood_comments, de_mood_comments
 
 load_dotenv()
 WEATHER = os.getenv("WEATHER")
-QUOTES = os.getenv("QUOTES")
 
 
 # * API scheme from https://api-ninjas.com
@@ -21,15 +20,6 @@ async def apininjas(url: str) -> dict:
     else:
         logging.exception("ERROR getting response from quotes API")
         raise ValueError
-
-# Functions used with api-ninjas
-async def get_quote(lang) -> dict:
-    if lang == "en":
-        url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
-        return await apininjas(url)
-    elif lang == "de":
-        url = "https://api.api-ninjas.com/v1/quotes?category=inspirational"
-        return await apininjas(url)
 
 
 
@@ -46,8 +36,6 @@ async def weatherapi(url: str, location: str) -> dict:
     return data
     
 # Functions used with weatherapi
-
-
 async def get_weather(location: str) -> dict:
     try:
         url = "https://api.weatherapi.com/v1/current.json"   

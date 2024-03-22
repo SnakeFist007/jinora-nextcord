@@ -1,8 +1,6 @@
 import nextcord
-from nextcord.interactions import Interaction
 from nextcord import Interaction
 from nextcord.ext import commands
-from cogs.misc.FeedbackForm import FeedbackForm
 from functions.helpers import EmbedBuilder
 from functions.logging import logging
 from functions.paths import SPARKLES, AIR_NOMAD, sunny
@@ -44,12 +42,6 @@ class Basics(commands.Cog, name="Misc"):
         )
 
         await interaction.send(file=EmbedBuilder.get_emoji(sunny), embed=em, ephemeral=True)
-
-
-    # Feedback command for users
-    @nextcord.slash_command(name="feedback", description="Give some feedback to the developer!")
-    async def feedback(self, interaction: Interaction) -> None:
-        await interaction.response.send_modal(FeedbackForm(self.bot))
 
 
 # Add Cog to bot

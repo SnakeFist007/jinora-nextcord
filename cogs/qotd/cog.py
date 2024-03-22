@@ -34,28 +34,6 @@ class QotD(commands.Cog, name="QotD"):
         await interaction.response.send_message(embed=EmbedBuilder.bake(embed))
     
     
-    # Quotes
-    @nextcord.slash_command(name="quote", description="Quote of the day!")
-    @application_checks.guild_only()
-    async def quote(self, interaction: Interaction,
-                    lang: str = SlashOption(description="Choose your langauge!", required=False, default="en", choices={
-                        "English": "en",
-                        "Deutsch": "de"
-                    })) -> None:
-        try: 
-            data = await get_quote(lang)
-            embed = {
-                "title": f"{data[0]['quote']} *~{data[0]['author']}*",
-                "description": "Sometimes quotes can be very insightful... Other times, not so much."
-            }
-        
-            await interaction.response.send_message(embed=EmbedBuilder.bake(embed))
-            
-        except ValueError:
-            logging.exception("ERROR getting response from quotes API")
-            raise commands.errors.BadArgument
-    
-    
     # Dailies
     @nextcord.slash_command(name="qotd", description="Enables Q of the day!")
     async def main(self, interaction: Interaction) -> None:

@@ -1,10 +1,10 @@
-# Jinora - Your Airbending Mood Tracker!
+# Jinora - Your Airbending Discord Bot!
 <div align="center">
     <a href="https://www.python.org">
-        <img src="https://custom-icon-badges.demolab.com/badge/Python-3.11.4-0F81C2?logo=python">
+        <img src="https://custom-icon-badges.demolab.com/badge/Python-3.12.1-0F81C2?logo=python">
     </a>
     <a href="https://docs.nextcord.dev/en/stable/">
-        <img src="https://custom-icon-badges.demolab.com/badge/Nextcord-2.5.0-5865F2?logo=nextcord">
+        <img src="https://custom-icon-badges.demolab.com/badge/Nextcord-2.6.0-5865F2?logo=nextcord">
     </a>
     <a href="https://www.mongodb.com">
         <img src="https://custom-icon-badges.demolab.com/badge/MongoDB-7.0-13AA52?logo=mongodb">
@@ -33,7 +33,7 @@
 
 <p align="center">
     <a href="https://github.com/SnakeFist007/jinora-nextcord/releases/latest">
-        <img src="https://img.shields.io/badge/Bot%20Version-2.3.0-blue.svg?style=for-the-badge&logo=Python">
+        <img src="https://img.shields.io/badge/Bot%20Version-3.0.0-blue.svg?style=for-the-badge&logo=Python">
     </a>
 </p>
 
@@ -62,16 +62,11 @@ Until then you are free to host the bot yourself, using the instructions below!
 
 # <img src="database/bot-logo.png" width=24px height=24px> Features
 - Question of the Day
-- Random Wisdoms & Quotes
 - Weather & Astro Commands
-- Recurring Reminders
-- Joke & 8-Ball Commands
-- ...and more!
 
 
 ## Roadmap
 See the [open issues](https://github.com/SnakeFist007/jinora-nextcord/issues) for a list of planned features and known issues.
-
 
 <br>
 
@@ -122,10 +117,10 @@ This project is licensed under the [GNU Affero General Public License 3.0](/LICE
 I use [SemVer](https://semver.org) for versioning. For all available versions, see the [tags](https://github.com/SnakeFist007/jinora-nextcord/tags) from this repository.
 
 ### Resources
-All images of Jinora have been generated with [Stable Diffusion](https://github.com/AUTOMATIC1111/stable-diffusion-webui), [Based65](https://civitai.com/models/31546/based65) & [Jinora LoRA](https://civitai.com/models/51783/jinora-the-legend-of-korra-lora), as well as being upscaled with `R-ESRGAN-4x+-Anime6B`.
+All images of Jinora have been generated with [Stable Diffusion](https://github.com/AUTOMATIC1111/stable-diffusion-webui), [Based65](https://civitai.com/models/31546/based65) and the amazing [Jinora LoRA](https://civitai.com/models/51783/jinora-the-legend-of-korra-lora), as well as being upscaled with `R-ESRGAN-4x+-Anime6B`.
 
 This project is not affiliated with the creators of 'The Legend of Korra' or the Avatar franchise!
 
 ---
 
-> Made by SnakeFist007 with ❤️
+> © 2023-2024, made by SnakeFist007 with ❤️

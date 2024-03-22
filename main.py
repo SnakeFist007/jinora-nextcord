@@ -8,7 +8,7 @@
 # ──▓▓▓▓▓▓▓▓▓▓▓───
 # ─────▓▓▓▓▓──────
 #
-# Made by: https://github.com/SnakeFist007 - 2023
+# Made by: https://github.com/SnakeFist007 - 2023-2024
 #
 
 import pretty_errors
@@ -29,12 +29,9 @@ from functions.bot import bot
 # Setup
 # * Load .env vars
 load_dotenv()
-VERSION = "2.3.0"
-FEEDBACK_ID = 1140961474718744636
-
+VERSION = "3.0.0"
 TOKEN = os.getenv("TOKEN")
 URI = os.getenv("MONGODB")
-
 
 # * MongoDB
 client = MongoClient(URI, server_api=ServerAPI("1"))
@@ -43,7 +40,6 @@ db_tasks = client.tasks
 
 # * Intents & Bot initialization
 console = Console(bot)
-
 
 
 # Events
