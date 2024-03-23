@@ -1,22 +1,37 @@
 {
     "default": {
-        "title": "Something went wrong!",
-        "description": "I'm sorry, this shouldn't have happened..."
+        "LNG_EN": {
+            "title": "Something went wrong!",
+            "description": "I'm sorry, this shouldn't have happened..."
+        },
+        "LNG_DE": {}
     },
     "dm": {
-        "title": "You can't use this command in DMs!",
-        "description": "This command is server-sided only."
+        "LNG_EN": {
+            "title": "You can't use this command in DMs!",
+            "description": "This command is server-sided only."
+        },
+        "LNG_DE": {}
     },
     "guild": {
-        "title": "You can't use this command in Servers!",
-        "description": "This command is DMs only."
+        "LNG_EN": {
+            "title": "You can't use this command in Servers!",
+            "description": "This command is DMs only."
+        },
+        "LNG_DE": {}
     },
     "permissions": {
-        "title": "Insufficient permissions!",
-        "description": "I'm sorry, but you can't use that command."
+        "LNG_EN": {
+            "title": "Insufficient permissions!",
+            "description": "I'm sorry, but you can't use that command."
+        },
+        "LNG_DE": {}
     },
     "cooldown": {
-        "title": "Command is on cooldown!",
-        "description": "Please try again later."
+        "LNG_EN": {
+            "title": "Command is on cooldown!",
+            "description": "Please try again later."
+        },
+        "LNG_DE": {}
     }
 }

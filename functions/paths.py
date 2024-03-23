@@ -1,75 +1,64 @@
 from pathlib import Path
 
 
-# * Base Path object
+# * Base Path object & important subfolders
 base_path = Path(".")
-
-# * Subfolders
 cogs = base_path / "cogs"
 embeds = base_path / "database/embeds"
 
-# * Files
-# Main
+# * Main files
 ascii_art = base_path / "database/ascii_art"
-
-# Functions: Helpers
-defaults = embeds / "defaults.json"
 messages = embeds / "messages.json"
 errors = embeds / "errors.json"
-
-# Cog: QotD
-questions = base_path / "database/questions/questions.json"
 
 # Cog: Weather
 conditions = base_path / "database/weather/weather_conditions.json"
 moon_phases = base_path / "database/weather/moon_phases.json"
 
-# Cog: Mood
-mood_comments = base_path / "database/mood/comments.json"
 
-# Emotes
-cloudy = base_path / "database/emotes/cloudy.png"
-greetings = base_path / "database/emotes/greetings.png"
-happy = base_path / "database/emotes/happy.png"
-sipping = base_path / "database/emotes/hot_chocolate.png"
-laughing = base_path / "database/emotes/laughing.png"
-meditating = base_path / "database/emotes/meditating.png"
-neutral = base_path / "database/emotes/neutral.png"
-night = base_path / "database/emotes/night.png"
-phone = base_path / "database/emotes/phone.png"
-proud = base_path / "database/emotes/proud.png"
-questioning = base_path / "database/emotes/questioning.png"
-rainy = base_path / "database/emotes/rainy.png"
-reading = base_path / "database/emotes/reading.png"
-snowy = base_path / "database/emotes/snowy.png"
-sunny = base_path / "database/emotes/sunny.png"
+# * Icons
+ICO_CLOUDY = base_path / "database/icons/cloudy.png"
+ICO_GREETINGS = base_path / "database/icons/greetings.png"
+ICO_HAPPY = base_path / "database/icons/happy.png"
+ICO_SIPPING = base_path / "database/icons/hot_chocolate.png"
+ICO_LAUGHING = base_path / "database/icons/laughing.png"
+ICO_MEDITATING = base_path / "database/icons/meditating.png"
+ICO_NEUTRAL = base_path / "database/icons/neutral.png"
+ICO_NIGHT = base_path / "database/icons/night.png"
+ICO_PHONE = base_path / "database/icons/phone.png"
+ICO_PROUD = base_path / "database/icons/proud.png"
+ICO_QUESTIONING = base_path / "database/icons/questioning.png"
+ICO_RAINY = base_path / "database/icons/rainy.png"
+ICO_READING = base_path / "database/icons/reading.png"
+ICO_SNOWY = base_path / "database/icons/snowy.png"
+ICO_SUNNY = base_path / "database/icons/sunny.png"
 
-# Emotes
-emotes = {
-    "cloudy": cloudy,
-    "greetings": greetings,
-    "happy": happy,
-    "sipping": sipping,
-    "laughing": laughing,
-    "meditating": meditating,
-    "neutral": neutral,
-    "night": night,
-    "phone": phone,
-    "proud": proud,
-    "questioning": questioning,
-    "rainy": rainy,
-    "reading": reading,
-    "snowy": snowy,
-    "sunny": sunny
+icons = {
+    "cloudy": ICO_CLOUDY,
+    "greetings": ICO_GREETINGS,
+    "happy": ICO_HAPPY,
+    "sipping": ICO_SIPPING,
+    "laughing": ICO_LAUGHING,
+    "meditating": ICO_MEDITATING,
+    "neutral": ICO_NEUTRAL,
+    "night": ICO_NIGHT,
+    "phone": ICO_PHONE,
+    "proud": ICO_PROUD,
+    "questioning": ICO_QUESTIONING,
+    "rainy": ICO_RAINY,
+    "reading": ICO_READING,
+    "snowy": ICO_SNOWY,
+    "sunny": ICO_SUNNY
 }
 
-# Emojis
-AIR = "<:air:1136372942712881324>"
-AIR_NOMAD = "<:air_nomad:1136373972246732891>"
-LOTUS = "<:white_lotus:1136372955908149290>"
-# Animated Emojis
-BOOST = "<a:boost:1088152045166542959>"
-SPARKLES = "<a:sparkles:1088152065034965104>"
-YES = "<a:jape:1088151992800641054>"
-MEH = "<a:meh:1088152028162822194>"
-NOU = "<a:nope:1088151978456129696>"
+
+# * Discord Emoji
+EMO_AIR = "<:air:1136372942712881324>"
+EMO_AIRNOMAD = "<:air_nomad:1136373972246732891>"
+EMO_LOTUS = "<:white_lotus:1136372955908149290>"
+
+EMO_BOOST = "<a:boost:1088152045166542959>"
+EMO_SPARKLES = "<a:sparkles:1088152065034965104>"
+EMO_YES = "<a:jape:1088151992800641054>"
+EMO_MEH = "<a:meh:1088152028162822194>"
+EMO_NOU = "<a:nope:1088151978456129696>"

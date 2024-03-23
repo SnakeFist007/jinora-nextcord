@@ -1,6 +1,12 @@
 {
     "welcome": {
-        "title": "Thanks for the invite! <3",
-        "description": "Use `/help` to learn more about my commands."
+        "LNG_EN": {
+            "title": "Thanks for the invite! <3",
+            "description": "Use `/help` to learn more about my commands."
+        },
+        "LNG_DE": {
+            "title": "Danke für die Einladung! <3",
+            "description": "Schau in `/help` rein, um mehr über meine Befehle zu erfahren."
+        }
     }
 }
