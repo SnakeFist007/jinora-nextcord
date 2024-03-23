@@ -31,10 +31,10 @@ from functions.bot import bot
 load_dotenv()
 VERSION = "3.0.0"
 TOKEN = os.getenv("TOKEN")
-URI = os.getenv("MONGODB")
+API_MONGODB = os.getenv("MONGODB")
 
 # * MongoDB
-client = MongoClient(URI, server_api=ServerAPI("1"))
+client = MongoClient(API_MONGODB, server_api=ServerAPI("1"))
 db_servers = client.servers
 db_tasks = client.tasks
 

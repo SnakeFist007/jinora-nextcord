@@ -11,10 +11,9 @@ from functions.bot import bot
 
 
 load_dotenv()
-TIMEZONE = os.getenv("TIMEZONE")
-
+SET_TIMEZONE = os.getenv("TIMEZONE")
 client = nextcord.Client()
-timezone = tz.gettz(TIMEZONE)
+timezone = tz.gettz(SET_TIMEZONE)
 
 
 # Get next occurance
@@ -31,7 +30,7 @@ def get_waittime(task):
     return (date - now).total_seconds()
 
 
-# Universal task handler
+# * Universal task handler
 async def set_task(task: dict) -> None:
     # Prepare message
     try:
