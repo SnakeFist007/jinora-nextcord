@@ -1,4 +1,4 @@
-FROM python:3.11.4-slim
+FROM python:3.12.1-slim
 LABEL org.opencontainers.image.source = "https://github.com/SnakeFist007/jinora-nextcord"
 
 # Add new non-root user

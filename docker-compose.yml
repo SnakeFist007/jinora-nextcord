@@ -1,13 +1,7 @@
-version: "3.3"
+version: "3.8"
 
 services:
   # Discord Bot
   jinora-nextcord:
     image: "ghcr.io/snakefist007/jinora-nextcord:latest"
     restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    # For some reason you need to import this AND add the .env variables to Portainer
-    env_file:
-      - stack.env
